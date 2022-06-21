@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_procs.a
-;               - ensemble de proc‚dures d'interrˆt g‚n‚ral...
+;               - ensemble de procâ€šdures d'interrË†t gâ€šnâ€šral...
 ;**************************************************************************
 
 ; test souris
@@ -53,7 +53,7 @@ graphe_souris   dw 1111000011111111xb
                 dw 0011110000000000xb
 l1:
 
-; test m‚moire (640k)
+; test mâ€šmoire (640k)
 ;**************************************************************************
 int 18
 cmp ax,640
@@ -64,10 +64,10 @@ pop ds
 mov dx,offset message_erreur_memoire
 int 21h
 ret
-message_erreur_memoire db 'Pas assez de m‚moire: il faut 640 Ko au moins...',13,10,'$'
+message_erreur_memoire db 'Pas assez de mâ€šmoire: il faut 640 Ko au moins...',13,10,'$'
 l1:
 
-; traitement des erreurs disque (disque non prˆt, par exemple)
+; traitement des erreurs disque (disque non prË†t, par exemple)
 ;**************************************************************************
 ; remplacement du vecteur d'interruption 24h
 cli
@@ -94,7 +94,7 @@ l1:
 call proc_init_vga
 ; nouveau curseur souris
 mov ax,9
-mov bx,3        ; point de r‚f‚rence...
+mov bx,3        ; point de râ€šfâ€šrence...
 mov cx,13       ; ... = "boule" de la croche
 mov dx,offset graphe_souris
 mov es,cs
@@ -112,7 +112,7 @@ int 33h         ; positions Y maxi/mini
 ;**************************************************************************
 call fin_t_procs
 
-; traitement des erreurs disque (disque non prˆt, par exemple)
+; traitement des erreurs disque (disque non prË†t, par exemple)
 ;**************************************************************************
 ; replacement du vecteur d'interruption 24h
 cli
@@ -191,17 +191,17 @@ loop b0
 
 ret
 message_fin_tracker:
-db '                         ÛÛÛÛÛ ÛÛÛÛ   ÛÛÛ  ÛÛÛÛÛ  ÛÛÛ',13,10
-db '                         Û     Û   Û Û   Û   Û   Û   Û',13,10
-db '                         Û     Û   Û Û   Û   Û   Û   Û',13,10
-db '                         ÛÛÛÛ  ÛÛÛÛ  ÛÛÛÛÛ   Û   Û   Û',13,10
-db '                         Û     Û   Û Û   Û   Û   Û   Û',13,10
-db '                         Û     Û   Û Û   Û   Û   Û   Û',13,10
-db '                         Û     Û   Û Û   Û   Û   Û   Û',13,10
-db '                         ÛÛÛÛÛ Û   Û Û   Û   Û    ÛÛÛ',13,10,10
+db '                         Ã›Ã›Ã›Ã›Ã› Ã›Ã›Ã›Ã›   Ã›Ã›Ã›  Ã›Ã›Ã›Ã›Ã›  Ã›Ã›Ã›',13,10
+db '                         Ã›     Ã›   Ã› Ã›   Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›     Ã›   Ã› Ã›   Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›Ã›Ã›Ã›  Ã›Ã›Ã›Ã›  Ã›Ã›Ã›Ã›Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›     Ã›   Ã› Ã›   Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›     Ã›   Ã› Ã›   Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›     Ã›   Ã› Ã›   Ã›   Ã›   Ã›   Ã›',13,10
+db '                         Ã›Ã›Ã›Ã›Ã› Ã›   Ã› Ã›   Ã›   Ã›    Ã›Ã›Ã›',13,10,10
 
-db '                         ÛÛÛÛÛÛ v1.0 - á version ÛÛÛÛÛ',13,10
-db '                         ÛÛÛÛÛÛÛÛ 24 ao–t 1995 ÛÛÛÛÛÛÛ',13,10,10,10
+db '                         Ã›Ã›Ã›Ã›Ã›Ã› v1.0 - Ã¡ version Ã›Ã›Ã›Ã›Ã›',13,10
+db '                         Ã›Ã›Ã›Ã›Ã›Ã›Ã›Ã› 24 aoâ€“t 1995 Ã›Ã›Ã›Ã›Ã›Ã›Ã›',13,10,10,10
 
 
 
@@ -209,33 +209,33 @@ db '              Ceci est une version PROVISOIRE et NON DOCUMENTEE!!',13,10
 db '                                   ----------    --------------',13,10,10
 
 db '     Il  y manque pas mal de chose, comme par  exemple  des  commandes MOD.',13,10
-db '    (il  y en a 30 en tout; 10 seulement sont pr‚sentes dans cette version !)',13,10
-db '          Il manque ‚galement un mode d',27h,'‚dition du style "s‚quenceur":',13,10
+db '    (il  y en a 30 en tout; 10 seulement sont prâ€šsentes dans cette version !)',13,10
+db '          Il manque â€šgalement un mode d',27h,'â€šdition du style "sâ€šquenceur":',13,10
 db '        adieu les fastidieuses et illisibles colonnes des soundtrackers!',13,10,10
 
-db '            Il est ‚galement possible que vous rencontriez des bugs',13,10
-db '               qui m',27h,'auraient ‚chapp‚. Merci de me les signaler!',13,10,10
+db '            Il est â€šgalement possible que vous rencontriez des bugs',13,10
+db '               qui m',27h,'auraient â€šchappâ€š. Merci de me les signaler!',13,10,10
 
 db '                                  Bruno Carrez',13,10
-db '                            50 rue du Moulin L',27h,'Avou‚',13,10
+db '                            50 rue du Moulin L',27h,'Avouâ€š',13,10
 db '                                62136 Richebourg',13,10
 db '                                    (France)',13,10,10
 
-db '    Une version plus approfondie sera bient“t disponible (‡a d‚pend surtout',13,10
-db '                    de mes ‚tudes... je rentre en math sp‚!)',13,10,10
+db '    Une version plus approfondie sera bientâ€œt disponible (â€¡a dâ€špend surtout',13,10
+db '                    de mes â€študes... je rentre en math spâ€š!)',13,10,10
 
-db '    Diffusez ce programme, copiez-le, donnez-le, offrez-le, t‚l‚chargez-le,',13,10
+db '    Diffusez ce programme, copiez-le, donnez-le, offrez-le, tâ€šlâ€šchargez-le,',13,10
 db '                  faxez-le, envoyez-le, dupliquez-le, mais...',13,10
 db '                              NE LE MODIFIEZ PAS!',13,10
 
-db '       Je suis dispos‚ … recevoir tous les conseils, remarques, insultes.',13,10
-db '                   (je r‚pondrai dans la mesure du possible).',13,10
+db '       Je suis disposâ€š â€¦ recevoir tous les conseils, remarques, insultes.',13,10
+db '                   (je râ€špondrai dans la mesure du possible).',13,10
 db '         ... et comme l',27h,'union fait la force, dingues de programmation,',13,10
 db '                         prenez contact! (j',27h,'ai 19 ans)',13,10,10
 
-db '                     ... et encore merci … Freddy V‚tel‚ !',13,10,10
+db '                     ... et encore merci â€¦ Freddy Vâ€štelâ€š !',13,10,10
 
-db '    (note: tapez "MODE 80" si vous d‚sirez retrouver un ‚cran … 25 lignes.)',13,10,'$'
+db '    (note: tapez "MODE 80" si vous dâ€šsirez retrouver un â€šcran â€¦ 25 lignes.)',13,10,'$'
 
 
 
@@ -272,7 +272,7 @@ int 33h
 pop dx,cx,bx,ax
 ret
 
-; MOUSE_HIDE (M): cache le curseur souris sur une zone sp‚cifique de l'‚cran
+; MOUSE_HIDE (M): cache le curseur souris sur une zone spâ€šcifique de l'â€šcran
 ;**************************************************************************
 mouse_hide macro
 mov cx,#1
@@ -308,7 +308,7 @@ cmp bx,0
 je proc_mouse_clic
 ret
 
-; MOUSE_STATE (M+P): retourne l'‚tat de la souris
+; MOUSE_STATE (M+P): retourne l'â€štat de la souris
 ;       retour: BX=boutons
 ;               CX=x
 ;               DX=y
@@ -348,7 +348,7 @@ mov b cs:var_couleur_texte_vga,15
 ret
 
 ; PLANS_ECRITURE_VGA (M+P)
-; modifie le registre de plans en ‚criture
+; modifie le registre de plans en â€šcriture
 ;**************************************************************************
 plans_ecriture_vga macro
 push ax
@@ -426,7 +426,7 @@ mov ax,bp
 mov cs:ofs_police_vga,ax
 ret
 
-; AFF_CARAC_VGA (P): affiche le caractŠre contenu dans AL
+; AFF_CARAC_VGA (P): affiche le caractÅ re contenu dans AL
 ;**************************************************************************
 proc_aff_carac_vga:
 mov cx,cs:taille_police_vga
@@ -434,13 +434,13 @@ mul cl
 add ax,cs:ofs_police_vga
 mov si,ax
 mov ax,cs:seg_police_vga
-mov ds,ax       ; DS:SI pointe sur le caractŠre dans la table
+mov ds,ax       ; DS:SI pointe sur le caractÅ re dans la table
 mov es,0A000h
 mov ax,cs:y_texte_vga
 mov bx,80
 mul bx
 add ax,cs:x_texte_vga
-mov di,ax       ; ES:DI pointe sur la destination du caractŠre
+mov di,ax       ; ES:DI pointe sur la destination du caractÅ re
 cld
 mov cx,cs:taille_police_vga
 mov dx,3C4h
@@ -452,14 +452,14 @@ out dx,al
 b1:
 push cx
 mov bl,cs:var_couleur_texte_vga
-mov ax,100h     ; ah=plans en ‚criture
+mov ax,100h     ; ah=plans en â€šcriture
                 ; al=plan en lecture
 mov cx,4
-mov bh,ds:[si]  ; bh=ligne de 8 pixels … traiter dans les differents plans
+mov bh,ds:[si]  ; bh=ligne de 8 pixels â€¦ traiter dans les differents plans
 b2:
 push ax
 mov dx,3CFh
-out dx,al       ; plans en ‚criture
+out dx,al       ; plans en â€šcriture
 mov al,ah
 mov dx,3C5h
 out dx,al       ; plans en lecture
@@ -493,14 +493,14 @@ l1:
 mov cs:x_texte_vga,ax
 ret
 
-; GOTOXY_VGA (M): va … la position sp‚cifi‚e
+; GOTOXY_VGA (M): va â€¦ la position spâ€šcifiâ€še
 ;**************************************************************************
 gotoxy_vga macro
 mov w cs:x_texte_vga,#1
 mov w cs:y_texte_vga,#2
 #em
 
-; AFF_CHAINE_VGA (M+P): affiche une chaine de caractŠres
+; AFF_CHAINE_VGA (M+P): affiche une chaine de caractÅ res
 ;**************************************************************************
 aff_chaine_vga macro
 jmp >m1
@@ -557,11 +557,11 @@ sub cx,ax       ; cx=nombre de lignes
 mov bx,5
 mul bx
 add ax,0A000h
-mov es,ax       ; es=segment vid‚o de la 1ø ligne … modifier
+mov es,ax       ; es=segment vidâ€šo de la 1Ã¸ ligne â€¦ modifier
 b1:
 push cx
 plans_ecriture_vga 0Fh
-out dx,al       ; ‚criture sur tous les plans
+out dx,al       ; â€šcriture sur tous les plans
 mov cx,data_rectangle_vga[4]
 inc cx
 mov di,data_rectangle_vga[0]
@@ -823,7 +823,7 @@ pop di,es,ds,dx,cx,bx,ax
 ret
 
 ; TEMPO_VGA (M+P)
-; temporisation balayage ‚cran
+; temporisation balayage â€šcran
 ;**************************************************************************
 tempo_vga     macro
 call proc_tempo_vga
@@ -833,12 +833,12 @@ push ax,dx
 mov dx,3DAh
 l1:
 in al,dx
-and al,8        ; le bit "d‚lai retour faisceau" est isol‚
+and al,8        ; le bit "dâ€šlai retour faisceau" est isolâ€š
 cmp al,0
 jne l1
 l1:
 in al,dx
-and al,8        ; le bit "d‚lai retour faisceau" est isol‚
+and al,8        ; le bit "dâ€šlai retour faisceau" est isolâ€š
 cmp al,0
 je l1
 pop dx,ax
@@ -873,10 +873,10 @@ out dx,al
 ret
 
 ; PROC_AFF_WORD_VGA (P)
-; affiche le contenu de AX en d‚cimal
+; affiche le contenu de AX en dâ€šcimal
 ;**************************************************************************
 proc_aff_word_vga:
-; affiche le nombre contenu dans AX (en d‚cimal)
+; affiche le nombre contenu dans AX (en dâ€šcimal)
 push ax,bx,cx,dx
 mov bx,10
 mov cx,0
@@ -898,10 +898,10 @@ pop dx,cx,bx,ax
 ret
 
 ; PROC_AFF_DWORD_VGA (P)
-; affiche le contenu de AX:DX en d‚cimal
+; affiche le contenu de AX:DX en dâ€šcimal
 ;**************************************************************************
 proc_aff_dword_vga:
-; proc‚dure affichant le nombre contenu dans ax:dx, en d‚cimal
+; procâ€šdure affichant le nombre contenu dans ax:dx, en dâ€šcimal
 push ax,bx,cx,dx,si
 mov bx,ax
 mov w cs:data_proc_affdwordvga,0
@@ -952,7 +952,7 @@ ret
 data_proc_affdwordvga      dw ?
 
 ; PROC_AFF_HEX_VGA (P)
-; affiche le contenu de AL en hexad‚cimal (sans le suffixe "h")
+; affiche le contenu de AL en hexadâ€šcimal (sans le suffixe "h")
 ;**************************************************************************
 proc_aff_hex_vga:
 push ax,bx,cx,dx,si
@@ -973,7 +973,7 @@ pop si,dx,cx,bx,ax
 ret
 
 ; TEST_ZONE_SOURIS x1,y1,x2,y2,label
-; saut … label si on n'a pas x1<=cx<=x2 et y1<=dx<=y2
+; saut â€¦ label si on n'a pas x1<=cx<=x2 et y1<=dx<=y2
 ;**************************************************************************
 test_zone_souris macro
 cmp cx,#1
@@ -1003,7 +1003,7 @@ jne proc_lache_souris
 ret
 
 ; INIT_BOUTON b,x1,y1,x2,y2,xt,yt,'texte' (M)
-; initialise dans la table DATA_BOUTON les donn‚es relatives au bouton nø b
+; initialise dans la table DATA_BOUTON les donnâ€šes relatives au bouton nÃ¸ b
 ; BOUTON_OFF (M+P)
 ; BOUTON_ON (M+P)
 ;**************************************************************************
@@ -1091,8 +1091,8 @@ call proc_aff_chaine_vga
 ret
 
 ; TEST_SOURIS_BOUTON b,l (M+P+S)
-; saut … l si pas sur le bouton...
-; si sur le bouton: bouton enfonc‚ et attend que la souris soit lach‚e
+; saut â€¦ l si pas sur le bouton...
+; si sur le bouton: bouton enfoncâ€š et attend que la souris soit lachâ€še
 ;**************************************************************************
 data_souris_bouton_1    db ?
 data_souris_bouton_2    dw ?
@@ -1121,7 +1121,7 @@ cmp cx,cs:[bx+4]
 ja >l1
 cmp dx,cs:[bx+6]
 ja >l1
-; on a cliqu‚ sur le bouton!
+; on a cliquâ€š sur le bouton!
 mov bl,cs:data_souris_bouton_1
 call proc_bouton_on
 lache_souris
