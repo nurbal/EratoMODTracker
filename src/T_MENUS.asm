@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_menus.a
-;               - ensemble de proc‚dures et de variables relatives … la
+;               - ensemble de procâ€šdures et de variables relatives â€¦ la
 ;                       double barre de menus...
 ;**************************************************************************
 
@@ -17,7 +17,7 @@ x_textes_menus          db 64 dup ?
 options_menus           db 2 dup ?
 nb_options_menus        db 2 dup ?
 
-; proc‚dures et macros
+; procâ€šdures et macros
 ;**************************************************************************
 
 ; AFFICHE_MENUS (M+P)
@@ -37,7 +37,7 @@ police_vga 1
 mov ds,cs
 mov cl,nb_options_menus[0]
 mov ch,0
-jcxz >p2        ; saut si pas d'options … afficher
+jcxz >p2        ; saut si pas d'options â€¦ afficher
 mov bx,0
 p1:
 push cx
@@ -192,24 +192,24 @@ if ae ret       ; retour si pas dans les menus
 cmp dx,25
 jb >p1
 cmp b cs:nb_options_menus[1],0
-je >p8          ; retour si dans le second menu vide, aprŠs avoir lach‚ la souris
+je >p8          ; retour si dans le second menu vide, aprÅ s avoir lachâ€š la souris
 p1:
 mov ds,cs
 mov ax,cx
 shr ax,1
 shr ax,1
-shr ax,1        ; al= caractŠre point‚
+shr ax,1        ; al= caractÅ re pointâ€š
 mov cl,nb_options_menus[0]
 cmp dx,25
 if ae mov cl,nb_options_menus[1]
-mov ch,0        ; cx = nombre d'options … tester
+mov ch,0        ; cx = nombre d'options â€¦ tester
 mov bx,0
 cmp dx,25       ; second menu ?
 if ae mov bx,32
-; d‚but des tests
+; dâ€šbut des tests
 b1:
 cmp al,x_textes_menus[bx]
-jb >p8  ; aucune option n'est point‚e
+jb >p8  ; aucune option n'est pointâ€še
 cmp al,x_textes_menus[bx+1]
 ja >b2
 push bx
@@ -287,10 +287,10 @@ pop bx
 pop ax
 mov ax,offsets_commandes_menus[bx]
 push ax
-ret             ; saut … l'endroit sp‚cifi‚ par le menu
+ret             ; saut â€¦ l'endroit spâ€šcifiâ€š par le menu
 
 ; CLS_MENUS (M+P)
-; efface tout l'‚cran sauf les menus, et actualise ces menus
+; efface tout l'â€šcran sauf les menus, et actualise ces menus
 ;**************************************************************************
 cls_menus macro
 call proc_cls_menus
