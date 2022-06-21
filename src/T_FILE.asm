@@ -5,11 +5,11 @@
 ; (menu fichier)
 ;**************************************************************************
 
-; d‚but du menu
+; dâ€šbut du menu
 ;**************************************************************************
 menu_fichier:
 
-; d‚finit le menu des options
+; dâ€šfinit le menu des options
 menu2 nouveau_fichier,'NOUVEAU',2,8, charger_fichier,'CHARGER',11,17, sauver_fichier,'SAUVER',20,25, changer_titre,'CHANGER-TITRE',28,40, quitter_programme,'QUITTER',71,77
 cls_menus
 
@@ -53,14 +53,14 @@ police_vga 2
 gotoxy_vga 30,223
 couleur_texte_vga 1
 bloc1_vga 20,180,59,279
-aff_chaine_vga 'Nouveau module cr‚‚.'
+aff_chaine_vga 'Nouveau module crâ€šâ€š.'
 b1:
 souris_menus
 jmp b1
 nom_nouveau_fichier     db 'ERATO_10.MOD',0
 titre_nouveau_mod       db 'Erato Tracker v1.0',0,0
 
-; message: "XXXXX.MOD n'est pas sauv‚!"
+; message: "XXXXX.MOD n'est pas sauvâ€š!"
 ;**************************************************************************
 proc_message_pas_sauve:
 bloc1_vga 20,100,59,149
@@ -70,7 +70,7 @@ gotoxy_vga 26,118
 mov ds,cs
 mov si,offset nom_fichier
 call proc_aff_chaine_vga
-aff_chaine_vga ' n',27h,'est pas sauv‚!'
+aff_chaine_vga ' n',27h,'est pas sauvâ€š!'
 ret
 
 ; quitter le programme
@@ -164,7 +164,7 @@ lache_souris
 ; affichage du chemin actuel
 gotoxy_vga 3,94
 couleur_texte_vga 1
-aff_chaine_vga 'R‚pertoire actuel:'
+aff_chaine_vga 'Râ€špertoire actuel:'
 bloc2_vga 2,110,77,133
 gotoxy_vga 3,115
 couleur_texte_vga 15
@@ -178,12 +178,12 @@ mov si,19200
 push ds,si
 mov ah,47h
 mov dl,cs:current_drive
-add dl,1        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+add dl,1        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 pop si,ds
 call proc_aff_chaine_vga
 
-; faut-il explorer … nouveau le r‚pertoire ou en avons-nous encore le contenu?
+; faut-il explorer â€¦ nouveau le râ€špertoire ou en avons-nous encore le contenu?
 cmp b cs:directory_modifiee,1
 if e jmp boucle_affiche_fichiers        ; recherches inutiles
 
@@ -191,10 +191,10 @@ if e jmp boucle_affiche_fichiers        ; recherches inutiles
 bloc1_vga 20,270,59,361
 couleur_texte_vga 1
 gotoxy_vga 26,299
-aff_chaine_vga 'Exploration du r‚pertoire...'
+aff_chaine_vga 'Exploration du râ€špertoire...'
 
-; recherche des r‚pertoires
-mov w cs:nb_fichiers,0     ; on commence … peine les recherches, oh!
+; recherche des râ€špertoires
+mov w cs:nb_fichiers,0     ; on commence â€¦ peine les recherches, oh!
 mov ds,cs
 mov dx,offset filtre_repertoires
 mov cx,10h
@@ -205,7 +205,7 @@ jc >l1
 b1:
 mov al,cs:[149]
 and al,10h
-jz >l2          ; ce n'est pas un r‚pertoire...
+jz >l2          ; ce n'est pas un râ€špertoire...
 mov es,cs:segment_directory
 mov b es:[di+13],1
 mov ds,cs
@@ -213,7 +213,7 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
@@ -222,9 +222,9 @@ add di,64       ; avancement dans la table
 l2:
 push di
 mov ah,4Fh
-int 21h         ; on cherche le r‚pertoire suivant...
+int 21h         ; on cherche le râ€špertoire suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des r‚pertoires … trouver!
+jnc b1  ; on continue tant qu'il y a des râ€špertoires â€¦ trouver!
 l1:
 ; recherche des modules
 mov ds,cs
@@ -241,12 +241,12 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 mov ax,cs:[154]
 mov es:[di+14],ax
 mov ax,cs:[156]
-mov es:[di+16],ax       ; taille transf‚r‚e
+mov es:[di+16],ax       ; taille transfâ€šrâ€še
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
 if e jmp fin_recherche_charger_fichier
@@ -256,7 +256,7 @@ push di
 mov ah,4Fh
 int 21h         ; on cherche le module suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des modules … trouver!
+jnc b1  ; on continue tant qu'il y a des modules â€¦ trouver!
 l1:
 ; recherche des modules *.NST
 mov ds,cs
@@ -273,12 +273,12 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 mov ax,cs:[154]
 mov es:[di+14],ax
 mov ax,cs:[156]
-mov es:[di+16],ax       ; taille transf‚r‚e
+mov es:[di+16],ax       ; taille transfâ€šrâ€še
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
 if e jmp fin_recherche_charger_fichier
@@ -288,10 +288,10 @@ push di
 mov ah,4Fh
 int 21h         ; on cherche le module suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des modules … trouver!
+jnc b1  ; on continue tant qu'il y a des modules â€¦ trouver!
 l1:
 fin_recherche_charger_fichier:
-; ouverture de tous les modules pour infos compl‚mentaires...
+; ouverture de tous les modules pour infos complâ€šmentaires...
 ;cmp b cs:current_drive,2
 ;if b jmp apres_lit_entetes_fichiers
 gotoxy_vga 40,319
@@ -336,7 +336,7 @@ mov cx,19
 cld
 rep movsb
 mov al,0
-stosb           ; titre transf‚r‚
+stosb           ; titre transfâ€šrâ€š
 pop si
 mov ax,[20280]
 mov bx,[20282]
@@ -346,7 +346,7 @@ cmp bh,'6'
 if ne cmp bh,'8'
 jne >l3
 sub bh,'0'
-mov [si+38],bh  ; nb de voies transf‚r‚
+mov [si+38],bh  ; nb de voies transfâ€šrâ€š
 mov b [si+41],31
 jmp >l2
 l3:
@@ -354,7 +354,7 @@ cmp bl,'6'
 if ne cmp bl,'8'
 jne >l3
 sub bl,'0'
-mov [si+38],bl  ; nb de voies transf‚r‚
+mov [si+38],bl  ; nb de voies transfâ€šrâ€š
 mov b [si+41],31
 jmp >l2
 l3:
@@ -362,7 +362,7 @@ cmp ah,'6'
 if ne cmp ah,'8'
 jne >l3
 sub ah,'0'
-mov [si+38],ah  ; nb de voies transf‚r‚
+mov [si+38],ah  ; nb de voies transfâ€šrâ€š
 mov b [si+41],31
 jmp >l2
 l3:
@@ -370,16 +370,16 @@ cmp al,'6'
 if ne cmp al,'8'
 jne >l2
 sub al,'0'
-mov [si+38],al  ; nb de voies transf‚r‚
+mov [si+38],al  ; nb de voies transfâ€šrâ€š
 mov b [si+41],31
 l2:
 cmp al,'M'
 if e cmp bl,'K'
-if e mov b [si+41],31   ; nb maxi d'instruments transf‚r‚
+if e mov b [si+41],31   ; nb maxi d'instruments transfâ€šrâ€š
 cmp b [si+41],31
 if e mov al,[20150]
 if ne mov al,[19670]
-mov [si+39],al          ; song length transf‚r‚
+mov [si+39],al          ; song length transfâ€šrâ€š
 if e mov di,20152
 if ne mov di,19672
 mov cx,128
@@ -390,7 +390,7 @@ if b mov al,[di]
 inc di
 loop b2
 inc al
-mov [si+40],al          ; nb patterns transf‚r‚
+mov [si+40],al          ; nb patterns transfâ€šrâ€š
 mov ah,0
 mov dx,0
 cmp b [si+38],4
@@ -399,7 +399,7 @@ cmp b [si+38],6
 if e mov dx,512
 mul dx
 add [si+14],ax
-adc [si+16],dx          ; correction de la taille en pr‚vision du chargement
+adc [si+16],dx          ; correction de la taille en prâ€švision du chargement
                         ; en 8 pistes au lieu de 4 ou 6
 pas_un_module:
 push ds
@@ -427,19 +427,19 @@ mov bl,18
 div bl
 mul bl
 mov cs:num_fichier,ax   ; on replace la page comme il faut!
-init_bouton 0,76,160,78,315,77,231,24   ; flŠche vers le haut
-init_bouton 1,76,316,78,471,77,387,25   ; flŠche vers le bas
+init_bouton 0,76,160,78,315,77,231,24   ; flÅ che vers le haut
+init_bouton 1,76,316,78,471,77,387,25   ; flÅ che vers le bas
 couleur_texte_vga 1
 gotoxy_vga 3,144
 rectangle_vga 3,144,77,159,7
 mov ax,cs:nb_fichiers
 call proc_aff_word_vga
-aff_chaine_vga ' fichiers et r‚pertoires trouv‚s:  (ci-dessous: fichiers '
+aff_chaine_vga ' fichiers et râ€špertoires trouvâ€šs:  (ci-dessous: fichiers '
 mov ax,cs:num_fichier
 inc ax
 push ax
 call proc_aff_word_vga
-aff_chaine_vga ' … '
+aff_chaine_vga ' â€¦ '
 pop ax
 add ax,17
 cmp ax,cs:nb_fichiers
@@ -466,7 +466,7 @@ shl ax,cl
 mov si,ax
 pop cx
 mov ax,cs:segment_directory
-mov ds,ax       ; DS:SI=1ø nom de fichier
+mov ds,ax       ; DS:SI=1Ã¸ nom de fichier
 cmp cx,0
 if e jmp fin_affiche_noms_fichiers
 mov ax,180
@@ -520,13 +520,13 @@ call proc_aff_chaine_vga
 apres_affiche_details_fichiers:
 jmp >l2
 affichage_repertoire:
-; affichage d'un r‚pertoire
+; affichage d'un râ€špertoire
 couleur_texte_vga 10
 push ax
 call proc_aff_chaine_vga
 pop ax
 gotoxy_vga 16,ax
-aff_chaine_vga '(sous-r‚pertoire)'
+aff_chaine_vga '(sous-râ€špertoire)'
 l2:
 pop ds,si,ax,cx
 add ax,16
@@ -566,9 +566,9 @@ jne boucle_souris_charge_fichier
 mov cs:current_drive,bl
 mov dl,bl
 mov ah,0Eh
-int 21h         ; s‚lectionne un nouveau disque
+int 21h         ; sâ€šlectionne un nouveau disque
 jmp boucle_charge_fichier
-; d‚filement du menu
+; dâ€šfilement du menu
 change_num_fichier:
 test_souris_bouton 1,>l1
 mov ax,cs:num_fichier
@@ -605,17 +605,17 @@ mov si,ax
 mov es,cs:segment_directory   ; es:si pointe sur le fichier...
 cmp b es:[si+13],0
 je >l1          ; c'est d'un fichier qu'il s'agit!
-; changement de r‚pertoire...
+; changement de râ€špertoire...
 push es
 pop ds
 mov dx,si
 mov ah,3Bh
-int 21h         ; changement de r‚pertoire
-mov b cs:directory_modifiee,0   ; on a chang‚ de r‚pertoire
+int 21h         ; changement de râ€špertoire
+mov b cs:directory_modifiee,0   ; on a changâ€š de râ€špertoire
 jmp boucle_charge_fichier
 ; chargement d'un fichier...
 l1:
-; test m‚moire
+; test mâ€šmoire
 mov ax,es:[si+14]
 mov dx,es:[si+16]
 add ax,15
@@ -632,7 +632,7 @@ if b jmp fichier_trop_gros
 mov cs:data_load_file,si
 mov ax,es
 mov cs:data_load_file[2],ax
-; n'y a-t-il pas un fichier … sauvegarder d'abbord?
+; n'y a-t-il pas un fichier â€¦ sauvegarder d'abbord?
 cmp b cs:fichier_modifie,0
 if e jmp ok_charger_fichier
 cls_menus
@@ -645,7 +645,7 @@ init_bouton 2,25,230,54,259,35,238,'Absolument.'
 b1:
 souris_menus
 test_souris_bouton 2,b1
-; ok pour charger quand mˆme:
+; ok pour charger quand mË†me:
 ok_charger_fichier:
 mov b cs:fichier_modifie,0
 ; tranfert du nom
@@ -656,32 +656,32 @@ mov es,cs
 mov di,offset nom_fichier
 cld
 mov cx,13
-rep movsb       ; nom du fichier transf‚r‚ dans NOM_FICHIER
+rep movsb       ; nom du fichier transfâ€šrâ€š dans NOM_FICHIER
 ; ouverture du fichier
 mov ax,3D00h
 mov ds,cs
 mov dx,offset nom_fichier
 int 21h
-mov cs:handle_mod,ax    ; handle pass‚ … la partie T_MOD.A
+mov cs:handle_mod,ax    ; handle passâ€š â€¦ la partie T_MOD.A
 call proc_charge_mod
 jmp menu_fichier
 data_load_file  dw 2 dup ?
 
-; fichier trop gros pour ˆtre contenu en m‚moire:
+; fichier trop gros pour Ë†tre contenu en mâ€šmoire:
 fichier_trop_gros:
 bloc1_vga 20,270,59,361
 couleur_texte_vga 4
 gotoxy_vga 28,299
 aff_chaine_vga 'Ce fichier est trop gros'
 gotoxy_vga 26,319
-aff_chaine_vga 'pour ˆtre charg‚ en m‚moire.'
+aff_chaine_vga 'pour Ë†tre chargâ€š en mâ€šmoire.'
 souris_menus
 lache_souris
 ; mov w cs:num_fichier,0
 jmp boucle_affiche_fichiers
 
 current_drive   db ?
-drive_present   db 13 dup ? ; (1=pr‚sent, 0=inexistant)
+drive_present   db 13 dup ? ; (1=prâ€šsent, 0=inexistant)
 nb_fichiers     dw ?
 filtre_repertoires db '*.*',0
 filtre_modules  db '*.MOD',0
@@ -692,7 +692,7 @@ fichier_modifie db 0
 directory_modifiee      db 0
 
 ; SAUVER_FICHIER (JMP)
-; proc‚dure de sauvegarde de fichier
+; procâ€šdure de sauvegarde de fichier
 ;**************************************************************************
 format_fichier  db 0
 sauver_fichier:
@@ -703,7 +703,7 @@ bloc1_vga 12,390,67,444
 police_vga 2
 gotoxy_vga 14,400
 couleur_texte_vga 1
-aff_chaine_vga 'R‚pertoire actuel:'
+aff_chaine_vga 'Râ€špertoire actuel:'
 gotoxy_vga 14,420
 mov ah,19h
 int 21h         ; AL = drive actuel
@@ -717,8 +717,8 @@ mov si,19200
 push ds,si
 mov ah,47h
 mov dl,cs:current_drive
-add dl,1        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+add dl,1        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 pop si,ds
 call proc_aff_chaine_vga
 
@@ -728,7 +728,7 @@ mov al,cs:nb_patterns
 mov ah,0
 mov cl,6
 shl ax,cl
-mov cx,ax       ; cx = nb de lignes … explorer
+mov cx,ax       ; cx = nb de lignes â€¦ explorer
 mov es,cs:segment_patterns
 mov si,16
 b1:
@@ -755,7 +755,7 @@ police_vga 2
 bloc1_vga 28,180,51,209
 gotoxy_vga 30,187
 aff_chaine_vga 'Sauvegarde Du Module'
-init_bouton 0,43,290,54,319,44,297,'R‚pertoire'
+init_bouton 0,43,290,54,319,44,297,'Râ€špertoire'
 init_bouton 1,43,320,54,349,48,327,'OK'
 gotoxy_vga 25,297
 aff_chaine_vga 'Nom du fichier:'
@@ -765,7 +765,7 @@ mul ah
 add ax,25
 gotoxy_vga ax,220
 couleur_texte_vga 4
-aff_chaine_vga 'conseill‚:'
+aff_chaine_vga 'conseillâ€š:'
 sub w cs:x_texte_vga,7
 mov w cs:y_texte_vga,234
 aff_chaine_vga 25,'  ',25
@@ -812,7 +812,7 @@ l1:
 aff_chaine_vga ' voies'
 lache_souris
 
-; boucle: on regarde ce que fait l'utilisateur (… la souris bien ‚videmment)
+; boucle: on regarde ce que fait l'utilisateur (â€¦ la souris bien â€švidemment)
 b1:
 souris_menus
 test_zone_souris 200,250,439,279,>l1    ; format du fichier ?
@@ -826,7 +826,7 @@ l1:
 test_zone_souris 200,320,319,349,>l1    ; nom du fichier ?
 jmp change_nom_fichier_mod
 l1:
-test_souris_bouton 0,>l1    ; r‚pertoire ?
+test_souris_bouton 0,>l1    ; râ€špertoire ?
 call proc_choix_directory
 jmp sauver_fichier
 l1:
@@ -845,17 +845,17 @@ ciaa_sauver     db 78h
 id_sauver       db 'M.K.','6CHN','8CHN'
 ins_data_sauver db 8 dup ?
 sauver_fichier_2:
-mov b cs:directory_modifiee,0   ; on a chang‚ le contenu de SEGMENT_DIRECTORY
-; cr‚ation du fichier
+mov b cs:directory_modifiee,0   ; on a changâ€š le contenu de SEGMENT_DIRECTORY
+; crâ€šation du fichier
 mov ds,cs
 mov dx,offset nom_fichier
 mov ax,5B00h
 mov cx,0
 int 21h
-if nc jmp creation_fichier_ok   ; cr‚ation OK
+if nc jmp creation_fichier_ok   ; crâ€šation OK
 mov ah,59h      ; erreur: laquelle?
 int 21h
-cmp ax,50h      ; fichier existant d‚j… ?
+cmp ax,50h      ; fichier existant dâ€šjâ€¦ ?
 if ne jmp erreur2_fichier_sauver        ; erreur d'ouverture inconnue
 ; fichier existant: confirmation
 bloc1_vga 25,200,54,309
@@ -864,7 +864,7 @@ gotoxy_vga 28,210
 mov ds,cs
 mov si,offset nom_fichier
 call proc_aff_chaine_vga
-aff_chaine_vga ' existe d‚j…!'
+aff_chaine_vga ' existe dâ€šjâ€¦!'
 init_bouton 0,33,240,46,269,35,247,'Remplacer!'
 init_bouton 1,33,270,46,299,37,277,'Retour'
 b1:
@@ -873,28 +873,28 @@ test_souris_bouton 1,>l1        ; Retour ?
 jmp sauver_fichier
 l1:
 test_souris_bouton 0,b1
-; cr‚ation de force:
+; crâ€šation de force:
 mov ds,cs
 mov dx,offset nom_fichier
 mov ax,3C00h
 mov cx,0
 int 21h
-if c jmp erreur2_fichier_sauver ; erreur … la cr‚ation du fichier
-; cr‚ation OK
+if c jmp erreur2_fichier_sauver ; erreur â€¦ la crâ€šation du fichier
+; crâ€šation OK
 creation_fichier_ok:
 mov cs:handle_mod,ax
-; ‚criture de l'entete
+; â€šcriture de l'entete
 mov bx,cs:handle_mod
 mov ds,cs
 mov dx,offset titre_mod
 mov cx,20
 mov ah,40h
-int 21h                 ; ‚criture du titre
+int 21h                 ; â€šcriture du titre
 if c jmp erreur_fichier_sauver
 cmp ax,20
 if ne jmp erreur_fichier_sauver
-mov cx,31               ; 31 samples … sauver
-mov dx,0                ; num‚ro du sample
+mov cx,31               ; 31 samples â€¦ sauver
+mov dx,0                ; numâ€šro du sample
 boucle_sauve_sample_fichier:
 push cx,dx
 mov bx,dx
@@ -906,11 +906,11 @@ mov cs:ins_data_sauver[1],al    ; longueurs en mots
 mov ax,cs:finetunes_samples[bx]
 mov b cs:ins_data_sauver[2],al  ; accord fin
 mov ax,cs:volumes_samples[bx]
-mov cs:ins_data_sauver[3],al    ; volume        (0 … 64)
+mov cs:ins_data_sauver[3],al    ; volume        (0 â€¦ 64)
 mov ax,cs:debuts_boucles_samples[bx]
 shr ax,1
 mov cs:ins_data_sauver[4],ah
-mov cs:ins_data_sauver[5],al    ; d‚but de boucle en mots
+mov cs:ins_data_sauver[5],al    ; dâ€šbut de boucle en mots
 mov ax,cs:longueurs_boucles_samples[bx]
 shr ax,1
 mov cs:ins_data_sauver[6],ah
@@ -923,7 +923,7 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,22
 mov ah,40h
-int 21h                 ; ‚criture du nom du sample
+int 21h                 ; â€šcriture du nom du sample
 jc >l0
 cmp ax,22
 je >l1
@@ -936,12 +936,12 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,8
 mov ah,40h
-int 21h                 ; ‚criture des donn‚es du sample
+int 21h                 ; â€šcriture des donnâ€šes du sample
 pop dx,cx
 if c jmp erreur_fichier_sauver
 cmp ax,8
 if ne jmp erreur_fichier_sauver
-inc dx                  ; num‚ro de sample+1
+inc dx                  ; numâ€šro de sample+1
 dec cx
 jcxz >l1
 jmp boucle_sauve_sample_fichier ; sample suivant
@@ -951,7 +951,7 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,1
 mov ah,40h
-int 21h                 ; ‚criture de la longueur en positions
+int 21h                 ; â€šcriture de la longueur en positions
 if c jmp erreur_fichier_sauver
 cmp ax,1
 if ne jmp erreur_fichier_sauver
@@ -960,7 +960,7 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,1
 mov ah,40h
-int 21h                 ; ‚criture de l'octet CIAA (aucune signification...)
+int 21h                 ; â€šcriture de l'octet CIAA (aucune signification...)
 if c jmp erreur_fichier_sauver
 cmp ax,1
 if ne jmp erreur_fichier_sauver
@@ -969,7 +969,7 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,128
 mov ah,40h
-int 21h                 ; ‚criture de l'arrangement
+int 21h                 ; â€šcriture de l'arrangement
 if c jmp erreur_fichier_sauver
 cmp ax,128
 if ne jmp erreur_fichier_sauver
@@ -983,7 +983,7 @@ mov bx,cs:handle_mod
 mov ds,cs
 mov cx,4
 mov ah,40h
-int 21h                 ; ‚criture de l'identificateur (4,6 ou 8 voix)
+int 21h                 ; â€šcriture de l'identificateur (4,6 ou 8 voix)
 if c jmp erreur_fichier_sauver
 cmp ax,4
 if ne jmp erreur_fichier_sauver
@@ -992,7 +992,7 @@ mov ah,0
 mov al,cs:nb_patterns
 mov cl,6
 shl ax,cl
-mov cx,ax               ; CX = nb de lignes … sauvegarder
+mov cx,ax               ; CX = nb de lignes â€¦ sauvegarder
 mov ax,cs:segment_patterns      ; AX = segment
 b1:
 push ax,cx
@@ -1006,7 +1006,7 @@ cmp b cs:format_fichier,2
 if e mov cx,32
 push cx
 mov ah,40h
-int 21h                 ; ‚criture de la ligne
+int 21h                 ; â€šcriture de la ligne
 pop cx
 pushf
 cmp ax,cx
@@ -1021,7 +1021,7 @@ if c jmp erreur_fichier_sauver
 add ax,2        ; ligne suivante
 loop b1
 ; sauvegarde des samples
-mov cx,31       ; 31 sample … sauvegarder
+mov cx,31       ; 31 sample â€¦ sauvegarder
 mov bx,0        ; pointeur dans les tables
 b1:
 cmp w cs:longueurs_samples[bx],1
@@ -1034,7 +1034,7 @@ mov cx,cs:longueurs_samples[bx]
 and cx,0FFFEh
 mov ah,40h
 mov bx,cs:handle_mod
-int 21h                 ; ‚criture du sample
+int 21h                 ; â€šcriture du sample
 pop cx,bx
 if c jmp erreur_fichier_sauver
 mov dx,cs:longueurs_samples[bx]
@@ -1048,7 +1048,7 @@ loop b1         ; sample suivant
 mov bx,cs:handle_mod
 mov ah,3Eh
 int 21h
-; accus‚ r‚ception de la sauvegarde
+; accusâ€š râ€šception de la sauvegarde
 mov b cs:fichier_modifie,0
 jmp menu_fichier
 
@@ -1064,9 +1064,9 @@ bloc1_vga 18,180,61,314
 gotoxy_vga 22,210
 aff_chaine_vga 'Sauvegarde de fichier impossible !!!'
 gotoxy_vga 24,250
-aff_chaine_vga 'Disque plein ? Disque non-prˆt ?'
+aff_chaine_vga 'Disque plein ? Disque non-prË†t ?'
 gotoxy_vga 28,270
-aff_chaine_vga 'Disque/Fichier prot‚g‚ ?'
+aff_chaine_vga 'Disque/Fichier protâ€šgâ€š ?'
 b1:
 souris_menus
 jmp b1
@@ -1147,7 +1147,7 @@ proc_choix_directory:
 pop ax
 mov cs:data_proc_choix_directory,ax
 
-mov b cs:directory_modifiee,0   ; on a chang‚ le contenu de SEGMENT_DIRECTORY
+mov b cs:directory_modifiee,0   ; on a changâ€š le contenu de SEGMENT_DIRECTORY
 
 bloc1_vga 0,50,79,479
 ; lecture du drive courant et du nombre de drives
@@ -1218,7 +1218,7 @@ lache_souris
 ; affichage du chemin actuel
 gotoxy_vga 3,94
 couleur_texte_vga 1
-aff_chaine_vga 'R‚pertoire actuel:'
+aff_chaine_vga 'Râ€špertoire actuel:'
 bloc2_vga 2,110,77,133
 gotoxy_vga 3,115
 couleur_texte_vga 15
@@ -1232,13 +1232,13 @@ mov si,0
 push ds,si
 mov ah,47h
 mov dl,cs:current_drive
-add dl,1        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+add dl,1        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 pop si,ds
 call proc_aff_chaine_vga
 
-; recherche des r‚pertoires
-mov w cs:nb_fichiers,0     ; on commence … peine les recherches, oh!
+; recherche des râ€špertoires
+mov w cs:nb_fichiers,0     ; on commence â€¦ peine les recherches, oh!
 mov ds,cs
 mov dx,offset filtre_repertoires
 mov cx,10h
@@ -1249,14 +1249,14 @@ jc >l1
 b1:
 mov al,cs:[149]
 and al,10h
-jz >l2          ; ce n'est pas un r‚pertoire...
+jz >l2          ; ce n'est pas un râ€špertoire...
 mov es,cs:segment_directory
 mov ds,cs
 mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,133
@@ -1265,11 +1265,11 @@ add di,16       ; avancement dans la table
 l2:
 push di
 mov ah,4Fh
-int 21h         ; on cherche le r‚pertoire suivant...
+int 21h         ; on cherche le râ€špertoire suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des r‚pertoires … trouver!
+jnc b1  ; on continue tant qu'il y a des râ€špertoires â€¦ trouver!
 
-; fin de la recherche des r‚pertoires
+; fin de la recherche des râ€špertoires
 l1:
 
 couleur_texte_vga 1
@@ -1277,12 +1277,12 @@ rectangle_vga 3,144,70,159,7
 gotoxy_vga 3,144
 mov ax,cs:nb_fichiers
 call proc_aff_word_vga
-aff_chaine_vga ' r‚pertoires trouv‚s:'
+aff_chaine_vga ' râ€špertoires trouvâ€šs:'
 bloc2_vga 1,160,64,473
 ; bouton OK:
 init_bouton 0,66,160,77,473,71,309,'OK'
 
-; affichage des noms de r‚pertoires
+; affichage des noms de râ€špertoires
 couleur_texte_vga 10
 mov cx,cs:nb_fichiers
 cmp cx,0
@@ -1318,16 +1318,16 @@ l1:
 test_zone_souris 8,58,639,81,>l1        ; changement de drive ?
 jmp change_disque_choix_directory
 l1:
-test_zone_souris 16,165,511,468,b1      ; un r‚pertoire est choisi ?
+test_zone_souris 16,165,511,468,b1      ; un râ€špertoire est choisi ?
 jmp >l3
 
-; sortie de la proc‚dure:
+; sortie de la procâ€šdure:
 l2:
 mov ax,cs:data_proc_choix_directory
 push ax
 ret
 
-; un r‚pertoire a ‚t‚ choisi:
+; un râ€špertoire a â€štâ€š choisi:
 l3:
 sub cx,16
 sub dx,165
@@ -1341,15 +1341,15 @@ mov cl,72
 div cl
 mov ah,19
 mul ah
-add dx,ax       ; dx = num‚ro du r‚pertoire choisi
+add dx,ax       ; dx = numâ€šro du râ€špertoire choisi
 cmp dx,cs:nb_fichiers
 if ae jmp boucle_change_directory
 mov cl,4
 shl dx,cl
 mov ds,cs:segment_directory   ; es:si pointe sur le fichier...
-; changement de r‚pertoire...
+; changement de râ€špertoire...
 mov ah,3Bh
-int 21h         ; changement de r‚pertoire
+int 21h         ; changement de râ€špertoire
 lache_souris
 jmp boucle_change_directory
 
@@ -1365,7 +1365,7 @@ if ne jmp boucle_change_directory
 mov cs:current_drive,bl
 mov dl,bl
 mov ah,0Eh
-int 21h         ; s‚lectionne un nouveau disque
+int 21h         ; sâ€šlectionne un nouveau disque
 jmp boucle_change_directory
 
 
@@ -1395,7 +1395,7 @@ b1:
 mouse_state
 cmp bx,0
 je >l1
-; on a cliqu‚!
+; on a cliquâ€š!
 mouse_off
 souris_menus_2
 mouse_on
@@ -1403,9 +1403,9 @@ l1:
 mov ah,1
 int 22
 jz b1
-; on a frapp‚ au clavier!
+; on a frappâ€š au clavier!
 mov ah,0
-int 22          ; al = caractŠre!
+int 22          ; al = caractÅ re!
 mov bx,-1
 b0:
 inc bx
@@ -1414,7 +1414,7 @@ jne b0
 cmp al,8        ; <-DEL ?
 jne >l1
 cmp bx,0
-je b1   ; pas de caractŠre … effacer
+je b1   ; pas de caractÅ re â€¦ effacer
 mov b cs:titre_mod[bx-1],0
 mov b cs:fichier_modifie,1
 mouse_off
@@ -1425,7 +1425,7 @@ jne >l1
 mouse_off
 jmp menu_fichier
 l1:
-; inscription du caractŠre
+; inscription du caractÅ re
 cmp bx,19
 je b1
 mov cs:titre_mod[bx],al
