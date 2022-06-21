@@ -4,7 +4,7 @@
 ; fichier t_sample.a
 ;**************************************************************************
 
-; d‚but du menu
+; dâ€šbut du menu
 ;**************************************************************************
 menu_samples:
 menu2 menu_editer_sample,'EDITER',2,7, menu_choix_sample,'CHOIX',10,14, menu_jouer_sample,'JOUER',17,21, charger_sample,'CHARGER',24,30, sauver_sample,'SAUVER',33,38, effacer_sample,'EFFACER',41,47
@@ -23,7 +23,7 @@ aff_chaine_vga 'Sample '
 mov al,cs:sample_modifie
 mov ah,0
 inc ax
-call proc_aff_word_vga          ; num‚ro du sample affich‚
+call proc_aff_word_vga          ; numâ€šro du sample affichâ€š
 dec ax
 push ax
 aff_chaine_vga '  -  '
@@ -33,7 +33,7 @@ mul ah
 mov si,ax
 add si,offset noms_samples
 mov ds,cs
-call proc_aff_chaine_vga        ; nom du sample affich‚
+call proc_aff_chaine_vga        ; nom du sample affichâ€š
 push ax
 aff_chaine_vga '  -  '
 pop ax
@@ -55,8 +55,8 @@ gotoxy_vga 38,205
 aff_chaine_vga 'vide'
 jmp apres_affiche_sample
 l1:
-mov cx,76       ; 608 points … afficher
-mov di,2        ; premiŠre abscisse … utiliser
+mov cx,76       ; 608 points â€¦ afficher
+mov di,2        ; premiÅ re abscisse â€¦ utiliser
 mov b cs:dernier_echantillon,80h
 mov ds,cs:segments_samples[bx]
 mov si,0
@@ -72,7 +72,7 @@ dec ax
 mul si
 mov cx,607
 div cx
-mov bp,ax       ; bp = adresse ‚chantillon
+mov bp,ax       ; bp = adresse â€šchantillon
 b3:
 mov al,ds:[bp]
 xor al,80h
@@ -89,7 +89,7 @@ mul cx
 add ax,0A000h
 mov es,ax       ; ES = adresse ligne
 pop ax
-or es:[di],al   ; point affich‚
+or es:[di],al   ; point affichâ€š
 push ax
 mov al,ds:[bp]
 xor al,80h
@@ -143,10 +143,10 @@ gotoxy_vga 48,98
 aff_chaine_vga 'TAILLE:'
 police_vga 0
 couleur_texte_vga 1
-mov cx,31       ; 31 samples … afficher
+mov cx,31       ; 31 samples â€¦ afficher
 mov bx,0        ; index dans les tables
 mov si,offset noms_samples      ; si point sur les noms
-mov dx,115      ; ligne o— afficher
+mov dx,115      ; ligne oâ€” afficher
 b1:
 push bx,cx,dx,si
 gotoxy_vga 26,dx
@@ -163,7 +163,7 @@ add bx,2
 add dx,10
 loop b1
 cmp b cs:mode_choix_sample,0
-jne >b2                 ; pas de bouton annulation si pas n‚cessaire
+jne >b2                 ; pas de bouton annulation si pas nâ€šcessaire
 init_bouton 0,26,425,53,455,35,433,'Annulation'
 police_vga 0
 
@@ -197,7 +197,7 @@ ja >l1
 mov ax,dx
 sub ax,115
 mov bl,10
-div bl  ; AL = num‚ro sample
+div bl  ; AL = numâ€šro sample
 mov ah,cs:note_samples
 call proc_lance_sample
 jmp b2
@@ -247,10 +247,10 @@ push bx
 ret
 
 ; PROC_EFFACE_SAMPLE (P)
-; efface le sample "SAMPLE_MODIFIE" de la m‚moire
+; efface le sample "SAMPLE_MODIFIE" de la mâ€šmoire
 ;**************************************************************************
 proc_efface_sample:
-; effacement de toutes les donn‚es concernant ce sample
+; effacement de toutes les donnâ€šes concernant ce sample
 mov bl,cs:sample_modifie
 mov bh,0
 shl bx,1
@@ -269,19 +269,19 @@ mov al,0
 mov cx,22
 cld
 rep stosb
-; d‚callage en m‚moire de tous les samples suivants
+; dâ€šcallage en mâ€šmoire de tous les samples suivants
 mov bl,cs:sample_modifie
 mov al,bl
-inc al          ; AL = sample de d‚part
+inc al          ; AL = sample de dâ€špart
 xor bh,bh
 shl bx,1        ; BX = pointeur tables samples
 mov cx,cs:segments_samples[bx+2]
-sub cx,cs:segments_samples[bx]        ; DX = nb de paragraphes … d‚caller
+sub cx,cs:segments_samples[bx]        ; DX = nb de paragraphes â€¦ dâ€šcaller
 call proc_decale_sample_2
 ret
 
 ; MENU_CHOIX_SAMPLE (JMP)
-; affiche un menu … droite de l'‚cran pour choisir un sample
+; affiche un menu â€¦ droite de l'â€šcran pour choisir un sample
 ;**************************************************************************
 menu_choix_sample:
 call proc_affiche_sample
@@ -292,7 +292,7 @@ mov cs:options_menus[1],0FFh
 jmp menu_samples
 
 ; EFFACER_SAMPLE (JMP)
-; efface le sample actuellement ‚dit‚
+; efface le sample actuellement â€šditâ€š
 ;**************************************************************************
 effacer_sample:
 call proc_affiche_sample
@@ -309,15 +309,15 @@ jmp menu_samples
 
 
 ; LANCE_SAMPLE (M+P)
-; lance un sample en m‚moire
-;       AL = num‚ro, AH = note (0=C-0, 24=C-2)
+; lance un sample en mâ€šmoire
+;       AL = numâ€šro, AH = note (0=C-0, 24=C-2)
 ;*************************************************************************************
 lance_sample macro
 call proc_lance_sample
 #em
 proc_lance_sample:
 push ax
-; arrˆt de toute sortie son
+; arrË†t de toute sortie son
 stop_mod
 ; "nettoyage" des buffers...
 mov es,9000h
@@ -342,18 +342,18 @@ mov al,0
 cld
 rep stosb
 
-; mise … jour des donn‚es n‚cessaires
+; mise â€¦ jour des donnâ€šes nâ€šcessaires
 pop ax
 mov cs:num_lance_sample,al
 mov bl,ah
 mov bh,0
 shl bx,1
 mov cx,cs:table_notes_mod[bx]
-; calcul de l'incr‚ment: i=((00369E9Ah/p‚riode)*256)/echantillonnage
+; calcul de l'incrâ€šment: i=((00369E9Ah/pâ€šriode)*256)/echantillonnage
 mov ax,9E9Ah
 mov dx,36h
 cmp cx,37h
-if b mov cx,37h ; pas catholique mais ‚vite les overflows....
+if b mov cx,37h ; pas catholique mais â€švite les overflows....
 div cx
 mov cx,256
 mul cx
@@ -376,21 +376,21 @@ mov es:[si],ax
 mov ax,cs
 mov es:[si+2],ax
 sti
-; lancement de la "r‚action en chaine":
+; lancement de la "râ€šaction en chaine":
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,cs:time_constant_sb
-call proc_ecrit_dsp_sb  ; ‚criture du "time constant"
+call proc_ecrit_dsp_sb  ; â€šcriture du "time constant"
 mov al,80h
 call proc_ecrit_dsp_sb
 mov al,0
 call proc_ecrit_dsp_sb
 mov al,0
-call proc_ecrit_dsp_sb  ; silence instantan‚ => va provoquer l'interruption
+call proc_ecrit_dsp_sb  ; silence instantanâ€š => va provoquer l'interruption
 ret
 
 ; INT_SAMPLE (INT)
-; joue le sample en m‚moire (lance le nouveau transfert DMA puis calcule le suivant)
+; joue le sample en mâ€šmoire (lance le nouveau transfert DMA puis calcule le suivant)
 ;*************************************************************************************
 num_lance_sample        db ?
 ofs_lance_sample        dw ?
@@ -409,7 +409,7 @@ in al,dx
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,cs:time_constant_sb
-call proc_ecrit_dsp_sb  ; ‚criture du "time constant"
+call proc_ecrit_dsp_sb  ; â€šcriture du "time constant"
 
 ; lancement du buffer
 ; program DMAC for output transfer (cf. appendice B-6 du SB developer kit)
@@ -442,9 +442,9 @@ ecrit_dsp_sb
 pop ax
 mov al,ah
 ecrit_dsp_sb    ; longueur
-; ‡a y est, le buffer est lanc‚
+; â€¡a y est, le buffer est lancâ€š
 
-; ‚change des buffers:
+; â€šchange des buffers:
 xor b cs:num_buffer_mod,1
 cmp b cs:num_buffer_mod,0
 if e mov w cs:ofs_buffer_mod,0BC90h
@@ -461,7 +461,7 @@ mov b cs:mod_status,2
 cmp b cs:deja_dans_int_mod,0
 if ne jmp fin_int_sample
 
-; flag 'en cours' activ‚
+; flag 'en cours' activâ€š
 mov b cs:deja_dans_int_mod,1
 
 ; calcul du buffer
@@ -528,11 +528,11 @@ mov cs:ofs_lance_sample,si
 jmp >l2
 
 l3:
-; arrˆt du sample
+; arrË†t du sample
 stop_mod
 
 l2:
-; flag 'en cours' d‚sactiv‚
+; flag 'en cours' dâ€šsactivâ€š
 mov b cs:deja_dans_int_mod,0
 
 fin_int_sample:
@@ -542,7 +542,7 @@ iret
 
 
 ; MENU_JOUER_SAMPLE (JMP)
-; joue le sample en m‚moire (comme un piano)
+; joue le sample en mâ€šmoire (comme un piano)
 ;*************************************************************************************
 octave_proc_joue_piano        db 2
 note_menu_jouer_sample          db ?
@@ -557,13 +557,13 @@ call proc_aff_piano
 boucle_jouer_sample:
 call proc_joue_piano
 mov al,cs:sample_modifie
-mov cs:note_samples,ah  ; note par d‚faut chang‚e!
-lance_sample            ; et le son est lanc‚!
+mov cs:note_samples,ah  ; note par dâ€šfaut changâ€še!
+lance_sample            ; et le son est lancâ€š!
 jmp boucle_jouer_sample
 
 
 ; PROC_AFF_PIANO (P)
-; affiche en bas de l'‚cran le piano
+; affiche en bas de l'â€šcran le piano
 ;**************************************************************************
 proc_aff_piano:
 ; affichage du piano
@@ -607,7 +607,7 @@ loop b1
 police_vga 0
 couleur_texte_vga 1
 gotoxy_vga 5,444
-aff_chaine_vga 'ÀÄÄÄÄÄF1ÄÄÄÄÄÙÀÄÄÄÄÄF2ÄÄÄÄÄÙÀÄÄÄÄÄF3ÄÄÄÄÄÙÀÄÄÄÄÄF4ÄÄÄÄÄÙÀÄÄÄÄÄF5ÄÄÄÄÄÙ'
+aff_chaine_vga 'Ã€Ã„Ã„Ã„Ã„Ã„F1Ã„Ã„Ã„Ã„Ã„Ã™Ã€Ã„Ã„Ã„Ã„Ã„F2Ã„Ã„Ã„Ã„Ã„Ã™Ã€Ã„Ã„Ã„Ã„Ã„F3Ã„Ã„Ã„Ã„Ã„Ã™Ã€Ã„Ã„Ã„Ã„Ã„F4Ã„Ã„Ã„Ã„Ã„Ã™Ã€Ã„Ã„Ã„Ã„Ã„F5Ã„Ã„Ã„Ã„Ã„Ã™'
 rectangle_vga 5,457,74,470,7
 mov al,cs:octave_proc_joue_piano
 mov ah,14
@@ -624,12 +624,12 @@ ret
 
 
 ; PROC_JOUE_PIANO (P)
-; permet … l'utilisateur de jouer du piano;
+; permet â€¦ l'utilisateur de jouer du piano;
 ; retour: AH = note
-;         AL = 0:essai, 1:d‚finitif
+;         AL = 0:essai, 1:dâ€šfinitif
 ;**************************************************************************
 data_proc_joue_piano    dw ?
-note_proc_joue_piano    db 24   ; d‚faut: C-2
+note_proc_joue_piano    db 24   ; dâ€šfaut: C-2
 proc_joue_piano:
 pop cs:data_proc_joue_piano
 
@@ -707,7 +707,7 @@ add al,dl       ; al = note
 mov cs:note_proc_joue_piano,al
 mov al,0
 shr bl,1
-if c mov al,1   ; choix d‚finitif si bouton gauche
+if c mov al,1   ; choix dâ€šfinitif si bouton gauche
 jmp fin_proc_joue_piano
 
 apres_souris_joue_piano:
@@ -741,7 +741,7 @@ apres_change_octave_piano:
 
 cmp al,13       ; enter?
 jne >l2
-mov al,1        ; choix d‚finitif
+mov al,1        ; choix dâ€šfinitif
 jmp fin_proc_joue_piano
 l2:
 mov ah,0FFh
@@ -789,7 +789,7 @@ push cs:data_proc_joue_piano
 ret
 
 ; PROC_DECALE_SAMPLE_1 (P)
-; d‚calle tous les samples … partir de AL, de CX paragraphes vers le haut.
+; dâ€šcalle tous les samples â€¦ partir de AL, de CX paragraphes vers le haut.
 ;**************************************************************************
 proc_decale_sample_1:
 cmp al,30
@@ -797,11 +797,11 @@ if a ret        ; retour si sample inexistant
 push cx
 mov cl,31
 sub cl,al
-xor ch,ch       ; CX = nombre de samples … d‚caler
+xor ch,ch       ; CX = nombre de samples â€¦ dâ€šcaler
 mov bl,30
 xor bh,bh
 shl bx,1        ; BX = pointeur dans les tables
-pop dx          ; DX = d‚callage
+pop dx          ; DX = dâ€šcallage
 b1:
 push cx
 mov ax,cs:segments_samples[bx]
@@ -823,7 +823,7 @@ loop b1
 ret
 
 ; PROC_DECALE_SAMPLE_2 (P)
-; d‚calle tous les samples … partir de AL, de CX paragraphes vers le bas.
+; dâ€šcalle tous les samples â€¦ partir de AL, de CX paragraphes vers le bas.
 ;**************************************************************************
 proc_decale_sample_2:
 cmp al,30
@@ -831,11 +831,11 @@ if a ret        ; retour si sample inexistant
 push cx
 mov cl,31
 sub cl,al
-xor ch,ch       ; CX = nombre de samples … d‚caler
+xor ch,ch       ; CX = nombre de samples â€¦ dâ€šcaler
 mov bl,al
 xor bh,bh
 shl bx,1        ; BX = pointeur dans les tables
-pop dx          ; DX = d‚callage
+pop dx          ; DX = dâ€šcallage
 b1:
 push cx
 mov ax,cs:segments_samples[bx]
@@ -857,20 +857,20 @@ ret
 
 ; SAUVER_SAMPLE (JMP)
 ;**************************************************************************
-format_fichier_sample   db 1      ; ESM par d‚faut
+format_fichier_sample   db 1      ; ESM par dâ€šfaut
 nom_fichier_sample      db 14 dup 0
 handle_fichier_sample   dw ?
 sauver_sample:
 call proc_affiche_sample
 
-; test: y a-t-il un sample … sauver?
+; test: y a-t-il un sample â€¦ sauver?
 mov bl,cs:sample_modifie
 xor bh,bh
 shl bx,1
 cmp w cs:longueurs_samples[bx],0
 if e jmp erreur_1_sauver_sample
 
-; cr‚ation du nom de fichier par d‚faut (… partir du nom du sample)
+; crâ€šation du nom de fichier par dâ€šfaut (â€¦ partir du nom du sample)
 mov al,cs:sample_modifie
 mov ah,22
 mul ah
@@ -888,7 +888,7 @@ cmp al,'z'
 ja b1
 sub al,20h
 l0:
-; test de tous les caractŠres irrecevables: *,./:;?\^
+; test de tous les caractÅ res irrecevables: *,./:;?\^
 cmp al,'!'
 jb b1
 cmp al,'_'
@@ -910,11 +910,11 @@ je b1
 cmp al,'^'
 je b1
 l2:
-; le caractŠre est recevable
+; le caractÅ re est recevable
 mov cs:nom_fichier_sample[bx],al
 inc bx
 cmp bx,8
-jb b1   ; caractŠre suivant
+jb b1   ; caractÅ re suivant
 l1:
 mov b cs:nom_fichier_sample[bx],'.'
 
@@ -925,7 +925,7 @@ bloc1_vga 12,390,67,444
 police_vga 2
 gotoxy_vga 14,400
 couleur_texte_vga 1
-aff_chaine_vga 'R‚pertoire actuel:'
+aff_chaine_vga 'Râ€špertoire actuel:'
 gotoxy_vga 14,420
 mov ah,19h
 int 21h         ; AL = drive actuel
@@ -939,12 +939,12 @@ mov si,19200
 push ds,si
 mov ah,47h
 mov dl,cs:current_drive
-add dl,1        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+add dl,1        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 pop si,ds
 call proc_aff_chaine_vga
 
-; sauvegarde par d‚faut: ESM
+; sauvegarde par dâ€šfaut: ESM
 mov b cs:format_fichier_sample,1
 
 bloc1_vga 20,140,59,369
@@ -952,7 +952,7 @@ couleur_texte_vga 4
 police_vga 2
 bloc1_vga 25,160,54,209
 gotoxy_vga 27,167
-aff_chaine_vga 'Sauvegarde Du Sample nø'
+aff_chaine_vga 'Sauvegarde Du Sample nÃ¸'
 mov al,cs:sample_modifie
 xor ah,ah
 inc ax
@@ -968,12 +968,12 @@ mov ah,22
 mul ah
 add ax,offset noms_samples
 mov si,ax
-call proc_aff_chaine_vga        ; nom du sample affich‚
+call proc_aff_chaine_vga        ; nom du sample affichâ€š
 gotoxy_vga 51,187
 mov al,'"'
 call proc_aff_carac_vga
 
-init_bouton 0,43,290,54,319,44,297,'R‚pertoire'
+init_bouton 0,43,290,54,319,44,297,'Râ€špertoire'
 init_bouton 1,43,320,54,349,48,327,'OK'
 gotoxy_vga 25,297
 aff_chaine_vga 'Nom du fichier:'
@@ -983,7 +983,7 @@ mul ah
 add ax,25
 gotoxy_vga 43,220
 couleur_texte_vga 4
-aff_chaine_vga 'conseill‚'
+aff_chaine_vga 'conseillâ€š'
 sub w cs:x_texte_vga,7
 mov w cs:y_texte_vga,234
 aff_chaine_vga 25,'   ',25
@@ -1020,7 +1020,7 @@ aff_chaine_vga 'Format  *.ESM'
 l2:
 lache_souris
 
-; boucle: on regarde ce que fait l'utilisateur (… la souris bien ‚videmment)
+; boucle: on regarde ce que fait l'utilisateur (â€¦ la souris bien â€švidemment)
 b1:
 souris_menus
 test_zone_souris 200,250,439,279,>l1    ; format du fichier ?
@@ -1034,7 +1034,7 @@ l1:
 test_zone_souris 200,320,319,349,>l1    ; nom du fichier ?
 jmp change_nom_fichier_sample
 l1:
-test_souris_bouton 0,>l1    ; r‚pertoire ?
+test_souris_bouton 0,>l1    ; râ€špertoire ?
 call proc_choix_directory
 jmp sauver_sample
 l1:
@@ -1045,17 +1045,17 @@ jmp b1
 
 ; sauvegarde du sample...
 sauver_sample_2:
-mov b cs:directory_modifiee,0   ; on a chang‚ le contenu de SEGMENT_DIRECTORY
-; cr‚ation du fichier
+mov b cs:directory_modifiee,0   ; on a changâ€š le contenu de SEGMENT_DIRECTORY
+; crâ€šation du fichier
 mov ds,cs
 mov dx,offset nom_fichier_sample
 mov ax,5B00h
 mov cx,0
 int 21h
-if nc jmp creation_fichier_sample_ok    ; cr‚ation OK
+if nc jmp creation_fichier_sample_ok    ; crâ€šation OK
 mov ah,59h      ; erreur: laquelle?
 int 21h
-cmp ax,50h      ; fichier existant d‚j… ?
+cmp ax,50h      ; fichier existant dâ€šjâ€¦ ?
 if ne jmp erreur_3_sauver_sample        ; erreur d'ouverture inconnue
 ; fichier existant: confirmation
 bloc1_vga 24,200,55,309
@@ -1064,7 +1064,7 @@ gotoxy_vga 28,210
 mov ds,cs
 mov si,offset nom_fichier_sample
 call proc_aff_chaine_vga
-aff_chaine_vga ' existe d‚j…!'
+aff_chaine_vga ' existe dâ€šjâ€¦!'
 init_bouton 0,33,240,46,269,35,247,'Remplacer!'
 init_bouton 1,33,270,46,299,37,277,'Retour'
 b1:
@@ -1073,14 +1073,14 @@ test_souris_bouton 1,>l1        ; Retour ?
 jmp sauver_sample
 l1:
 test_souris_bouton 0,b1
-; cr‚ation de force:
+; crâ€šation de force:
 mov ds,cs
 mov dx,offset nom_fichier_sample
 mov ax,3C00h
 mov cx,0
 int 21h
-if c jmp erreur_3_sauver_sample ; erreur … la cr‚ation du fichier
-; cr‚ation OK
+if c jmp erreur_3_sauver_sample ; erreur â€¦ la crâ€šation du fichier
+; crâ€šation OK
 creation_fichier_sample_ok:
 mov cs:handle_fichier_sample,ax
 
@@ -1096,7 +1096,7 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,2
 mov ah,40h
-int 21h                 ; ‚criture de la taille du sample
+int 21h                 ; â€šcriture de la taille du sample
 if c jmp erreur_2_sauver_sample
 cmp ax,2
 if ne jmp erreur_2_sauver_sample
@@ -1109,7 +1109,7 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,2
 mov ah,40h
-int 21h                 ; ‚criture du d‚but de boucle
+int 21h                 ; â€šcriture du dâ€šbut de boucle
 if c jmp erreur_2_sauver_sample
 cmp ax,2
 if ne jmp erreur_2_sauver_sample
@@ -1122,7 +1122,7 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,2
 mov ah,40h
-int 21h                 ; ‚criture de la longueur de boucle
+int 21h                 ; â€šcriture de la longueur de boucle
 if c jmp erreur_2_sauver_sample
 cmp ax,2
 if ne jmp erreur_2_sauver_sample
@@ -1135,7 +1135,7 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,2
 mov ah,40h
-int 21h                 ; ‚criture du volume
+int 21h                 ; â€šcriture du volume
 if c jmp erreur_2_sauver_sample
 cmp ax,2
 if ne jmp erreur_2_sauver_sample
@@ -1148,7 +1148,7 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,2
 mov ah,40h
-int 21h                 ; ‚criture du finetune
+int 21h                 ; â€šcriture du finetune
 if c jmp erreur_2_sauver_sample
 cmp ax,2
 if ne jmp erreur_2_sauver_sample
@@ -1161,13 +1161,13 @@ mov bx,cs:handle_fichier_sample
 mov ds,cs
 mov cx,22
 mov ah,40h
-int 21h                 ; ‚criture du nom
+int 21h                 ; â€šcriture du nom
 if c jmp erreur_2_sauver_sample
 cmp ax,22
 if ne jmp erreur_2_sauver_sample
 
 apres_ecrit_entete_sample:
-; sauvegarde des donn‚es sonores
+; sauvegarde des donnâ€šes sonores
 mov bl,cs:sample_modifie
 xor bh,bh
 shl bx,1
@@ -1178,7 +1178,7 @@ xor dx,dx
 mov bx,cs:handle_fichier_sample
 push cx
 mov ah,40h
-int 21h                 ; ‚criture du nom
+int 21h                 ; â€šcriture du nom
 pop cx
 if c jmp erreur_2_sauver_sample
 cmp ax,cx
@@ -1202,14 +1202,14 @@ gotoxy_vga 30,217
 aff_chaine_vga 'Ce sample est vide !'
 souris_menus
 lache_souris
-jmp menu_samples        ; retour aprŠs clic si sample vide
-; erreur 2: fichier ouvert mais pb … l'‚criture
+jmp menu_samples        ; retour aprÅ s clic si sample vide
+; erreur 2: fichier ouvert mais pb â€¦ l'â€šcriture
 erreur_2_sauver_sample:
 ; fermeture du fichier
 mov bx,cs:handle_fichier_sample
 mov ah,3Eh
 int 21h
-; erreur 3: pb … la cr‚ation
+; erreur 3: pb â€¦ la crâ€šation
 erreur_3_sauver_sample:
 police_vga 2
 couleur_texte_vga 4
@@ -1217,9 +1217,9 @@ bloc1_vga 18,180,61,314
 gotoxy_vga 22,210
 aff_chaine_vga 'Sauvegarde de fichier impossible !!!'
 gotoxy_vga 24,250
-aff_chaine_vga 'Disque plein ? Disque non-prˆt ?'
+aff_chaine_vga 'Disque plein ? Disque non-prË†t ?'
 gotoxy_vga 28,270
-aff_chaine_vga 'Disque/Fichier prot‚g‚ ?'
+aff_chaine_vga 'Disque/Fichier protâ€šgâ€š ?'
 souris_menus
 lache_souris
 jmp menu_samples
@@ -1411,7 +1411,7 @@ lache_souris
 ; affichage du chemin actuel
 gotoxy_vga 3,94
 couleur_texte_vga 1
-aff_chaine_vga 'R‚pertoire actuel:'
+aff_chaine_vga 'Râ€špertoire actuel:'
 bloc2_vga 2,110,77,133
 gotoxy_vga 3,115
 couleur_texte_vga 15
@@ -1425,12 +1425,12 @@ mov si,19200
 push ds,si
 mov ah,47h
 mov dl,cs:current_drive
-add dl,1        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+add dl,1        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 pop si,ds
 call proc_aff_chaine_vga
 
-; faut-il explorer … nouveau le r‚pertoire ou en avons-nous encore le contenu?
+; faut-il explorer â€¦ nouveau le râ€špertoire ou en avons-nous encore le contenu?
 cmp b cs:directory_modifiee,2
 if e jmp boucle_affiche_fichiers_samples        ; recherches inutiles
 
@@ -1438,10 +1438,10 @@ if e jmp boucle_affiche_fichiers_samples        ; recherches inutiles
 bloc1_vga 20,270,59,361
 couleur_texte_vga 1
 gotoxy_vga 26,299
-aff_chaine_vga 'Exploration du r‚pertoire...'
+aff_chaine_vga 'Exploration du râ€špertoire...'
 
-; recherche des r‚pertoires
-mov w cs:nb_fichiers,0     ; on commence … peine les recherches, oh!
+; recherche des râ€špertoires
+mov w cs:nb_fichiers,0     ; on commence â€¦ peine les recherches, oh!
 mov ds,cs
 mov dx,offset filtre_repertoires
 mov cx,10h
@@ -1452,7 +1452,7 @@ jc >l1
 b1:
 mov al,cs:[149]
 and al,10h
-jz >l2          ; ce n'est pas un r‚pertoire...
+jz >l2          ; ce n'est pas un râ€špertoire...
 mov es,cs:segment_directory
 mov b es:[di+13],1
 mov ds,cs
@@ -1460,7 +1460,7 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
@@ -1469,9 +1469,9 @@ add di,64       ; avancement dans la table
 l2:
 push di
 mov ah,4Fh
-int 21h         ; on cherche le r‚pertoire suivant...
+int 21h         ; on cherche le râ€špertoire suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des r‚pertoires … trouver!
+jnc b1  ; on continue tant qu'il y a des râ€špertoires â€¦ trouver!
 l1:
 
 ; recherche des samples ESM
@@ -1489,7 +1489,7 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
@@ -1500,7 +1500,7 @@ push di
 mov ah,4Fh
 int 21h         ; on cherche le module suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des modules … trouver!
+jnc b1  ; on continue tant qu'il y a des modules â€¦ trouver!
 l1:
 
 ; recherche des modules *.SPL, *.SMP, *.SAM
@@ -1521,10 +1521,10 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 mov ax,cs:[154]
-mov es:[di+14],ax       ; taille transf‚r‚e
+mov es:[di+14],ax       ; taille transfâ€šrâ€še
 mov ax,cs:[156]
 cmp ax,0        ; taille correcte? (<64K)
 jne >l2
@@ -1540,7 +1540,7 @@ push di
 mov ah,4Fh
 int 21h         ; on cherche le module suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des modules … trouver!
+jnc b1  ; on continue tant qu'il y a des modules â€¦ trouver!
 l1:
 pop dx,cx
 add dx,6
@@ -1564,7 +1564,7 @@ mov si,158
 cld
 mov cx,13
 push di
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 pop di
 sub w cs:[154],44
 sbb w cs:[156],0        ; on ne compte pas l'entete!
@@ -1574,7 +1574,7 @@ jne >l2
 mov ax,cs:[154]
 cmp ax,0
 je >l2
-mov es:[di+14],ax       ; taille transf‚r‚e
+mov es:[di+14],ax       ; taille transfâ€šrâ€še
 inc w cs:nb_fichiers
 cmp w cs:nb_fichiers,300
 jne >l3
@@ -1587,14 +1587,14 @@ push di
 mov ah,4Fh
 int 21h         ; on cherche le module suivant...
 pop di
-jnc b1  ; on continue tant qu'il y a des modules … trouver!
+jnc b1  ; on continue tant qu'il y a des modules â€¦ trouver!
 l1:
 pop dx,cx
 add dx,6
 loop boucle_cherche_voc
 
 fin_recherche_charger_fichier_sample:
-; ouverture de tous les modules pour infos compl‚mentaires...
+; ouverture de tous les modules pour infos complâ€šmentaires...
 gotoxy_vga 40,319
 aff_chaine_vga '/'
 mov ax,cs:nb_fichiers
@@ -1617,7 +1617,7 @@ push ds
 int 21h
 pop ds
 pop dx
-add dx,14       ; positionn‚ sur l'endroit o— aura lieu la copie de l'entete
+add dx,14       ; positionnâ€š sur l'endroit oâ€” aura lieu la copie de l'entete
 mov cx,32
 mov bx,ax
 mov ah,3Fh
@@ -1651,19 +1651,19 @@ mov bl,18
 div bl
 mul bl
 mov cs:num_fichier,ax   ; on replace la page comme il faut!
-init_bouton 0,76,160,78,315,77,231,24   ; flŠche vers le haut
-init_bouton 1,76,316,78,471,77,387,25   ; flŠche vers le bas
+init_bouton 0,76,160,78,315,77,231,24   ; flÅ che vers le haut
+init_bouton 1,76,316,78,471,77,387,25   ; flÅ che vers le bas
 couleur_texte_vga 1
 gotoxy_vga 3,144
 rectangle_vga 3,144,77,159,7
 mov ax,cs:nb_fichiers
 call proc_aff_word_vga
-aff_chaine_vga ' fichiers et r‚pertoires trouv‚s:  (ci-dessous: fichiers '
+aff_chaine_vga ' fichiers et râ€špertoires trouvâ€šs:  (ci-dessous: fichiers '
 mov ax,cs:num_fichier
 inc ax
 push ax
 call proc_aff_word_vga
-aff_chaine_vga ' … '
+aff_chaine_vga ' â€¦ '
 pop ax
 add ax,17
 cmp ax,cs:nb_fichiers
@@ -1690,7 +1690,7 @@ shl ax,cl
 mov si,ax
 pop cx
 mov ax,cs:segment_directory
-mov ds,ax       ; DS:SI=1ø nom de fichier
+mov ds,ax       ; DS:SI=1Ã¸ nom de fichier
 cmp cx,0
 if e jmp fin_affiche_noms_fichiers_samples
 mov ax,180
@@ -1755,13 +1755,13 @@ add si,24
 call proc_aff_chaine_vga        ; nom
 jmp >l2
 affichage_repertoire_sample:
-; affichage d'un r‚pertoire
+; affichage d'un râ€špertoire
 couleur_texte_vga 10
 push ax
 call proc_aff_chaine_vga
 pop ax
 gotoxy_vga 16,ax
-aff_chaine_vga '(sous-r‚pertoire)'
+aff_chaine_vga '(sous-râ€špertoire)'
 jmp >l2
 ; affichage d'un SPL,SMP,SAM
 ; affichage d'un VOC,WAV
@@ -1819,9 +1819,9 @@ jne boucle_souris_charge_fichier_sample
 mov cs:current_drive,bl
 mov dl,bl
 mov ah,0Eh
-int 21h         ; s‚lectionne un nouveau disque
+int 21h         ; sâ€šlectionne un nouveau disque
 jmp boucle_charge_fichier_sample
-; d‚filement du menu
+; dâ€šfilement du menu
 change_num_fichier_sample:
 test_souris_bouton 1,>l1
 mov ax,cs:num_fichier
@@ -1858,30 +1858,30 @@ mov si,ax
 mov es,cs:segment_directory   ; es:si pointe sur le fichier...
 cmp b es:[si+13],1
 jne >l1         ; c'est d'un fichier qu'il s'agit!
-; changement de r‚pertoire...
+; changement de râ€špertoire...
 push es
 pop ds
 mov dx,si
 mov ah,3Bh
-int 21h         ; changement de r‚pertoire
-mov b cs:directory_modifiee,0   ; on a chang‚ de r‚pertoire
+int 21h         ; changement de râ€špertoire
+mov b cs:directory_modifiee,0   ; on a changâ€š de râ€špertoire
 jmp boucle_charge_fichier_sample
 ; chargement d'un fichier...
 l1:
 
-; test m‚moire
+; test mâ€šmoire
 mov ax,es:[si+14]
 shr ax,1
 add ax,7
 mov cl,3
 shr ax,cl
-push ax                 ; taille du nouveau sample (en paragraphes) empil‚e
+push ax                 ; taille du nouveau sample (en paragraphes) empilâ€še
 
 mov bl,cs:sample_modifie
 mov bh,0
 shl bx,1
 mov ax,cs:segments_samples[bx+2]
-sub ax,cs:segments_samples[bx]  ; ax = taille lib‚r‚e par l'actuel sample
+sub ax,cs:segments_samples[bx]  ; ax = taille libâ€šrâ€še par l'actuel sample
 add ax,segment_buffers_mod
 sub ax,cs:segments_samples[60]
 mov bx,cs:longueurs_samples[60]
@@ -1891,7 +1891,7 @@ shr bx,1
 shr bx,1
 shr bx,1
 sub ax,bx               ; AX = taille disponible
-pop bx                  ; BX = taille n‚cessaire en paragraphes
+pop bx                  ; BX = taille nâ€šcessaire en paragraphes
 cmp ax,bx
 if b jmp fichier_sample_trop_gros
 
@@ -1900,7 +1900,7 @@ mov cs:data_load_file,si
 mov ax,es
 mov cs:data_load_file[2],ax
 
-; n'y a-t-il pas de sample … l'emplacement d‚sir‚?
+; n'y a-t-il pas de sample â€¦ l'emplacement dâ€šsirâ€š?
 mov bl,cs:sample_modifie
 mov bh,0
 shl bx,1
@@ -1911,28 +1911,28 @@ call proc_affiche_sample
 gotoxy_vga 24,380
 couleur_texte_vga 4
 bloc1_vga 20,360,59,459
-aff_chaine_vga 'Ce sample sera effac‚ du module!'
-init_bouton 2,25,410,54,439,31,417,'Charger quand-mˆme.'
+aff_chaine_vga 'Ce sample sera effacâ€š du module!'
+init_bouton 2,25,410,54,439,31,417,'Charger quand-mË†me.'
 b1:
 souris_menus
 test_souris_bouton 2,b1
 
-; ok pour charger quand mˆme:
+; ok pour charger quand mË†me:
 ok_charger_fichier_sample:
 stop_mod
 mov b cs:fichier_modifie,1
 mov si,cs:data_load_file
 mov ax,cs:data_load_file[2]
-mov ds,ax       ; ds:si = donn‚es du fichier
+mov ds,ax       ; ds:si = donnâ€šes du fichier
 mov bl,cs:sample_modifie
 mov bh,0
 shl bx,1
 mov ax,ds:[si+14]
 and ax,0FFFEh
-mov cs:longueurs_samples[bx],ax ; taille transf‚r‚e
+mov cs:longueurs_samples[bx],ax ; taille transfâ€šrâ€še
 cmp b ds:[si+13],0      ; fichier ESM ? (la grande classe...)
 jne >l1
-; transfert des donn‚es ESM...
+; transfert des donnâ€šes ESM...
 mov ax,ds:[si+16]
 mov cs:debuts_boucles_samples[bx],ax
 mov ax,ds:[si+18]
@@ -1950,10 +1950,10 @@ mov di,ax
 mov es,cs
 mov cx,22
 cld
-rep movsb       ; nom transf‚r‚
+rep movsb       ; nom transfâ€šrâ€š
 jmp >l2
 l1:
-; cr‚ation des donnes pour le fichier SPL ou VOC...
+; crâ€šation des donnes pour le fichier SPL ou VOC...
 mov w cs:debuts_boucles_samples[bx],0
 mov w cs:longueurs_boucles_samples[bx],2
 mov w cs:volumes_samples[bx],40h
@@ -1978,10 +1978,10 @@ cmp di,22
 jb b2
 l2:
 
-; d‚callage des samples
+; dâ€šcallage des samples
 mov bl,cs:sample_modifie
 mov al,bl
-inc al  ; premier sample … d‚caller vers le bas
+inc al  ; premier sample â€¦ dâ€šcaller vers le bas
 mov bh,0
 shl bx,1
 mov cx,cs:segments_samples[bx+2]
@@ -1989,7 +1989,7 @@ sub cx,cs:segments_samples[bx]
 call proc_decale_sample_2
 mov bl,cs:sample_modifie
 mov al,bl
-inc al  ; premier sample … d‚caller vers le haut
+inc al  ; premier sample â€¦ dâ€šcaller vers le haut
 mov bh,0
 shl bx,1
 mov cx,cs:longueurs_samples[bx]
@@ -2011,27 +2011,27 @@ int 21h
 mov cs:handle_fichier_sample,ax
 pop si,ds
 
-; d‚callage ‚ventuel (*.ESM)
+; dâ€šcallage â€šventuel (*.ESM)
 cmp b ds:[si+13],0      ; esm ?
 jne >l1
 mov ax,4200h
 mov cx,0
 mov dx,46
 mov bx,cs:handle_fichier_sample
-int 21h         ; d‚callage effectu‚
+int 21h         ; dâ€šcallage effectuâ€š
 l1:
 
-; d‚callage ‚ventuel (*.VOC, *.WAV)
+; dâ€šcallage â€šventuel (*.VOC, *.WAV)
 cmp b ds:[si+13],3      ; voc ?
 jne >l1
 mov ax,4200h
 mov cx,0
 mov dx,44
 mov bx,cs:handle_fichier_sample
-int 21h         ; d‚callage effectu‚
+int 21h         ; dâ€šcallage effectuâ€š
 l1:
 
-; lecture des donn‚es sonores
+; lecture des donnâ€šes sonores
 mov bl,cs:sample_modifie
 mov bh,0
 shl bx,1
@@ -2045,7 +2045,7 @@ mov ax,3F00h
 int 21h         ; lecture...
 pop cx,es
 
-; invertion du bit 7 (PC->Amiga) si n‚cessaire
+; invertion du bit 7 (PC->Amiga) si nâ€šcessaire
 mov si,cs:data_load_file
 mov ax,cs:data_load_file[2]
 mov ds,ax       ; ds:si = nom du fichier
@@ -2069,7 +2069,7 @@ bloc1_vga 30,400,49,429
 gotoxy_vga 33,407
 police_vga 2
 couleur_texte_vga 1
-aff_chaine_vga 'Sample jou‚...'
+aff_chaine_vga 'Sample jouâ€š...'
 mov ah,cs:note_samples
 mov al,cs:sample_modifie
 call proc_lance_sample
@@ -2086,20 +2086,20 @@ lache_souris
 jmp menu_samples
 
 
-; fichier trop gros pour ˆtre contenu en m‚moire:
+; fichier trop gros pour Ë†tre contenu en mâ€šmoire:
 fichier_sample_trop_gros:
 bloc1_vga 20,270,59,361
 couleur_texte_vga 4
 gotoxy_vga 28,299
 aff_chaine_vga 'Ce fichier est trop gros'
 gotoxy_vga 26,319
-aff_chaine_vga 'pour ˆtre charg‚ en m‚moire.'
+aff_chaine_vga 'pour Ë†tre chargâ€š en mâ€šmoire.'
 souris_menus
 lache_souris
 jmp boucle_affiche_fichiers_samples
 
 ; MENU_EDITER_SAMPLE (JMP)
-; edition du sample (nom,boucle,vol,finetune,+ quelques effets (s‚lection)
+; edition du sample (nom,boucle,vol,finetune,+ quelques effets (sâ€šlection)
 ;**************************************************************************
 menu_editer_sample:
 call proc_affiche_sample
@@ -2116,9 +2116,9 @@ cmp w cs:longueurs_samples[bx],0
 if e jmp apres_affiche_boucle_sample    ; sample vide, eh, ducon!
 push bx
 plans_ecriture_vga 5    ; mauve (inverse de vert clair)
-plan_lecture_vga 2      ; plan rouge (un des deux utilis‚s par le mauve)
+plan_lecture_vga 2      ; plan rouge (un des deux utilisâ€šs par le mauve)
 pop bx
-; Xecran=16+Xr‚el*608/Taillesample
+; Xecran=16+Xrâ€šel*608/Taillesample
 mov ax,cs:debuts_boucles_samples[bx]
 mov cx,607
 mul cx
@@ -2146,15 +2146,15 @@ couleur_texte_vga 13
 cmp si,65
 if a mov si,65
 gotoxy_vga si,90
-aff_chaine_vga 27,'D‚but Boucle'
+aff_chaine_vga 27,'Dâ€šbut Boucle'
 mov bl,cs:sample_modifie
 xor bh,bh
 shl bx,1
 push bx
 plans_ecriture_vga 5    ; mauve (inverse de vert clair)
-plan_lecture_vga 2      ; plan rouge (un des deux utilis‚s par le mauve)
+plan_lecture_vga 2      ; plan rouge (un des deux utilisâ€šs par le mauve)
 pop bx
-; Xecran=16+Xr‚el*607/Taillesample
+; Xecran=16+Xrâ€šel*607/Taillesample
 mov ax,cs:debuts_boucles_samples[bx]
 add ax,cs:longueurs_boucles_samples[bx]
 mov cx,607
@@ -2215,7 +2215,7 @@ call proc_aff_chaine_vga
 
 init_bouton 0,32,366,54,395,38,374,'Test Sample'
 init_bouton 1,55,366,77,395,61,374,'SILENCE !!!'
-init_bouton 2,32,396,54,425,35,404,'S‚lectionner Tout'
+init_bouton 2,32,396,54,425,35,404,'Sâ€šlectionner Tout'
 init_bouton 3,55,396,77,425,59,404,'Annuler Boucle'
 
 boucle_editer_sample:
@@ -2300,7 +2300,7 @@ shl bx,1
 cmp w cs:longueurs_samples[bx],0
 if e jmp boucle_editer_sample
 
-; on est en train de s‚lectionner un morceau du sample
+; on est en train de sâ€šlectionner un morceau du sample
 cmp cx,16
 if b mov cx,16
 ; offset = (cx-16)*(taillesample-1)/607
@@ -2346,7 +2346,7 @@ jmp boucle_select_sample
 apres_select_sample:
 mov ax,cs:debut_select_sample
 cmp ax,cs:fin_select_sample
-if e jmp boucle_editer_sample   ; rien de s‚lectionn‚!
+if e jmp boucle_editer_sample   ; rien de sâ€šlectionnâ€š!
 jmp traitement_select_sample
 
 data_change_nom_sample  dw ?
@@ -2371,7 +2371,7 @@ b1:
 mouse_state
 cmp bx,0
 je >l1
-; on a cliqu‚!
+; on a cliquâ€š!
 mouse_off
 souris_menus_2
 jmp menu_editer_sample
@@ -2379,9 +2379,9 @@ l1:
 mov ah,1
 int 22
 jz b1
-; on a frapp‚ au clavier!
+; on a frappâ€š au clavier!
 mov ah,0
-int 22          ; al = caractŠre!
+int 22          ; al = caractÅ re!
 mov bx,-1
 b0:
 inc bx
@@ -2391,7 +2391,7 @@ jne b0
 cmp al,8        ; <-DEL ?
 jne >l1
 cmp bx,0
-je b1   ; pas de caractŠre … effacer
+je b1   ; pas de caractÅ re â€¦ effacer
 mov si,cs:data_change_nom_sample
 mov b cs:[bx+si-1],0
 mov b cs:fichier_modifie,1
@@ -2403,7 +2403,7 @@ jne >l1
 mouse_off
 jmp menu_editer_sample
 l1:
-; inscription du caractŠre
+; inscription du caractÅ re
 cmp bx,21
 je b1
 mov si,cs:data_change_nom_sample
@@ -2475,7 +2475,7 @@ ret
 
 
 ; PROC_AFF_SELECT_SAMPLE (P)
-; proc‚dure affichant les limites de la zone s‚lectionn‚e
+; procâ€šdure affichant les limites de la zone sâ€šlectionnâ€še
 ;**************************************************************************
 debut_select_sample     dw ?
 fin_select_sample       dw ?
@@ -2487,10 +2487,10 @@ shl bx,1
 cmp w cs:longueurs_samples[bx],0
 if e ret        ; sample vide, eh, ducon!
 push bx
-plans_ecriture_vga 1    ; Bleu fonc‚
+plans_ecriture_vga 1    ; Bleu foncâ€š
 plan_lecture_vga 0      ; plan bleu
 pop bx
-; Xecran=16+Xr‚el*608/Taillesample
+; Xecran=16+Xrâ€šel*608/Taillesample
 mov ax,cs:debut_select_sample
 mov cx,607
 mul cx
@@ -2506,7 +2506,7 @@ and cl,7
 mov bl,80h
 shr bl,cl
 mov es,0A1A4h
-mov cx,4                ; 4 plans … inverser
+mov cx,4                ; 4 plans â€¦ inverser
 mov ax,1
 b0:
 push si,cx,ax,bx
@@ -2524,7 +2524,7 @@ pop ax,cx,si
 inc ah
 shl al,1
 loop b0
-; Xecran=16+Xr‚el*607/Taillesample
+; Xecran=16+Xrâ€šel*607/Taillesample
 mov ax,cs:fin_select_sample
 mov cx,607
 mul cx
@@ -2544,7 +2544,7 @@ and cl,7
 mov bl,80h
 shr bl,cl
 mov es,0A1A4h
-mov cx,4                ; 4 plans … inverser
+mov cx,4                ; 4 plans â€¦ inverser
 mov ax,1
 b0:
 push si,cx,ax,bx
@@ -2570,7 +2570,7 @@ traitement_select_sample:
 bloc1_vga 25,150,54,179
 couleur_texte_vga 1
 gotoxy_vga 32,158
-aff_chaine_vga 'Bloc S‚lectionn‚'
+aff_chaine_vga 'Bloc Sâ€šlectionnâ€š'
 bloc1_vga 25,180,54,320
 init_bouton 0,30,190,49,219,37,198,'>Boucle'
 init_bouton 1,30,220,49,249,37,228,'Effacer'
@@ -2614,7 +2614,7 @@ l1:
 jmp boucle_traitement_select_sample
 
 effacer_select_sample:
-; effacement proprement dit (d‚callage)
+; effacement proprement dit (dâ€šcallage)
 mov es,cs:segments_samples[bx]
 mov ds,es
 mov di,cs:debut_select_sample
@@ -2626,14 +2626,14 @@ add cx,2
 cmp cx,0
 jle >l1
 cld
-rep movsb               ; donn‚es d‚call‚es
+rep movsb               ; donnâ€šes dâ€šcallâ€šes
 l1:
 mov ax,cs:fin_select_sample
 sub ax,cs:debut_select_sample
 and al,0FEh
 add ax,2
 mov dx,cs:longueurs_samples[bx]
-sub cs:longueurs_samples[bx],ax ; taille modifi‚e
+sub cs:longueurs_samples[bx],ax ; taille modifiâ€še
 mov cl,4
 shr dx,cl
 mov ax,cs:longueurs_samples[bx]
@@ -2644,10 +2644,10 @@ mov al,cs:sample_modifie
 inc al
 jcxz >l1
 push bx
-call proc_decale_sample_2      ; autres samples d‚call‚s
+call proc_decale_sample_2      ; autres samples dâ€šcallâ€šs
 pop bx
 l1:
-; op‚ration d'actualisation de la boucle … pr‚sent...
+; opâ€šration d'actualisation de la boucle â€¦ prâ€šsent...
 mov ax,cs:fin_select_sample
 cmp ax,cs:debuts_boucles_samples[bx]
 jae >l1
@@ -2665,7 +2665,7 @@ ja >l1
 ; cas 2 (on s'en fout...)
 jmp >l0
 l1:
-; autres cas: la boucle n'est pas intŠgre
+; autres cas: la boucle n'est pas intÅ gre
 ; donc on l'annule
 mov w cs:debuts_boucles_samples[bx],0
 mov w cs:longueurs_boucles_samples[bx],2
