@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_ed_st.a
-; (Çdition partition sous forme de sound tracker)
+; (‚Äödition partition sous forme de sound tracker)
 ;**************************************************************************
 
 ; MENU_SOUNDTRACKER (JMP)
@@ -14,16 +14,16 @@ affiche_menus
 rectangle_vga 0,50,68,127,0
 mov b cs:choix_menu_edition,0
 
-; dessin de l'en-tàte
+; dessin de l'en-tÀÜte
 bloc1_vga 14,53,54,79
 police_vga 2
 couleur_texte_vga 4
 gotoxy_vga 16,59
-aff_chaine_vga 'EDITION (prÇsentation "soundtracker")'
+aff_chaine_vga 'EDITION (pr‚Äösentation "soundtracker")'
 bloc1_vga 20,83,48,124
 gotoxy_vga 22,96
 couleur_texte_vga 1
-aff_chaine_vga 'Pattern ÇditÇ:'
+aff_chaine_vga 'Pattern ‚Äödit‚Äö:'
 bloc2_vga 38,90,46,117
 couleur_texte_vga 12
 mov w cs:x_texte_vga,42
@@ -72,7 +72,7 @@ call proc_aff_soundtracker
 
 
 
-; interprÇtation des commandes de l'utilisateur
+; interpr‚Äötation des commandes de l'utilisateur
 ;**************************************************************************
 retour_soundtracker:
 mouse_on
@@ -111,14 +111,14 @@ cmp dx,152
 jb >l1
 cmp dx,471
 ja >l1
-; on clique dans le pattern, peuchäre!
+; on clique dans le pattern, peuch≈†re!
 jmp clique_pattern
 l1:
 mouse_on
 jmp b1
 
 ; PROC_AFF_SOUNDTRACKER (P)
-; affiche toute la partition Ö partir de PREMIERE_NOTE_MODIFIEE
+; affiche toute la partition ‚Ä¶ partir de PREMIERE_NOTE_MODIFIEE
 ;**************************************************************************
 proc_aff_soundtracker:
 rectangle_vga 1,152,2,475,7
@@ -175,11 +175,11 @@ mov ah,cs:pattern_modifie
 mov al,0
 shr ax,1
 add ax,cs:segment_patterns
-mov ds,ax       ; ds:si = ligne de partition Ö afficher
+mov ds,ax       ; ds:si = ligne de partition ‚Ä¶ afficher
 mov cx,8
 b_aff_note_soundtracker:
 push cx
-; premiäre donnÇe Ö afficher: note
+; premi≈†re donn‚Äöe ‚Ä¶ afficher: note
 mov ax,ds:[si]
 xchg ah,al
 and ah,0Fh
@@ -206,14 +206,14 @@ loop b1
 l1:
 add w cs:x_texte_vga,3
 l2:
-; seconde donnÇe Ö afficher: instrument
+; seconde donn‚Äöe ‚Ä¶ afficher: instrument
 mov al,ds:[si]
 mov ah,ds:[si+2]
 mov cl,4
 shr ah,cl
 and al,0F0h
 or al,ah
-xor ah,ah       ; ax=numÇro de l'instrument
+xor ah,ah       ; ax=num‚Äöro de l'instrument
 cmp ax,0
 if e inc w cs:x_texte_vga
 cmp ax,10
@@ -225,7 +225,7 @@ couleur_texte_vga 12
 call proc_aff_word_vga
 pop ds,si
 l1:
-; troisiäme donnÇe Ö afficher: commande
+; troisi≈†me donn‚Äöe ‚Ä¶ afficher: commande
 mov al,ds:[si+2]
 and al,0Fh      ; al=commande
 xor ah,ah
@@ -241,7 +241,7 @@ pop bx
 mov al,cs:[bx+1]
 call proc_aff_carac_vga
 pop ds,si
-; quatriäme donnÇe Ö afficher: commande
+; quatri≈†me donn‚Äöe ‚Ä¶ afficher: commande
 mov ax,ds:[si]
 and al,0Fh
 mov bl,ds:[si+2]
@@ -253,14 +253,14 @@ if e cmp b ds:[si+3],0
 je >l1
 cmp bl,0
 if e cmp b ds:[si+3],0
-je >l1          ; pas d'arpäge: on n'affiche rien
+je >l1          ; pas d'arp≈†ge: on n'affiche rien
 mov al,ds:[si+3]
 push ds,si
 couleur_texte_vga 12
 call proc_aff_hex_vga
 pop si,ds
 jmp >l2
-l1:     ; pas de donnÇe Ö afficher
+l1:     ; pas de donn‚Äöe ‚Ä¶ afficher
 add w cs:x_texte_vga,2
 l2:
 pop cx
@@ -300,7 +300,7 @@ call proc_aff_curseur_soundtracker
 jmp ascenceur_soundtracker
 
 ; PROC_AFF_CURSEUR_SOUNDTRACKER (P)
-; affiche l'ascenceuren haut Ö droite pour les notes affichÇes
+; affiche l'ascenceuren haut ‚Ä¶ droite pour les notes affich‚Äöes
 ;**************************************************************************
 proc_aff_curseur_soundtracker:
 bloc2_vga 73,65,75,121
@@ -321,17 +321,17 @@ mov ax,cs:premiere_note_modifiee
 push ax
 call proc_aff_word_vga
 mov w cs:x_texte_vga,74
-aff_chaine_vga 'Ö '
+aff_chaine_vga '‚Ä¶ '
 pop ax
 add ax,31
 call proc_aff_word_vga
 ret
 
 ; CLIQUE_PATTERN (JMP)
-; interpräte les commandes lorsque l'utilisateur clique dans la partition...
+; interpr≈†te les commandes lorsque l'utilisateur clique dans la partition...
 ;**************************************************************************
 clique_pattern:
-; arràt de la musique (si mode 1)
+; arrÀÜt de la musique (si mode 1)
 cmp b cs:mod_status,1
 if e stop_mod
 ; d'abbord, calcul de NOTE_MODIFIEE, VOIX_NOTE_MODIFIEE et DONNEE_NOTE_MODIFIEE
@@ -374,9 +374,9 @@ pop cx
 cmp bx,0
 if e jmp modifie_note_soundtracker      ; modification de la note
 loop b1
-; traitement de la crÇation du bloc:
+; traitement de la cr‚Äöation du bloc:
 
-; initialisation du bloc sÇlectionnÇ
+; initialisation du bloc s‚Äölectionn‚Äö
 mov b cs:nb_voix_select,1
 mov b cs:nb_notes_select,1
 call proc_aff_select_soundtracker
@@ -384,7 +384,7 @@ call proc_aff_select_soundtracker
 boucle_select_soundtracker:
 mouse_state
 cmp bx,0
-if e jmp traitement_select      ; un bloc a ÇtÇ sÇlectionnÇ: on le traite!
+if e jmp traitement_select      ; un bloc a ‚Äöt‚Äö s‚Äölectionn‚Äö: on le traite!
 mov ax,dx
 sub ax,152
 jns >l1
@@ -393,14 +393,14 @@ mov dl,cs:note_modifiee
 mov dh,0
 sub dx,cs:premiere_note_modifiee
 jns >l1
-; on passe Ö la partie supÇrieure de la partition
+; on passe ‚Ä¶ la partie sup‚Äörieure de la partition
 mov w cs:premiere_note_modifiee,0
 call proc_aff_soundtracker
 mov b cs:flag_select_soundtracker,1
 mouse_state
 mov ax,4
 mov dx,470
-int 33h         ; curseur fixÇ en bas de l'Çcran
+int 33h         ; curseur fix‚Äö en bas de l'‚Äöcran
 jmp boucle_select_soundtracker
 l1:
 mov dl,10
@@ -415,7 +415,7 @@ sub ax,cs:premiere_note_modifiee
 cmp ax,32
 pop ax
 jb >l1
-; on passe Ö le seconde page
+; on passe ‚Ä¶ le seconde page
 mov w cs:premiere_note_modifiee,32
 call proc_aff_soundtracker
 mov b cs:flag_select_soundtracker,1
@@ -423,7 +423,7 @@ mov b cs:flag_select_soundtracker,1
 mouse_state
 mov ax,4
 mov dx,156
-int 33h         ; curseur fixÇ en haut de l'Çcran
+int 33h         ; curseur fix‚Äö en haut de l'‚Äöcran
 jmp boucle_select_soundtracker
 l1:
 sub al,cs:note_modifiee
@@ -456,7 +456,7 @@ jmp boucle_select_soundtracker
 jmp menu_edition
 
 ; PROC_AFF_SELECT_SOUNDTRACKER (P)
-; inverse le plan bleu au-dessus du bloc sÇlectionnÇ
+; inverse le plan bleu au-dessus du bloc s‚Äölectionn‚Äö
 ;**************************************************************************
 flag_select_soundtracker        db 0
 proc_aff_select_soundtracker:
@@ -464,26 +464,26 @@ cmp b cs:flag_select_soundtracker,0
 mov b cs:flag_select_soundtracker,0
 if ne ret
 push ax,bx,cx,dx
-; on fixe le plan bleu en lecture/Çcriture
+; on fixe le plan bleu en lecture/‚Äöcriture
 plans_ecriture_vga 1
 plan_lecture_vga 0
-; calcul du segment de la 1¯ ligne Ö inverser
+; calcul du segment de la 1√∏ ligne ‚Ä¶ inverser
 mov cl,cs:nb_notes_select
-xor ch,ch               ; cx = nombre de lignes de partition Ö inverser
+xor ch,ch               ; cx = nombre de lignes de partition ‚Ä¶ inverser
 mov al,cs:note_modifiee
 xor ah,ah
 sub ax,cs:premiere_note_modifiee
 jns >l1
-mov ax,0   ; on commence Ö la premiäre ligne si NOTE_MODIFIEE<PREMIERE_NOTE_MODIFIEE
+mov ax,0   ; on commence ‚Ä¶ la premi≈†re ligne si NOTE_MODIFIEE<PREMIERE_NOTE_MODIFIEE
 add cl,cs:note_modifiee
-sub cx,cs:premiere_note_modifiee        ; nombre de lignes rÇactualisÇ
+sub cx,cs:premiere_note_modifiee        ; nombre de lignes r‚Äöactualis‚Äö
 if s jmp fin_proc_aff_select_soundtracker       ; retour si bloc invisible
 l1:
 mov bx,50
 mul bx
 add ax,0A2F8h
-mov es,ax               ; ES = premiäre ligne Ö inverser
-                        ; CX = nb de lignes de partition Ö inverser
+mov es,ax               ; ES = premi≈†re ligne ‚Ä¶ inverser
+                        ; CX = nb de lignes de partition ‚Ä¶ inverser
 b1:
 push cx,es
 
@@ -495,7 +495,7 @@ mov al,cs:voix_note_modifiee
 mov ah,9
 mul ah
 add ax,4
-mov di,ax       ; DI point sur le premier octet Ö inverser
+mov di,ax       ; DI point sur le premier octet ‚Ä¶ inverser
 mov cl,cs:nb_voix_select
 xor ch,ch
 b3:
@@ -533,7 +533,7 @@ modifie_note_soundtracker:
 
 cmp b cs:donnee_note_modifiee,0
 if ne jmp apres_modifie_note_soundtracker
-; dÇtermination du sample, ou bien demande Ö l'utilisateur
+; d‚Äötermination du sample, ou bien demande ‚Ä¶ l'utilisateur
 adresse_note_modifiee
 mov cl,cs:note_modifiee
 inc cl
@@ -547,19 +547,19 @@ mov cl,4
 shr ah,cl
 pop cx
 or al,ah
-sub si,32       ; ligne prÇcÇdente
+sub si,32       ; ligne pr‚Äöc‚Äödente
 cmp al,0
-if e loop b1    ; ligne prÇcÇdente si sample toujours pas dÇterminÇ
-dec al          ; AL = numÇro de l'instrument (0FFh = pas d'instrument connu)
+if e loop b1    ; ligne pr‚Äöc‚Äödente si sample toujours pas d‚Äötermin‚Äö
+dec al          ; AL = num‚Äöro de l'instrument (0FFh = pas d'instrument connu)
 cmp al,0FFh
 if e choix_sample_2     ; choix de l'instrument (sans annulation possible)
 mov cs:ins_modifie_note_soundtracker,al
 ; affichage du piano
 call proc_aff_piano
-; dÇtermination d'une note
+; d‚Äötermination d'une note
 b1:
 call proc_joue_piano
-cmp al,1        ; choix dÇfinitif ?
+cmp al,1        ; choix d‚Äöfinitif ?
 je >l1
 mov al,cs:ins_modifie_note_soundtracker
 lance_sample
@@ -567,7 +567,7 @@ jmp b1
 l1:
 cmp b cs:mod_status,2
 push ax
-if e stop_mod   ; arràt des sons instrumentaux
+if e stop_mod   ; arrÀÜt des sons instrumentaux
 pop ax
 mov bl,ah
 mov bh,0
@@ -585,9 +585,9 @@ mov al,cs:ins_modifie_note_soundtracker
 inc al
 mov cl,4
 shl al,cl
-or es:[si+2],al                 ; note et instrument stockÇs!
-mov b cs:fichier_modifie,1      ; indique que le fichier est modifiÇ
-jmp menu_edition                ; modif. terminÇe, retour Ö l'Çdition.
+or es:[si+2],al                 ; note et instrument stock‚Äös!
+mov b cs:fichier_modifie,1      ; indique que le fichier est modifi‚Äö
+jmp menu_edition                ; modif. termin‚Äöe, retour ‚Ä¶ l'‚Äödition.
 ins_modifie_note_soundtracker   db ?
 apres_modifie_note_soundtracker:
 
@@ -601,11 +601,11 @@ adresse_note_modifiee
 ;cmp ax,0
 ;jne >l2
 ;mov b cs:donnee_note_modifiee,0
-;jmp modifie_note_soundtracker   ; crÇation de la note nÇcessaire
+;jmp modifie_note_soundtracker   ; cr‚Äöation de la note n‚Äöcessaire
 ;l2:
 choix_sample
 cmp al,31
-if e jmp menu_edition           ; instrument pas modifiÇ
+if e jmp menu_edition           ; instrument pas modifi‚Äö
 adresse_note_modifiee
 inc al
 mov ah,al
@@ -615,7 +615,7 @@ or es:[si],ah
 mov cl,4
 shl al,cl
 and b es:[si+2],0Fh
-or es:[si+2],al                 ; numÇro de l'instrument Çcrit
+or es:[si+2],al                 ; num‚Äöro de l'instrument ‚Äöcrit
 mov b cs:fichier_modifie,1      ; indique que l'on a modifie le bestiaux
 jmp menu_edition
 l1:
@@ -624,7 +624,7 @@ l1:
 jmp modifie_commande
 
 ; COLLER_SOUNDTRACKER (JMP)
-; procÇdure pour coller le bloc dans la partition
+; proc‚Äödure pour coller le bloc dans la partition
 ;**************************************************************************
 coller_soundtracker:
 affiche_menus
@@ -632,7 +632,7 @@ rectangle_vga 69,50,79,127,0    ; on efface l'ascenceur
 bloc1_vga 10,83,58,124
 init_bouton 0,48,91,56,116,49,96,'Annuler'
 gotoxy_vga 13,96
-aff_chaine_vga 'Cliquez Ö l',27h,'endroit oó coller...'
+aff_chaine_vga 'Cliquez ‚Ä¶ l',27h,'endroit o‚Äî coller...'
 b1:
 souris_menus
 test_zone_souris 32,152,607,471,>l1     ; coller ?
