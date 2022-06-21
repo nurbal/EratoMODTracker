@@ -11,8 +11,8 @@ joue_mod
 apres_menu_jouer:
 tempo_vga
 
-; d‚finit le menu principal
-menu2 rew,'<<REW',2,6, play,'PLAY>',9,13, ff,'FF>>',16,19, stop,'STOPþ',22,26, pause,'PAUSEþþ',29,35
+; dâ€šfinit le menu principal
+menu2 rew,'<<REW',2,6, play,'PLAY>',9,13, ff,'FF>>',16,19, stop,'STOPÃ¾',22,26, pause,'PAUSEÃ¾Ã¾',29,35
 mov b cs:options_menus[1],1
 cmp b cs:mod_status,0
 if e mov b cs:options_menus[1],3
@@ -21,7 +21,7 @@ if e cmp b cs:deja_dans_int_mod,1
 if e mov b cs:options_menus[1],4
 affiche_menus
 
-; affichage de l'‚cran principal:
+; affichage de l'â€šcran principal:
 bloc1_vga 0,50,79,479
 bloc2_vga 1,100,32,243
 bloc2_vga 34,100,65,243 ; samples
@@ -178,7 +178,7 @@ jne b1
 mouse_off
 jmp apres_menu_jouer
 l1:
-mov cs:chrono_menu_jouer,al     ; chrono transf‚r‚
+mov cs:chrono_menu_jouer,al     ; chrono transfâ€šrâ€š
 
 ; surveillance de l'utilisateur:
 mouse_state
@@ -192,7 +192,7 @@ l1:
 ; on cache la souris
 mouse_hide 1,76,78,472
 
-; affichage des donn‚es note, patterns, position
+; affichage des donnâ€šes note, patterns, position
 cmp b cs:chrono_menu_jouer,0
 if ne jmp apres_aff_note_menu_jouer
 ;mouse_hide 13,76,55,91
@@ -226,7 +226,7 @@ and bl,63
 add al,bl
 adc ah,0
 mov di,ax
-mov cx,36       ; 36 lignes … effacer
+mov cx,36       ; 36 lignes â€¦ effacer
 cld
 b1:
 push cx
@@ -248,7 +248,7 @@ and al,0Fh
 mov ah,9
 mul ah
 add ax,offset bonhomme_menu_jouer
-mov si,ax       ; si pointe sur le bonhomme … afficher
+mov si,ax       ; si pointe sur le bonhomme â€¦ afficher
 mov ds,cs
 mov cx,3
 b1:
@@ -266,12 +266,12 @@ add w cs:y_texte_vga,12
 pop cx
 loop b1
 
-; affichage des num‚ros de samples
+; affichage des numâ€šros de samples
 police_vga 0
 couleur_texte_vga 14    ; jaune: comme les notes
 mov si,offset donnees_voix_mod
 mov di,offset donnees_ins_menu_jouer
-mov ah,0        ; num‚ro de la voix
+mov ah,0        ; numâ€šro de la voix
 mov cx,8
 boucle_aff_ins_menu_jouer:
 push ax,cx,si,di
@@ -280,20 +280,20 @@ je >l1
 ; il y a un instrument actif
 mov al,cs:[si+1]
 cmp al,cs:[di]
-if e jmp fin_aff_ins_menu_jouer  ; ok: no problem (instrument d‚j… affich‚)
+if e jmp fin_aff_ins_menu_jouer  ; ok: no problem (instrument dâ€šjâ€¦ affichâ€š)
 jmp >l3
 ; pas d'instrument actif
 l1:
 cmp b cs:[di],0FFh
 ;if e
-jmp fin_aff_ins_menu_jouer ; ok, c'est comme pr‚vu
-; affichage du num‚ro de voix … c“t‚ du sample
+jmp fin_aff_ins_menu_jouer ; ok, c'est comme prâ€švu
+; affichage du numâ€šro de voix â€¦ câ€œtâ€š du sample
 l3:
 
 ; effacement de l'ancien
 push ax,di
 mov bh,0
-mov bl,ah       ; BX=num‚ro de la voix
+mov bl,ah       ; BX=numâ€šro de la voix
 mov al,cs:[di]
 cmp al,0FFh
 je >l2
@@ -315,17 +315,17 @@ add di,80
 loop b1
 l2:
 pop di,ax
-; ah = num‚ro voix
+; ah = numâ€šro voix
 
 l1:
 ; affichage du nouveau
 mov bl,ah
-mov bh,0        ; bx = num‚ro voix
+mov bh,0        ; bx = numâ€šro voix
 cmp b cs:[si],0
-if e mov b cs:[di],0FFh ; voix d‚sactiv‚e!
+if e mov b cs:[di],0FFh ; voix dâ€šsactivâ€še!
 if e jmp fin_aff_ins_menu_jouer ; ... donc on ne l'affiche pas
 mov al,cs:[si+1]
-mov cs:[di],al          ; num‚ro de l'instrument transmis
+mov cs:[di],al          ; numâ€šro de l'instrument transmis
 mov cx,2
 cmp al,16
 if ae mov cx,35
@@ -338,9 +338,9 @@ add ax,108      ; ax = y
 mov cs:y_texte_vga,ax
 mov ax,bx
 inc ax
-call proc_aff_word_vga  ; num‚ro affich‚!
+call proc_aff_word_vga  ; numâ€šro affichâ€š!
 
-; fin de l'affichage du num‚ro du sample:
+; fin de l'affichage du numâ€šro du sample:
 fin_aff_ins_menu_jouer:
 pop di,si,cx,ax
 add si,16
@@ -377,7 +377,7 @@ b2:
 push cx
 mov al,ds:[si]  ; octet source!
 inc si
-shr al,1        ; divis‚ par 2
+shr al,1        ; divisâ€š par 2
 mov ah,5
 mul ah
 add ax,0A21Ch
@@ -393,15 +393,15 @@ loop b1
 
 ; affichage des jolies petites notes
 ;mouse_hide 15,268,77,395
-plans_ecriture_vga 14   ; couleur jaune (par d‚faut)
+plans_ecriture_vga 14   ; couleur jaune (par dâ€šfaut)
 mov cx,8
 mov si,offset donnees_voix_mod
 mov di,offset donnees_voix_menu_jouer
-mov dx,0        ; dx=num‚ro voix
+mov dx,0        ; dx=numâ€šro voix
 b1:
 push cx
 push dx
-cmp b cs:[si],0 ; inactivit‚?
+cmp b cs:[si],0 ; inactivitâ€š?
 je >l1
 cmp b cs:[si+7],0
 jne >l2
@@ -412,7 +412,7 @@ l2:
 mov ax,cs:[si+4]
 mov cs:[di+4],ax
 mov ax,cs:[di+1]
-cmp ax,cs:[si+2]        ; note modifi‚e ?
+cmp ax,cs:[si+2]        ; note modifiâ€še ?
 if ne call nouvelle_note_menu_jouer
 ;cmp b cs:[si+7],1
 ;if e mov b cs:[di],24
@@ -445,7 +445,7 @@ b1:
 mov b es:[bx],0
 add bx,80
 loop b1
-; d‚termination de la nouvelle note
+; dâ€štermination de la nouvelle note
 mov ax,cs:[si+2]
 mov bx,-2
 mov cx,60
@@ -454,8 +454,8 @@ add bx,2
 cmp ax,cs:table_notes_mod[bx]
 if b loop b1
 shr bx,1
-mov cs:[di+3],bl        ; num‚ro note transf‚r‚
-; mise … jour du chrono
+mov cs:[di+3],bl        ; numâ€šro note transfâ€šrâ€š
+; mise â€¦ jour du chrono
 mov b cs:[di],32
 ret
 affiche_note_menu_jouer:
@@ -489,14 +489,14 @@ l1:
 push dx
 push cx
 mov cx,2
-shr al,cl       ; al=0 … 8
+shr al,cl       ; al=0 â€¦ 8
 pop cx
 push ax
 mov ah,8
 sub ah,al
 mov al,80
 mul ah
-mov dx,ax       ; d‚callage
+mov dx,ax       ; dâ€šcallage
 pop ax
 mov cl,al
 push cx
@@ -510,8 +510,8 @@ shl ch,cl
 xor al,ch
 pop cx
 shl cl,1
-mov ch,0        ; r‚p‚tition
-add bx,dx       ; d‚callage effectu‚
+mov ch,0        ; râ€špâ€štition
+add bx,dx       ; dâ€šcallage effectuâ€š
 pop dx
 cmp cx,0
 if e ret
@@ -521,7 +521,7 @@ add bx,80
 loop b1
 ret
 
-; variable n‚cessaires … la repr‚sentation graphique de la musique:
+; variable nâ€šcessaires â€¦ la reprâ€šsentation graphique de la musique:
 chrono_menu_jouer       db ?
 donnees_voix_menu_jouer db 48 dup ?
 donnees_ins_menu_jouer  db 8 dup ?
@@ -534,7 +534,7 @@ db '/( '
 db ' >>'
 
 db '  O'
-db ' /Í'
+db ' /Ã'
 db '/> '
 
 db '\< '
@@ -542,55 +542,55 @@ db '  \'
 db ' /O'
 
 db '\ /'
-db ' ³ '
+db ' Â³ '
 db '<O>'
 
 db '  >'
-db ' ³Ù'
+db ' Â³Ã™'
 db 'O\\'
 
 db 'O  '
 db '>\>'
 db ' <<'
 
-db '³O³'
-db ' ³ '
+db 'Â³OÂ³'
+db ' Â³ '
 db '/ \'
 
 db '<O>'
-db ' ³ '
+db ' Â³ '
 db '/ \'
 
 db ' O '
-db 'Ù³À'
+db 'Ã™Â³Ã€'
 db '/ \'
 
 db ' O '
-db '/³\'
+db '/Â³\'
 db '/ \'
 
 db ' O '
-db '<³>'
+db '<Â³>'
 db '/ \'
 
 db ' O '
-db '/³<'
+db '/Â³<'
 db ' >\'
 
 db ' O/'
-db '/³ '
+db '/Â³ '
 db ' >>'
 
-db ' O³'
-db 'Ù³ '
+db ' OÂ³'
+db 'Ã™Â³ '
 db '< >'
 
 db ' O '
-db 'Ù³À'
+db 'Ã™Â³Ã€'
 db '/ \'
 
 db ' O/'
-db '<³ '
+db '<Â³ '
 db '/ >'
 
 
@@ -601,7 +601,7 @@ play:
 affiche_menus
 joue_mod
 cli
-mov b cs:deja_dans_int_mod,0    ; interruption d‚masq‚e
+mov b cs:deja_dans_int_mod,0    ; interruption dâ€šmasqâ€še
 sti
 tempo_vga
 jmp boucle_menu_jouer
@@ -612,14 +612,14 @@ jmp boucle_menu_jouer
 data_pause      db 2 dup ?
 pause:
 cli
-mov b cs:deja_dans_int_mod,1    ; interruption masq‚e
+mov b cs:deja_dans_int_mod,1    ; interruption masqâ€še
 sti
 mov es,9000h
 mov di,0BC90h
 mov cx,440
 mov ax,8080h
 cld
-rep stosw       ; buffers effac‚s
+rep stosw       ; buffers effacâ€šs
 affiche_menus
 jmp boucle_menu_jouer
 
@@ -632,7 +632,7 @@ stop_mod
 jmp boucle_menu_jouer
 
 ; REW (JMP)
-; revient en arriŠre
+; revient en arriÅ re
 ;*****************************************************************
 rew:
 mov al,cs:num_position_mod
