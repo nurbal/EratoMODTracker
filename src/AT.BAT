@@ -1,1 +1,1 @@
-a86\a86 t_mod.a t_procs.a t_menus.a t_main.a t_file.a t_sample.a t_edit.a t_jouer.a t_option.a t.com
+a86\a86 t_mod.asm t_procs.asm t_menus.asm t_main.asm t_file.asm t_sample.asm t_edit.asm t_jouer.asm t_option.asm t.com
