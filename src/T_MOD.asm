@@ -5,7 +5,7 @@ limite_portamento_up dw 39h
 limite_portamento_down dw 6B0h
 
 SEGMENT_BUFFERS_MOD     equ 9BC9h
-PORT_SB dw 220h    ; … initialiser
+PORT_SB dw 220h    ; â€¦ initialiser
 INT_SB  db 5       ; idem
 VERSION_DSP_SB db 2 dup ?
 TABLE_NOTES_MOD dw 6B0h,650h,5F5h,5A0h,54Dh,501h,4B9h,475h,435h,3F9h,3C1h,38Bh
@@ -34,7 +34,7 @@ deja_dans_int_mod       db ?
 mode_joue_mod           db ?
 pattern_joue_mod        db ?
 
-; variable plus sp‚cifiques au playback:
+; variable plus spâ€šcifiques au playback:
 num_position_mod db ?
 num_note_mod    db ?
 chrono_note_mod db ?
@@ -46,12 +46,12 @@ donnees_voix_mod db 128 dup ?
 
 ; initialisation de la Sound Blaster
 initialisation_mod:
-; recherche de la chaŒne 'BLASTER=' dans l'environnement
-; et positionnement de DS:[SI] juste aprŠs...
+; recherche de la chaÅ’ne 'BLASTER=' dans l'environnement
+; et positionnement de DS:[SI] juste aprÅ s...
 mov ax,cs:[2Ch] ; ax = segment de l'environnement
 mov ds,ax
 mov si,0
-test_chaine_blaster:     ; on est au d‚but d'une variable d'environnement
+test_chaine_blaster:     ; on est au dâ€šbut d'une variable d'environnement
 cld
 lodsb
 cmp al,0        ; fin d'environnement ?
@@ -115,7 +115,7 @@ cmp al,0
 jne chaine_blaster_suivante
 jmp test_chaine_blaster  ; test de cette nouvelle chaine!
 
-; adresse et interruption initialis‚es
+; adresse et interruption initialisâ€šes
 apres_test_blaster:
 push cs
 pop ds
@@ -150,7 +150,7 @@ call proc_lit_dsp_sb
 cmp al,0AAh
 je >l1
 loop b1
-jmp erreur_dsp  ; le DSP ne s'est pas initialis‚ correctement
+jmp erreur_dsp  ; le DSP ne s'est pas initialisâ€š correctement
 l1:
 
 ; test de l'interruption du DSP
@@ -166,13 +166,13 @@ mov b cs:mod_status,1
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,131
-call proc_ecrit_dsp_sb  ; ‚criture du "time constant": 8000 Hz
+call proc_ecrit_dsp_sb  ; â€šcriture du "time constant": 8000 Hz
 mov al,80h
 call proc_ecrit_dsp_sb
 mov al,0
 call proc_ecrit_dsp_sb
 mov al,0
-call proc_ecrit_dsp_sb  ; silence instantan‚ (1/8000 sec.)
+call proc_ecrit_dsp_sb  ; silence instantanâ€š (1/8000 sec.)
 mov cx,0FFFFh
 b1:
 cmp b cs:mod_status,0
@@ -180,7 +180,7 @@ je >l1  ; ok, l'interruption a eu lieu.
 loop b1
 ; l'interruption n'a pas eu lieu...
 mov al,20h
-out 20h,al      ; EOI puisque ‡a n'a pas ‚t‚ fait par le programme...
+out 20h,al      ; EOI puisque â€¡a n'a pas â€štâ€š fait par le programme...
 jmp erreur_dsp
 l1:
 
@@ -252,7 +252,7 @@ mov ah,9
 int 21h
 ret
 message_erreur_dsp db 'Erreur d',27h,'initialisation de la Sound Blaster...',13,10
-        db 'V‚rifiez votre variable d',27h,'environnement BLASTER.',13,10
+        db 'Vâ€šrifiez votre variable d',27h,'environnement BLASTER.',13,10
         db '(ex: SET BLASTER=A220 I5 D1 T3 ==> port 220h, interruption 5)',13,10
         db '... ou achetez une Sound Blaster!',13,10,'$'
 
@@ -297,33 +297,33 @@ pop dx
 ret
 
 ; ACTUALISE_VOLUME_MOD (M+P)
-; actualise la table de traduction qui se situe … 9000:C000
+; actualise la table de traduction qui se situe â€¦ 9000:C000
 ;*****************************************************************
 actualise_volume_mod macro
 call proc_actualise_volume_mod
 #em
 proc_actualise_volume_mod:
 mov es,9C00h
-mov di,0        ; ES:DI point sur le d‚but de la table
+mov di,0        ; ES:DI point sur le dâ€šbut de la table
 mov cx,64       ; 64 niveaux de volumes (vol 63 = vol 64 ...)
 mov si,0        ; on commence au volume 0
 b1:
 push cx
-mov cx,256      ; 256 ‚chantillons possibles!
-mov bh,0        ; on commence … l'‚chantillon 0
+mov cx,256      ; 256 â€šchantillons possibles!
+mov bh,0        ; on commence â€¦ l'â€šchantillon 0
 b2:
 push cx
 mov cl,cs:volume_mod
 mov ch,0
-mov al,bh       ; al = ‚chantillon sign‚
-cbw             ; ax = ‚chantillon sign‚ (mot)
-imul cx         ; ah = ‚chantillon sign‚ aprŠs volume maŒtre
-imul si         ; DL = ‚chantillon sign‚ aprŠs les 2 convertions de volume
+mov al,bh       ; al = â€šchantillon signâ€š
+cbw             ; ax = â€šchantillon signâ€š (mot)
+imul cx         ; ah = â€šchantillon signâ€š aprÅ s volume maÅ’tre
+imul si         ; DL = â€šchantillon signâ€š aprÅ s les 2 convertions de volume
 mov al,dl
 cld
-stosb           ; ‚chantillon stock‚!
+stosb           ; â€šchantillon stockâ€š!
 pop cx
-inc bh          ; ‚chantillon suivant
+inc bh          ; â€šchantillon suivant
 loop b2
 pop cx
 add si,2        ; volume suivant
@@ -352,16 +352,16 @@ mov cs:time_constant_sb,bl
 ret
 
 ; PROC_NEW_MOD (P)
-; efface le module en m‚moire et en cr‚e un nouveau, vierge (1 position)
+; efface le module en mâ€šmoire et en crâ€še un nouveau, vierge (1 position)
 ;*****************************************************************
 proc_new_mod:
-; arrˆt du module actuellement jou‚...
+; arrË†t du module actuellement jouâ€š...
 call proc_stop_mod
-; effacement des donn‚es en m‚moire...
+; effacement des donnâ€šes en mâ€šmoire...
 mov ax,segment_buffers_mod
 sub ax,cs:segment_patterns
-mov cx,ax       ; cx=nb de paragraphes … zigouiller...
-mov bx,cs:segment_patterns      ; bx=1ø paragraphe
+mov cx,ax       ; cx=nb de paragraphes â€¦ zigouiller...
+mov bx,cs:segment_patterns      ; bx=1Ã¸ paragraphe
 mov ax,0
 cld
 b1:
@@ -373,23 +373,23 @@ rep stosw
 pop cx
 inc bx  ; paragraphe suivant!
 loop b1
-; initialisation des variables de contr“le du MOD...
+; initialisation des variables de contrâ€œle du MOD...
 mov es,cs
 mov di,offset table_positions
 mov cx,64
-rep stosw       ; table des positions effac‚e
+rep stosw       ; table des positions effacâ€še
 mov di,offset titre_mod
 mov cx,10
-rep stosw       ; titre effac‚
+rep stosw       ; titre effacâ€š
 mov di,offset noms_samples
 mov cx,341
-rep stosw       ; noms des samples effac‚s
-mov cx,31       ; 31 samples … effacer
+rep stosw       ; noms des samples effacâ€šs
+mov cx,31       ; 31 samples â€¦ effacer
 mov ax,cs:segment_patterns
 add ax,128      ; ax = adresse segment du premier sample
 mov bx,0
 b1:
-mov cs:segments_samples[bx],ax  ; segment initialis‚
+mov cs:segments_samples[bx],ax  ; segment initialisâ€š
 mov w cs:longueurs_samples[bx],0
 mov w cs:debuts_boucles_samples[bx],0
 mov w cs:longueurs_boucles_samples[bx],2
@@ -399,16 +399,16 @@ add bx,2
 loop b1
 mov b cs:nb_positions,1
 mov b cs:nb_patterns,1
-; ‡a y est, on a tout r‚initialis‚...
+; â€¡a y est, on a tout râ€šinitialisâ€š...
 ret
 
 ; PROC_CHARGE_MOD (P)
-; charge un nouveau module en m‚moire, actualise toutes les variables.
-; zone tampon de la m‚moire: RAM vid‚o non utilis‚e en mode VGA A000:FA00 … A000:FFFF
+; charge un nouveau module en mâ€šmoire, actualise toutes les variables.
+; zone tampon de la mâ€šmoire: RAM vidâ€šo non utilisâ€še en mode VGA A000:FA00 â€¦ A000:FFFF
 ;                                                               (1536 octets)
 ;*************************************************************************************
 proc_charge_mod:
-; ‚crasement de l'ancien module
+; â€šcrasement de l'ancien module
 call proc_new_mod
 
 ; lecture de l'entete dans la zone tampon
@@ -416,7 +416,7 @@ mov ax,4200h
 mov cx,0
 mov dx,0
 mov bx,cs:handle_mod
-int 21h         ; on revient au d‚but du fichier
+int 21h         ; on revient au dâ€šbut du fichier
 mov ax,cs:segment_patterns
 mov ds,ax
 mov dx,0
@@ -425,7 +425,7 @@ mov bx,cs:handle_mod
 mov ah,3Fh
 int 21h         ; entete lu
 
-; lecture de l'entete comme si c'‚tait un 31 samples (on le fera autrement sinon)
+; lecture de l'entete comme si c'â€štait un 31 samples (on le fera autrement sinon)
 ; copie du titre
 mov ax,cs:segment_patterns
 mov ds,ax
@@ -444,24 +444,24 @@ b1:
 push cx
 cld
 mov cx,22
-rep movsb               ; nom transf‚r‚
+rep movsb               ; nom transfâ€šrâ€š
 mov b es:[di-1],0       ; (en asciiz...)
 lodsw
 xchg ah,al
 shl ax,1
-mov cs:longueurs_samples[bx],ax ; taille transf‚r‚e
+mov cs:longueurs_samples[bx],ax ; taille transfâ€šrâ€še
 lodsb
 test al,08h
-if nz or al,0F0h        ; on r‚percute le signe dans le reste de l'octet
+if nz or al,0F0h        ; on râ€špercute le signe dans le reste de l'octet
 cbw
-mov cs:finetunes_samples[bx],ax ; accord fin transf‚r‚
+mov cs:finetunes_samples[bx],ax ; accord fin transfâ€šrâ€š
 lodsb
 mov ah,0
-mov cs:volumes_samples[bx],ax   ; volume par d‚faut transf‚r‚
+mov cs:volumes_samples[bx],ax   ; volume par dâ€šfaut transfâ€šrâ€š
 lodsw
 xchg ah,al
 shl ax,1
-mov cs:debuts_boucles_samples[bx],ax    ; d‚but de boucle transf‚r‚
+mov cs:debuts_boucles_samples[bx],ax    ; dâ€šbut de boucle transfâ€šrâ€š
 lodsw
 xchg ah,al
 shl ax,1
@@ -469,7 +469,7 @@ add ax,cs:debuts_boucles_samples[bx]
 cmp ax,cs:longueurs_samples[bx]
 if a mov ax,cs:longueurs_samples[bx]
 sub ax,cs:debuts_boucles_samples[bx]
-mov cs:longueurs_boucles_samples[bx],ax ; longueur de boucle transf‚r‚e
+mov cs:longueurs_boucles_samples[bx],ax ; longueur de boucle transfâ€šrâ€še
 pop cx
 add bx,2
 loop b1
@@ -518,7 +518,7 @@ add dx,ax
 add bx,2
 loop b1
 
-; d‚termination du type du module: 15 samples & 4voix, 31 samples & 4,6 ou 8 voix.
+; dâ€štermination du type du module: 15 samples & 4voix, 31 samples & 4,6 ou 8 voix.
 mov es,cs:segment_patterns
 mov ax,es:[1080]
 mov bx,es:[1082]
@@ -542,7 +542,7 @@ if ne cmp bh,'8'
 if e jmp charge_patterns_8
 
 ; si le programme arrive ici, il s'agit d'un module 4 voix, 15 samples
-; correction de l'entˆte:
+; correction de l'entË†te:
 ; correction des infos samples ( sauf segments )
 mov bx,30
 mov cx,16
@@ -607,7 +607,7 @@ pop cx
 add dx,ax
 add bx,2
 loop b1
-; d‚placement du pointeur de lecture/‚criture
+; dâ€šplacement du pointeur de lecture/â€šcriture
 mov ax,4200h
 mov bx,cs:handle_mod
 mov cx,0
@@ -616,13 +616,13 @@ int 21h
 ; chargement de la suite comme un 4 voix normal...
 jmp charge_patterns_4
 
-; chargement d'un module … 4 voix
+; chargement d'un module â€¦ 4 voix
 charge_patterns_4:
 mov al,cs:nb_patterns
 mov ah,0
 mov cl,6
 shl ax,cl
-mov cx,ax       ; CX = nombre de lignes … charger
+mov cx,ax       ; CX = nombre de lignes â€¦ charger
 mov ax,cs:segment_patterns
 mov ds,ax
 b1:
@@ -632,7 +632,7 @@ mov di,16
 mov cx,8
 mov ax,0
 cld
-rep stosw       ; ligne effac‚e
+rep stosw       ; ligne effacâ€še
 mov cx,16
 mov dx,0
 mov bx,cs:handle_mod
@@ -645,13 +645,13 @@ mov ds,ax
 loop b1
 jmp charge_samples
 
-; chargement d'un module … 6 voix
+; chargement d'un module â€¦ 6 voix
 charge_patterns_6:
 mov al,cs:nb_patterns
 mov ah,0
 mov cl,6
 shl ax,cl
-mov cx,ax       ; CX = nombre de lignes … charger
+mov cx,ax       ; CX = nombre de lignes â€¦ charger
 mov ax,cs:segment_patterns
 mov ds,ax
 b1:
@@ -661,7 +661,7 @@ mov di,24
 mov cx,4
 mov ax,0
 cld
-rep stosw       ; ligne effac‚e
+rep stosw       ; ligne effacâ€še
 mov cx,24       ; 1 ligne = 24 octets
 mov dx,0
 mov bx,cs:handle_mod
@@ -674,13 +674,13 @@ mov ds,ax       ; segment de ligne suivante
 loop b1
 jmp charge_samples
 
-; chargement d'un module … 8 voix
+; chargement d'un module â€¦ 8 voix
 charge_patterns_8:
 mov al,cs:nb_patterns
 mov ah,0
 mov cl,6
 shl ax,cl
-mov cx,ax       ; cx = nb de lignes … charger
+mov cx,ax       ; cx = nb de lignes â€¦ charger
 mov ds,cs:segment_patterns
 b1:
 push cx,ds
@@ -724,13 +724,13 @@ int 21h
 ret
 
 ; STOP_MOD (M+P)
-; arrˆte le module en m‚moire (mˆme s'il est arr‚t‚, c'est pareil...)
+; arrË†te le module en mâ€šmoire (mË†me s'il est arrâ€štâ€š, c'est pareil...)
 ;*************************************************************************************
 stop_mod macro
 call proc_stop_mod
 #em
 proc_stop_mod:
-; installation de l'interruption d'arrˆt DSP
+; installation de l'interruption d'arrË†t DSP
 mov es,0
 mov al,cs:int_sb
 add al,8
@@ -743,14 +743,14 @@ mov es:[si],ax
 mov ax,cs
 mov es:[si+2],ax
 sti
-; attend que le mod soit termin‚:
+; attend que le mod soit terminâ€š:
 b1:
 cmp b cs:mod_status,0
 jne b1
 ret
 
 ; INT_FIN_MOD (INT)
-; arrˆte le module en m‚moire (‚vite de nouveaux transferts DMA)
+; arrË†te le module en mâ€šmoire (â€švite de nouveaux transferts DMA)
 ;*************************************************************************************
 int_fin_mod:
 push ax,bx,cx,dx
@@ -758,23 +758,23 @@ sti
 mov dx,cs:port_sb
 add dx,0Eh
 in al,dx        ; "aknowledge interrupt"
-mov b cs:mod_status,0   ; dire que c'est termin‚!
+mov b cs:mod_status,0   ; dire que c'est terminâ€š!
 mov al,20h
 out 20h,al       ; EOI
 pop dx,cx,bx,ax
 iret
 
 ; JOUE_MOD (M+P)
-; joue le en m‚moire (sauf s'il est d‚j… en route...)
+; joue le en mâ€šmoire (sauf s'il est dâ€šjâ€¦ en route...)
 ;*************************************************************************************
 joue_mod macro
 call proc_joue_mod
 #em
 proc_joue_mod:
-; retour si d‚j… en route
+; retour si dâ€šjâ€¦ en route
 cmp b cs:mod_status,1
 if e ret
-; arrˆt de toute sortie son
+; arrË†t de toute sortie son
 stop_mod
 ; "nettoyage" des buffers...
 mov es,9000h
@@ -811,21 +811,21 @@ mov es:[si],ax
 mov ax,cs
 mov es:[si+2],ax
 sti
-; lancement de la "r‚action en chaine":
+; lancement de la "râ€šaction en chaine":
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,cs:time_constant_sb
-call proc_ecrit_dsp_sb  ; ‚criture du "time constant"
+call proc_ecrit_dsp_sb  ; â€šcriture du "time constant"
 mov al,80h
 call proc_ecrit_dsp_sb
 mov al,0
 call proc_ecrit_dsp_sb
 mov al,0
-call proc_ecrit_dsp_sb  ; silence instantan‚ => va provoquer l'interruption
+call proc_ecrit_dsp_sb  ; silence instantanâ€š => va provoquer l'interruption
 ret
 
 ; INTERRUPTION_MOD (INT)
-; joue le module en m‚moire (lance le nouveau transfert DMA puis calcule le suivant)
+; joue le module en mâ€šmoire (lance le nouveau transfert DMA puis calcule le suivant)
 ;*************************************************************************************
 interruption_mod:
 push ax,bx,cx,dx,si,di,ds,es,bp
@@ -840,7 +840,7 @@ in al,dx
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,cs:time_constant_sb
-call proc_ecrit_dsp_sb  ; ‚criture du "time constant"
+call proc_ecrit_dsp_sb  ; â€šcriture du "time constant"
 
 ; lancement du buffer
 ; program DMAC for output transfer (cf. appendice B-6 du SB developer kit)
@@ -873,9 +873,9 @@ ecrit_dsp_sb
 pop ax
 mov al,ah
 ecrit_dsp_sb    ; longueur
-; ‡a y est, le buffer est lanc‚
+; â€¡a y est, le buffer est lancâ€š
 
-; ‚change des buffers:
+; â€šchange des buffers:
 xor b cs:num_buffer_mod,1
 cmp b cs:num_buffer_mod,0
 if e mov w cs:ofs_buffer_mod,0BC90h
@@ -888,13 +888,13 @@ out 20h,al
 ; actualisation MOD_STATUS (1: on est en train de jouer un module)
 mov b cs:mod_status,1
 cmp b cs:mode_joue_mod,1
-if e mov b cs:mod_status,3      ; mode sp‚cial: un seul pattern
+if e mov b cs:mod_status,3      ; mode spâ€šcial: un seul pattern
 
 ; sortie si en cours
 cmp b cs:deja_dans_int_mod,0
 if ne jmp fin_int_mod
 
-; flag 'en cours' activ‚
+; flag 'en cours' activâ€š
 mov b cs:deja_dans_int_mod,1
 
 ; chrono_note_mod=0?
@@ -904,7 +904,7 @@ if ne jmp op_50_sec
 ; num_note=0?
 cmp b cs:num_note_mod,0
 jne >l1
-cmp cs:mode_joue_mod,1 ; au cas o— on est en mode sp‚cial
+cmp cs:mode_joue_mod,1 ; au cas oâ€” on est en mode spâ€šcial
 if e cmp b cs:num_position_mod,1
 je >l2
 mov al,cs:num_position_mod
@@ -912,7 +912,7 @@ cmp al,cs:nb_positions
 jne >l1
 l2:
 ; int dsp=int_fin_mod
-; installation de l'interruption d'arrˆt DSP
+; installation de l'interruption d'arrË†t DSP
 mov es,0
 mov al,cs:int_sb
 add al,8
@@ -965,7 +965,7 @@ if e jmp fin_voix_calcul_buffer
 
 
 push bx
-; pr‚paration de la boucle d'‚criture
+; prâ€šparation de la boucle d'â€šcriture
 mov al,cs:[bx+1]
 mov ah,0
 shl ax,1
@@ -975,56 +975,56 @@ mov bp,cs:longueurs_samples[si]
 cmp b cs:[bx+7],1       ; en boucle?
 jne >l0
 mov bp,cs:debuts_boucles_samples[si]
-add bp,cs:longueurs_boucles_samples[si]    ; BP = offset o— boucler
+add bp,cs:longueurs_boucles_samples[si]    ; BP = offset oâ€” boucler
 l0:
 mov ax,9000h
 mov ds,ax                       ; DS pointe sur le segment 9000h: buffers, table de traduction volume
 mov si,cs:[bx+4]        ; si = offset sample
-; calcul de l'incr‚ment: i=((00369E9Ah/p‚riode)*256)/echantillonnage
+; calcul de l'incrâ€šment: i=((00369E9Ah/pâ€šriode)*256)/echantillonnage
 mov ax,9E9Ah
 mov dx,36h
-mov cx,cs:[bx+2]        ; cx=p‚riode
+mov cx,cs:[bx+2]        ; cx=pâ€šriode
 cmp cx,37h
-if b mov cx,37h ; pas catholique mais ‚vite les overflows....
+if b mov cx,37h ; pas catholique mais â€švite les overflows....
 div cx
 mov cx,256
 mul cx
 mov cx,cs:echantillonnage_mod
 div cx
-mov dl,al               ; dl=incr‚ment(d‚cimal)
+mov dl,al               ; dl=incrâ€šment(dâ€šcimal)
 mov al,ah
-mov ah,0                ; ax=incr‚ment(entier)
-mov dh,cs:[bx+6]        ; dh=offset sample(d‚cimal)
+mov ah,0                ; ax=incrâ€šment(entier)
+mov dh,cs:[bx+6]        ; dh=offset sample(dâ€šcimal)
 mov ch,cs:[bx+8]
 cmp ch,63
 if a mov ch,63
 mov cl,0
 mov bx,cx
-add bx,0C000h   ; DS:BX pointe sur la table de volume appropri‚e
-mov di,cs:ofs_buffer_mod        ; ds+di = adresse du buffer o— ‚crire
-mov cx,cs:longueur_buffers_mod  ; cx = nb d'‚chantillons … ‚crire
+add bx,0C000h   ; DS:BX pointe sur la table de volume appropriâ€še
+mov di,cs:ofs_buffer_mod        ; ds+di = adresse du buffer oâ€” â€šcrire
+mov cx,cs:longueur_buffers_mod  ; cx = nb d'â€šchantillons â€¦ â€šcrire
 b1:
 cmp si,bp       ; boucle atteinte?
 ja >l2          ; l2: boucle atteinte
 l3:
-mov ah,al       ; incr‚ment entier sauv‚ dans AH
-mov al,es:[si]  ; ‚chantillon 'brut'
-xlat            ; ‚chantillon traduit
-add [di],al     ; ajout‚ … la voix en sortie
+mov ah,al       ; incrâ€šment entier sauvâ€š dans AH
+mov al,es:[si]  ; â€šchantillon 'brut'
+xlat            ; â€šchantillon traduit
+add [di],al     ; ajoutâ€š â€¦ la voix en sortie
 mov al,ah
-xor ah,ah       ; AX=incr‚ment entier restaur‚
-inc di          ; ‚chantillon en sortie suivant!
+xor ah,ah       ; AX=incrâ€šment entier restaurâ€š
+inc di          ; â€šchantillon en sortie suivant!
 add dh,dl
-adc si,ax       ; offset sample incr‚ment‚
+adc si,ax       ; offset sample incrâ€šmentâ€š
 loop b1
-jmp >l4         ; L4=aprŠs calcul normal du buffer sur 1 voix
-; traitement du cas o— on boucle
+jmp >l4         ; L4=aprÅ s calcul normal du buffer sur 1 voix
+; traitement du cas oâ€” on boucle
 sauve_bx_mod    dw ?
 sauve_si_mod    dw ?
 sauve_ax_mod    dw ?
 l2:
-mov cs:sauve_bx_mod,bx  ; on pr‚serve BX
-mov cs:sauve_ax_mod,ax  ; on pr‚serve AX
+mov cs:sauve_bx_mod,bx  ; on prâ€šserve BX
+mov cs:sauve_ax_mod,ax  ; on prâ€šserve AX
 pop bx          ; bx = donnees_voix[???]
 push bx
 mov b cs:[bx+7],1       ; voix en boucle
@@ -1033,20 +1033,20 @@ mov ah,0
 shl ax,1
 mov si,ax       ; si=pointeur dans les tables d'instruments
 cmp w cs:longueurs_boucles_samples[si],2
-if na mov b cs:[bx],0   ; pas de boucle: voix d‚sactiv‚e
+if na mov b cs:[bx],0   ; pas de boucle: voix dâ€šsactivâ€še
 jna >l4                 ; pas de boucle: fin des calculs
 mov bp,cs:debuts_boucles_samples[si]
 push bp
 add bp,cs:longueurs_boucles_samples[si]
                         ; bp = fin de la boucle
-pop si                  ; si=d‚but de la boucle
-mov bx,cs:sauve_bx_mod  ; on r‚cupŠre BX
-mov ax,cs:sauve_ax_mod  ; on r‚cupŠre AX
+pop si                  ; si=dâ€šbut de la boucle
+mov bx,cs:sauve_bx_mod  ; on râ€šcupÅ re BX
+mov ax,cs:sauve_ax_mod  ; on râ€šcupÅ re AX
 jmp l3  ; on retourne au boulot!
 l4:
 pop bx
-mov cs:[bx+4],si        ; offset sample actualis‚
-mov cs:[bx+6],dh        ; idem mais partie d‚cimale
+mov cs:[bx+4],si        ; offset sample actualisâ€š
+mov cs:[bx+6],dh        ; idem mais partie dâ€šcimale
 
 fin_voix_calcul_buffer:
 pop cx
@@ -1057,14 +1057,14 @@ jmp boucle1_calcule_buffer
 l1:
 
 
-; incr‚mentation de COMPTEUR_TEMPO
+; incrâ€šmentation de COMPTEUR_TEMPO
 mov al,cs:chrono_note_mod
 inc al
 cmp al,cs:vitesse_mod
 if e mov al,0
 mov cs:chrono_note_mod,al
 
-; flag 'en cours' d‚sactiv‚
+; flag 'en cours' dâ€šsactivâ€š
 mov b cs:deja_dans_int_mod,0
 
 ; fin de l'interruption:
@@ -1077,10 +1077,10 @@ iret
 
 
 
-; op‚rations … faire tous les 50ø de secondes
+; opâ€šrations â€¦ faire tous les 50Ã¸ de secondes
 op_50_sec:
-mov di,offset donnees_voix_mod  ; cs:di = donn‚es de voix
-mov cx,8        ; 8 voix, Šh!
+mov di,offset donnees_voix_mod  ; cs:di = donnâ€šes de voix
+mov cx,8        ; 8 voix, Å h!
 boucle_50_sec:
 push cx
 
@@ -1128,7 +1128,7 @@ mov ah,0
 cmp b cs:[di+0Bh],1
 je >l2          ; sens positif
 cmp b cs:[di+0Bh],2
-je >l1          ; op‚ration d‚j… termin‚e
+je >l1          ; opâ€šration dâ€šjâ€¦ terminâ€še
 sub cs:[di+2],ax
 mov ax,cs:[di+2]
 cmp ax,cs:[di+0Ch]
@@ -1175,13 +1175,13 @@ jmp calcul_buffer
 
 ; lecture de la note:
 lecture_note:
-; calcul dans ES du segment de la note … lire (sur 8 voix)
+; calcul dans ES du segment de la note â€¦ lire (sur 8 voix)
 mov bl,cs:num_position_mod
 mov bh,0
 mov ah,0
-mov al,cs:table_positions[bx]           ; AX = num‚ro de pattern (si mode 0)
+mov al,cs:table_positions[bx]           ; AX = numâ€šro de pattern (si mode 0)
 cmp b cs:mode_joue_mod,1
-if e mov al,cs:pattern_joue_mod         ; AX = num‚ro de pattern (si mode 1)
+if e mov al,cs:pattern_joue_mod         ; AX = numâ€šro de pattern (si mode 1)
 mov cl,7
 shl ax,cl
 add ax,cs:segment_patterns              ; AX = segment du pattern
@@ -1192,9 +1192,9 @@ add ax,bx                               ; AX = segment de la note
 mov es,ax
 
 mov si,0        ; es:si = note
-mov di,offset donnees_voix_mod  ; cs:di = donn‚es de voix
+mov di,offset donnees_voix_mod  ; cs:di = donnâ€šes de voix
 
-mov cx,8        ; 8 voix, Šh!
+mov cx,8        ; 8 voix, Å h!
 boucle_lit_note:
 push cx
 
@@ -1215,7 +1215,7 @@ mov cl,es:[si+2]
 and cl,0Fh
 
 ; CL = commande
-; traitement des diff‚rentes commandes:
+; traitement des diffâ€šrentes commandes:
 
 ; arpeggio
 cmp cl,0
@@ -1233,19 +1233,19 @@ shl bx,1
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 l1:
 cmp b cs:[di],0 ; voix inactive ?
-if ne cmp b es:[si+3],0 ; pas de paramŠtre ?
+if ne cmp b es:[si+3],0 ; pas de paramÅ tre ?
 jne >l1
-; pas d'interpr‚tation d'arpeggio
+; pas d'interprâ€štation d'arpeggio
 mov b cs:[di+0Eh],3
 jmp fin_boucle_lit_note
 l1:
-; interpr‚tation de l'arpeggio
+; interprâ€štation de l'arpeggio
 mov bx,0
 mov ax,cs:[di+2]
 b1:
@@ -1255,7 +1255,7 @@ add bx,2
 jmp b1
 l2:
 shr bx,1
-; bl = num‚ro de la 1ø note
+; bl = numâ€šro de la 1Ã¸ note
 push bx
 mov al,es:[si+3]
 mov cl,4
@@ -1268,7 +1268,7 @@ mov ax,cs:table_notes_mod[bx]
 call proc_traduit_finetune
 mov cs:[di+0Ah],ax
 pop bx
-; bl = num‚ro de la 2ø note
+; bl = numâ€šro de la 2Ã¸ note
 mov al,es:[si+3]
 and al,0Fh
 add bl,al
@@ -1295,14 +1295,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1320,14 +1320,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1365,7 +1365,7 @@ l2:
 jmp fin_boucle_lit_note
 l1:
 
-; fixe l'offset de l'‚chantillon
+; fixe l'offset de l'â€šchantillon
 cmp cl,9
 jne >l1
 mov cs:[di+9],cl
@@ -1378,14 +1378,14 @@ call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
 mov al,es:[si+3]
 mov b cs:[di+5],al
-mov b cs:[di+4],0       ; on commence l… o— il faut
+mov b cs:[di+4],0       ; on commence lâ€¦ oâ€” il faut
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1415,25 +1415,25 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 mov al,es:[si]
 mov ah,es:[si+2]
 and ax,0F0F0h
-cmp ax,0                ; y a-t-il par hasard un sample d‚sign‚ ici?
+cmp ax,0                ; y a-t-il par hasard un sample dâ€šsignâ€š ici?
 je >l2
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1445,7 +1445,7 @@ mov cs:[di+9],cl
 mov al,es:[si+3]
 dec al
 cmp b cs:mode_joue_mod,0
-if e mov cs:num_position_mod,al ; sauts autoris‚s seulement en mode normal!
+if e mov cs:num_position_mod,al ; sauts autorisâ€šs seulement en mode normal!
 mov b cs:num_note_mod,63   ; ordre transmis
 mov ah,es:[si]
 mov al,es:[si+1]
@@ -1454,14 +1454,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1479,9 +1479,9 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1498,14 +1498,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1516,7 +1516,7 @@ jne >l1
 mov cs:[di+9],cl
 mov al,es:[si+3]
 cmp al,1Fh
-ja >l1          ; ignor‚ si pas valable
+ja >l1          ; ignorâ€š si pas valable
 mov cs:vitesse_mod,al   ; vitesse transmise
 mov ah,es:[si]
 mov al,es:[si+1]
@@ -1525,14 +1525,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 jmp fin_boucle_lit_note
 l1:
@@ -1546,14 +1546,14 @@ cmp ax,0
 je >l2
 call proc_traduit_finetune
 mov cs:[di+2],ax        ; note transmise
-mov w cs:[di+4],0       ; on commence au d‚but du sample
+mov w cs:[di+4],0       ; on commence au dâ€šbut du sample
 mov b cs:[di+7],0       ; premier passage (pas en boucle)
-mov b cs:[di],1         ; voix activ‚e
+mov b cs:[di],1         ; voix activâ€še
 mov bl,cs:[di+1]
 mov bh,0
 shl bx,1
 mov ax,cs:volumes_samples[bx]
-mov cs:[di+8],al        ; volume par d‚faut transmis
+mov cs:[di+8],al        ; volume par dâ€šfaut transmis
 l2:
 
 ; voix suivante:
@@ -1569,10 +1569,10 @@ l1:
 jmp apres_lecture_note
 
 ; PROC_TRADUIT_FINETUNE (P)
-; entr‚e:       AX = p‚riode amiga actuelle
+; entrâ€še:       AX = pâ€šriode amiga actuelle
 ;               BX = pointeur dans les tables XXXXX_SAMPLES (=spl*2)
-; sortie:       AX = p‚riode amiga corrig‚e
-;               autres registres sauvegard‚s
+; sortie:       AX = pâ€šriode amiga corrigâ€še
+;               autres registres sauvegardâ€šs
 ;**************************************************************************
 proc_traduit_finetune:
 push bx,cx,dx,di
@@ -1586,7 +1586,7 @@ mov dx,139
 mov di,138
 cmp cx,0
 jg >l1
-; correction: finetune n‚gatif
+; correction: finetune nâ€šgatif
 xor cx,cx
 sub cx,cs:finetunes_samples[bx]
 xchg dx,di
