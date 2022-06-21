@@ -5,11 +5,11 @@
 ; (menu des options)
 ;**************************************************************************
 
-; d‚but du programme
+; dâ€šbut du programme
 ;**************************************************************************
 menu_options:
 
-; d‚finit le menu des options
+; dâ€šfinit le menu des options
 menu2 option_affichage,'COULEURS',2,9, option_sb,'SOUND-BLASTER',12,24, sauve_config,'SAUVER',72,77
 cls_menus
 
@@ -17,7 +17,7 @@ b1:
 souris_menus
 jmp b1
 
-; sch‚mas de couleurs pr‚d‚finis:
+; schâ€šmas de couleurs prâ€šdâ€šfinis:
 palettes_couleurs:
 ; standard:
 db 0,0,0, 0,0,42, 0,42,0, 0,42,42, 42,0,0, 42,0,42, 42,21,0, 42,42,42
@@ -31,25 +31,25 @@ db 28,21,16, 21,21,63, 21,63,21, 21,63,63, 63,21,21, 63,21,63, 63,63,21, 63,60,5
 ; bleu:
 db 0,0,22, 0,0,42, 0,42,0, 0,42,42, 42,0,0, 42,0,42, 42,21,0, 37,41,53
 db 21,21,36, 21,21,63, 21,63,21, 21,63,63, 63,21,21, 63,21,63, 63,63,21, 48,55,63
-; oc‚an:
+; ocâ€šan:
 db 0,0,0, 0,28,42, 0,42,0, 0,42,42, 42,0,28, 42,0,42, 42,21,0, 33,50,49
 db 21,28,30, 21,21,63, 21,55,48, 21,63,63, 63,9,38, 63,21,63, 63,63,21, 49,63,63
-; invers‚:
+; inversâ€š:
 db 63,63,63, 63,63,21, 63,21,63, 63,21,21, 21,63,63, 21,63,21, 21,42,63, 21,21,21
 db 42,42,42, 42,42,0, 42,0,42, 42,0,0, 0,42,42, 0,42,0, 0,0,42, 0,0,0
 noms_palettes_couleurs  db ' Standard ',0
                         db 'Monochrome',0
                         db '  Sable   ',0
                         db '   Bleu   ',0
-                        db '  Oc‚an   ',0
-                        db ' Invers‚  ',0
+                        db '  Ocâ€šan   ',0
+                        db ' Inversâ€š  ',0
 
 ; config des couleurs
 ;**************************************************************************
 couleur_modifiee        db 1
 option_affichage:
 cls_menus
-; affichage de l'‚cran de controle des couleurs
+; affichage de l'â€šcran de controle des couleurs
 bloc1_vga 4,90,75,439
 bloc1_vga 22,110,57,139
 police_vga 2
@@ -120,7 +120,7 @@ loop b2
 pop cx
 add ax,8
 loop b1
-; affichage de la partie droite de l'‚cran: curseurs et t‚moin
+; affichage de la partie droite de l'â€šcran: curseurs et tâ€šmoin
 bloc2_vga 46,160,65,269
 mov al,cs:couleur_modifiee
 rectangle_vga 47,168,64,261,al
@@ -136,7 +136,7 @@ aff_chaine_vga 'B:'
 call proc_affiche_curseur_r
 call proc_affiche_curseur_v
 call proc_affiche_curseur_b
-; affichage des 6 palettes pr‚d‚finies en bas
+; affichage des 6 palettes prâ€šdâ€šfinies en bas
 couleur_texte_vga 1
 police_vga 2
 mov cx,6
@@ -161,14 +161,14 @@ loop b1
 ; appel du menu
 b1:
 souris_menus
-; tests de zone ‚cran
+; tests de zone â€šcran
 cmp dx,450
 jb >l1
 cmp cx,32
 jb b1
 cmp cx,607
 ja b1
-; choix d'une palette pr‚d‚finie
+; choix d'une palette prâ€šdâ€šfinie
 call proc_choix_palette
 jmp b1
 l1:
@@ -317,7 +317,7 @@ mov ax,cx
 mov bl,96
 div bl
 mov cs:num_palette,al
-; affichage du bouton enfonc‚
+; affichage du bouton enfoncâ€š
 mov al,cs:num_palette
 mov ah,12
 mul ah
@@ -338,7 +338,7 @@ add ax,offset noms_palettes_couleurs
 mov si,ax
 mov ds,cs
 call proc_aff_chaine_vga
-; activation de la palette concern‚e
+; activation de la palette concernâ€še
 mov es,cs
 mov ds,cs
 mov al,cs:num_palette
@@ -356,7 +356,7 @@ call proc_affiche_curseur_v
 call proc_affiche_curseur_b
 ; attend que l'utilisateur relache le bouton
 lache_souris
-; affichage du bouton relach‚
+; affichage du bouton relachâ€š
 mov al,cs:num_palette
 mov ah,12
 mul ah
@@ -397,14 +397,14 @@ souris_menus
 test_souris_bouton 0,b1
 ; sauvegarde config. :
 mov ds,cs
-; nom de fichier complet: cr‚ation
+; nom de fichier complet: crâ€šation
 mov ah,3Ch
 mov ds,cs
 mov dx,offset nom_fichier_config
 mov cx,0
 int 21h
 push ax
-; ‚criture
+; â€šcriture
 mov ds,cs
 mov dx,offset debut_vars
 mov cx,offset fin_vars
@@ -419,12 +419,12 @@ int 21h
 rectangle_vga 21,230,58,259,7
 couleur_texte_vga 1
 gotoxy_vga 27,238
-aff_chaine_vga 'Configuration sauvegard‚e.'
+aff_chaine_vga 'Configuration sauvegardâ€še.'
 b2:
 souris_menus
 jmp b2
 
-; config de la Sound Blaster (volume et ‚chantillonnage)
+; config de la Sound Blaster (volume et â€šchantillonnage)
 ;**************************************************************************
 option_sb:
 cls_menus
@@ -440,7 +440,7 @@ bloc1_vga 48,336,57,359
 gotoxy_vga 24,341
 aff_chaine_vga 'Volume'
 gotoxy_vga 51,341
-aff_chaine_vga 'Fr‚q.'
+aff_chaine_vga 'Frâ€šq.'
 call proc_aff_ech_mod
 call proc_aff_vol_mod
 b1:
@@ -448,13 +448,13 @@ souris_menus
 cmp dx,420
 ja b1   ; trop bas
 cmp cx,272
-jb b1   ; trop … gauche
+jb b1   ; trop â€¦ gauche
 cmp cx,367
-ja b1   ; trop … doite
+ja b1   ; trop â€¦ doite
 cmp cx,304
 jb >l1  ; modif volume
 cmp cx,335
-ja >l2  ; modif fr‚quence
+ja >l2  ; modif frâ€šquence
 jmp b1
 ; modif. volume
 l1:
@@ -473,7 +473,7 @@ tempo_vga
 call proc_aff_vol_mod
 actualise_volume_mod
 jmp b1
-; modif. fr‚quence
+; modif. frâ€šquence
 l2:
 cmp dx,218
 jb b1   ; trop haut
@@ -493,7 +493,7 @@ tempo_vga
 call proc_aff_ech_mod
 actualise_echantillonnage_mod
 jmp b1
-; affichage de l'‚chantillonnage
+; affichage de l'â€šchantillonnage
 proc_aff_ech_mod:
 rectangle_vga 42,220,45,416,7
 bloc2_vga 43,216,44,420
