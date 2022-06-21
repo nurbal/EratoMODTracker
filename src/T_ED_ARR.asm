@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_ed_arr.a
-; (‚dition de l'arrangement)
+; (â€šdition de l'arrangement)
 ;**************************************************************************
 
 ; MENU_ARRANGEMENT (JMP)
@@ -42,7 +42,7 @@ bloc1_vga 30,244,49,269
 gotoxy_vga 31,249
 aff_chaine_vga 'Table des Patterns'
 
-; affichage des commentaires (patterns ou positions) et du menu sp‚cifique
+; affichage des commentaires (patterns ou positions) et du menu spâ€šcifique
 bloc1_vga 0,404,79,479
 police_vga 2
 couleur_texte_vga 1
@@ -51,7 +51,7 @@ aff_chaine_vga 'Bouton Gauche = choisir / modifier une position'
 gotoxy_vga 2,434
 aff_chaine_vga 'Bouton Droit = jouer un pattern ou une position'
 gotoxy_vga 2,454
-aff_chaine_vga 'Boutons Gauche (maintenu) = effacer un pattern / s‚lectionner des positions'
+aff_chaine_vga 'Boutons Gauche (maintenu) = effacer un pattern / sâ€šlectionner des positions'
 
 
 ; affichage de tous les blocs
@@ -67,7 +67,7 @@ loop b1
 
 mouse_on
 boucle_souris_arrangement:
-; mise … jour de l'affichage si module en marche
+; mise â€¦ jour de l'affichage si module en marche
 cmp b cs:mod_status,1
 jne apres_actualise_arrangement
 mov bl,cs:num_position_mod
@@ -117,7 +117,7 @@ pop bx
 xor bh,bh
 mov al,cs:table_positions[bx]
 call proc_change_pat_arrangement
-; bouton gauche: test d‚lai
+; bouton gauche: test dâ€šlai
 mov cx,delai_select
 b1:
 push cx
@@ -146,10 +146,10 @@ and dl,70h
 mov ax,cx
 mov bl,40
 div bl
-or al,dl        ; al = num‚ro position
+or al,dl        ; al = numâ€šro position
 cmp al,cs:position_modifiee
 jae >l2
-mov al,1        ; taille s‚lect = 1
+mov al,1        ; taille sâ€šlect = 1
 jmp >l3
 l2:
 sub al,cs:position_modifiee
@@ -157,7 +157,7 @@ inc al
 l3:
 cmp al,cs:taille_select_arrangement
 je b1
-; modif du bloc s‚lectionn‚:
+; modif du bloc sâ€šlectionnâ€š:
 mouse_off
 push ax
 call proc_aff_select_arrangement
@@ -177,7 +177,7 @@ mov bl,40
 div bl
 or al,dl        ; al = nouveau pattern
 call proc_change_pat_arrangement
-; bouton gauche: test d‚lai
+; bouton gauche: test dâ€šlai
 mov cx,delai_select
 b1:
 push cx
@@ -187,15 +187,15 @@ pop cx
 cmp bx,0
 if e jmp change_pattern_arrangement
 loop b1
-; s‚lection d'un pattern pour effacement
+; sâ€šlection d'un pattern pour effacement
 jmp efface_pattern_arrangement
 l1:
 jmp boucle_souris_arrangement
 
-; on a choisi un autre pattern : modif, et v‚rifications.
+; on a choisi un autre pattern : modif, et vâ€šrifications.
 change_pattern_arrangement:
 mouse_off
-call proc_sauve_arrangement     ; sauvegarde en vue d'une ‚ventuelle annulation
+call proc_sauve_arrangement     ; sauvegarde en vue d'une â€šventuelle annulation
 mov al,cs:pattern_modifie
 mov bl,cs:position_modifiee
 xor bh,bh
@@ -225,10 +225,10 @@ police_vga 2
 couleur_texte_vga 4
 aff_chaine_vga 'EFFACEMENT D',27h,'UN PATTERN'
 lache_souris
-; affichage du num‚ro du pattern concern‚
+; affichage du numâ€šro du pattern concernâ€š
 gotoxy_vga 31,217
 couleur_texte_vga 1
-aff_chaine_vga 'Pattern num‚ro: '
+aff_chaine_vga 'Pattern numâ€šro: '
 mov al,cs:pattern_modifie
 xor ah,ah
 call proc_aff_word_vga
@@ -262,11 +262,11 @@ cmp cs:table_positions[bx],al
 if a dec b cs:table_positions[bx]
 inc bx
 loop b1
-; d‚callage des autres patterns:
+; dâ€šcallage des autres patterns:
 mov cl,cs:nb_patterns
 sub cl,cs:pattern_modifie
 dec cl
-xor ch,ch       ; cx = nb de patterns … modifier
+xor ch,ch       ; cx = nb de patterns â€¦ modifier
 mov al,cs:pattern_modifie
 mov ah,128
 mul ah
@@ -287,12 +287,12 @@ pop cx
 loop b1
 ; correction du nombre de patterns:
 dec b cs:nb_patterns
-; d‚callage des samples:
+; dâ€šcallage des samples:
 mov al,0
 mov cx,128
 call proc_decale_sample_2
 jmp menu_edition
-erreur1_eff_pattern_arrangement:        ; pattern d‚j… inexistant...
+erreur1_eff_pattern_arrangement:        ; pattern dâ€šjâ€¦ inexistant...
 gotoxy_vga 24,240
 couleur_texte_vga 4
 aff_chaine_vga 'Impossible: pattern inexistant...'
@@ -300,10 +300,10 @@ b1:
 souris_menus
 test_souris_bouton 0,b1 ; annuler?
 jmp menu_edition
-erreur2_eff_pattern_arrangement:        ; pattern utilis‚...
+erreur2_eff_pattern_arrangement:        ; pattern utilisâ€š...
 gotoxy_vga 25,240
 couleur_texte_vga 4
-aff_chaine_vga 'Impossible: pattern utilis‚...'
+aff_chaine_vga 'Impossible: pattern utilisâ€š...'
 b1:
 souris_menus
 test_souris_bouton 0,b1 ; annuler?
@@ -327,7 +327,7 @@ bloc1_vga 12,270,67,299
 gotoxy_vga 14,277
 police_vga 2
 couleur_texte_vga 1
-aff_chaine_vga 'Choisissez ci-dessus la derniŠre position … jouer...'
+aff_chaine_vga 'Choisissez ci-dessus la derniÅ re position â€¦ jouer...'
 b1:
 souris_menus
 test_zone_souris 0,110,639,237,b1
@@ -343,7 +343,7 @@ mov b cs:fichier_modifie,1
 jmp menu_edition
 
 ; COLLER_ARRANGEMENT (JMP)
-; insŠre dans la table des positions le bloc
+; insÅ re dans la table des positions le bloc
 ;**************************************************************************
 coller_arrangement:
 affiche_menus
@@ -360,7 +360,7 @@ bloc1_vga 10,270,69,319
 gotoxy_vga 13,277
 police_vga 2
 couleur_texte_vga 1
-aff_chaine_vga 'Choisissez ci-dessus la position o— ins‚rer le bloc...'
+aff_chaine_vga 'Choisissez ci-dessus la position oâ€” insâ€šrer le bloc...'
 gotoxy_vga 23,297
 aff_chaine_vga '( taille du bloc: '
 mov al,cs:taille_bloc_arrangement
@@ -389,14 +389,14 @@ l1:
 ; tout est OK
 ; sauvegarde de l'ancien arrangement
 call proc_sauve_arrangement
-; d‚callage des positions existantes
+; dâ€šcallage des positions existantes
 mov es,cs
 mov ds,cs
 mov cl,128
 sub cl,cs:taille_bloc_arrangement
 sub cl,cs:position_modifiee
-xor ch,ch       ; CX = nombre de positions … modifier
-jcxz >l1        ; d‚callage inutile
+xor ch,ch       ; CX = nombre de positions â€¦ modifier
+jcxz >l1        ; dâ€šcallage inutile
 mov ax,127+offset table_positions
 mov di,ax
 sub al,cs:taille_bloc_arrangement
@@ -418,7 +418,7 @@ rep movsb
 ; modif. de la taille de la chanson
 mov al,cs:nb_positions
 cmp al,cs:position_modifiee
-jbe >l1 ; modif pas n‚cessaire
+jbe >l1 ; modif pas nâ€šcessaire
 mov al,cs:taille_bloc_arrangement
 add cs:nb_positions,al
 if s mov b cs:nb_positions,128
@@ -481,7 +481,7 @@ mov al,cs:data_proc_aff_pat_arrangement
 cmp al,cs:nb_patterns
 pop ax
 jb >l1
-; affichage d'un bloc vide: bˆte rectangle
+; affichage d'un bloc vide: bË†te rectangle
 rectangle_vga ax,bx,cx,dx,7
 couleur_texte_vga 8
 jmp aff_num_pat_arrangement
@@ -500,13 +500,13 @@ je >l2
 inc bx
 loop b1
 jmp >l3
-; affichage du pattern modifi‚
+; affichage du pattern modifiâ€š
 l1:
 pop cx,bx,ax
 bloc3_vga ax,bx,cx,dx
 couleur_texte_vga 4
 jmp aff_num_pat_arrangement
-; affichage d'un autre pattern, pr‚sent dans la table
+; affichage d'un autre pattern, prâ€šsent dans la table
 l2:
 pop cx,bx,ax
 bloc1_vga ax,bx,cx,dx
@@ -517,7 +517,7 @@ l3:
 pop cx,bx,ax
 bloc1_vga ax,bx,cx,dx
 couleur_texte_vga 8
-; affichage du num‚ro du pattern
+; affichage du numâ€šro du pattern
 aff_num_pat_arrangement:
 inc ax
 add bx,4
@@ -530,7 +530,7 @@ ret
 
 
 ; PROC_AFF_POS_ARRANGEMENT (P)
-; affiche le bloc correspondant … la position AL
+; affiche le bloc correspondant â€¦ la position AL
 ;**************************************************************************
 proc_aff_pos_arrangement:
 mov cs:data_proc_aff_pat_arrangement,al
@@ -559,7 +559,7 @@ cmp al,cs:nb_positions
 pop ax
 jb >l2
 jmp >l3
-; affichage de la position s‚lectionn‚e
+; affichage de la position sâ€šlectionnâ€še
 l1:
 push ax
 mov al,cs:position_modifiee
@@ -573,16 +573,16 @@ l5:
 bloc3_vga ax,bx,cx,dx
 couleur_texte_vga 4
 jmp >l4
-; affichage d'une position utilis‚e
+; affichage d'une position utilisâ€še
 l2:
 bloc1_vga ax,bx,cx,dx
 couleur_texte_vga 1
 jmp >l4
-; affichage d'une position inutilis‚e
+; affichage d'une position inutilisâ€še
 l3:
 rectangle_vga ax,bx,cx,dx,7
 couleur_texte_vga 8
-; affichage du num‚ro du pattern
+; affichage du numâ€šro du pattern
 l4:
 inc ax
 add bx,4
@@ -641,7 +641,7 @@ mov al,cs:nb_positions
 mov cs:data_annul_arrangement[128],al
 ret
 ; PROC_ANNUL_ARRANGEMENT (P)
-; restaure la table des positions telle qu'elle a ‚t‚ sauv‚e
+; restaure la table des positions telle qu'elle a â€štâ€š sauvâ€še
 ;**************************************************************************
 proc_annul_arrangement:
 mov ds,cs
@@ -656,9 +656,9 @@ mov cs:nb_positions,al
 ret
 
 ; PROC_CONTROLE_ARRANGEMENT (P)
-; controle la validit‚ du nombre de patterns
+; controle la validitâ€š du nombre de patterns
 ;       - si OK, RET
-;       - sinon, cr‚e/efface des patterns, ou bien annulation,
+;       - sinon, crâ€še/efface des patterns, ou bien annulation,
 ;                               puis JMP MENU_EDITION
 ;**************************************************************************
 data_controle_arrangement       db ?
@@ -672,7 +672,7 @@ cmp al,cs:table_positions[bx]
 if b mov al,cs:table_positions[bx]
 inc bx
 loop b1
-inc al  ; al = nombre l‚gal de patterns...
+inc al  ; al = nombre lâ€šgal de patterns...
 cmp al,cs:nb_patterns   ; est-ce correct?
 jne >l0
 mov b cs:fichier_modifie,1
@@ -693,7 +693,7 @@ cmp al,cs:nb_patterns
 if b jmp eff_controle_arrangement
 if a jmp cree_controle_arrangement
 eff_controle_arrangement:
-; calcul du nombre de patterns … effacer
+; calcul du nombre de patterns â€¦ effacer
 mov ah,cs:nb_patterns
 sub ah,al
 mov al,ah
@@ -721,26 +721,26 @@ jmp annul_controle_arrangement
 l1:
 test_souris_bouton 1,b1     ; effacer ?
 mov al,cs:data_controle_arrangement
-sub cs:nb_patterns,al           ; nombre de patterns modifi‚...
+sub cs:nb_patterns,al           ; nombre de patterns modifiâ€š...
 mov ah,128
 mul ah
 mov cx,ax
 mov al,0
-call proc_decale_sample_2      ; ... et samples d‚call‚s vers le bas !
+call proc_decale_sample_2      ; ... et samples dâ€šcallâ€šs vers le bas !
 mov b cs:fichier_modifie,1
 jmp menu_edition
 cree_controle_arrangement:
-; calcul du nombre de patterns … cr‚er
+; calcul du nombre de patterns â€¦ crâ€šer
 sub al,cs:nb_patterns
 mov cs:data_controle_arrangement,al
-; message de cr‚ation
+; message de crâ€šation
 gotoxy_vga 25,217
-aff_chaine_vga 'Il faut cr‚er '
+aff_chaine_vga 'Il faut crâ€šer '
 mov al,cs:data_controle_arrangement
 xor ah,ah
 call proc_aff_word_vga
 aff_chaine_vga ' pattern(s)...'
-; y a-t-il assez de m‚moire?
+; y a-t-il assez de mâ€šmoire?
 mov al,cs:data_controle_arrangement
 mov ah,128
 mul ah
@@ -755,8 +755,8 @@ if nz inc bx
 add ax,bx       ; ax = dernier segment qu'aurait le module...
 cmp ax,segment_buffers_mod
 if a jmp memoire_controle_arrangement
-; bouton 'cr‚er'
-init_bouton 1,34,240,45,269,37,247,'Cr‚er.'
+; bouton 'crâ€šer'
+init_bouton 1,34,240,45,269,37,247,'Crâ€šer.'
 b1:
 mouse_on
 b0:
@@ -769,19 +769,19 @@ pop dx,cx,bx
 test_souris_bouton 0,>l1    ; annuler ?
 jmp annul_controle_arrangement
 l1:
-test_souris_bouton 1,b1     ; cr‚er ?
+test_souris_bouton 1,b1     ; crâ€šer ?
 mov al,cs:nb_patterns
 mov ah,128
 mul ah
 add ax,cs:segment_patterns
-push ax         ; segment du premier pattern rajout‚ empil‚
+push ax         ; segment du premier pattern rajoutâ€š empilâ€š
 mov al,cs:data_controle_arrangement
-add cs:nb_patterns,al           ; nombre de patterns modifi‚...
+add cs:nb_patterns,al           ; nombre de patterns modifiâ€š...
 mov ah,128
 mul ah
 mov cx,ax
 mov al,0
-call proc_decale_sample_1      ; ... samples d‚call‚s vers le haut ...
+call proc_decale_sample_1      ; ... samples dâ€šcallâ€šs vers le haut ...
 pop es
 mov cl,cs:data_controle_arrangement
 xor ch,ch
@@ -791,7 +791,7 @@ mov cx,1024
 xor ax,ax
 mov di,0
 cld
-rep stosw                       ; ... et pattern vid‚ des anciens samples.
+rep stosw                       ; ... et pattern vidâ€š des anciens samples.
 pop cx
 mov ax,es
 add ax,128
@@ -819,7 +819,7 @@ call proc_annul_arrangement
 jmp menu_edition
 
 ; PROC_AFF_SELECT_ARRANGEMENT (P)
-; inverse tous les plans des blocs s‚lectionn‚s
+; inverse tous les plans des blocs sâ€šlectionnâ€šs
 ;**************************************************************************
 proc_aff_select_arrangement:
 mov al,0
@@ -838,17 +838,17 @@ add ax,110
 mov bx,5
 mul bx
 add ax,0A000h
-mov es,ax       ; ES = paragraphe de la premiŠre ligne … modifier
+mov es,ax       ; ES = paragraphe de la premiÅ re ligne â€¦ modifier
 mov al,cs:position_modifiee
 and al,0Fh
 mov ah,5
 mul ah
 mov di,ax       ; DI = offset premier bloc
 mov cl,cs:taille_select_arrangement
-xor ch,ch       ; cx = nb de blocs … inverser
+xor ch,ch       ; cx = nb de blocs â€¦ inverser
 b1:
 push cx,es,di
-mov cx,16       ; un bloc = 16 lignes vid‚o
+mov cx,16       ; un bloc = 16 lignes vidâ€šo
 b2:
 push cx
 mov cx,5
@@ -858,7 +858,7 @@ inc di
 loop b3         ; octet suivant
 add di,75
 pop cx
-loop b2         ; ligne vid‚o suivante
+loop b2         ; ligne vidâ€šo suivante
 pop di,es,cx
 add di,5
 cmp di,80
@@ -883,7 +883,7 @@ bloc1_vga 27,110,52,369
 bloc1_vga 31,120,48,149
 gotoxy_vga 32,127
 couleur_texte_vga 4
-aff_chaine_vga 'Bloc S‚lectionn‚'
+aff_chaine_vga 'Bloc Sâ€šlectionnâ€š'
 init_bouton 0,34,230,45,259,37,237,'Copier'
 init_bouton 1,34,260,45,289,37,267,'Couper'
 init_bouton 2,34,290,45,319,36,297,'Effacer'
@@ -951,7 +951,7 @@ cld
 rep movsb
 ret
 proc_effacer_select_arrangement:
-; d‚callage des positions sup‚rieures ( si n‚cessaires )
+; dâ€šcallage des positions supâ€šrieures ( si nâ€šcessaires )
 mov cl,128
 sub cl,cs:position_modifiee
 sub cl,cs:taille_select_arrangement
@@ -967,19 +967,19 @@ mov si,ax
 cld
 rep movsb
 l1:
-; effacement des positions lib‚r‚es … la fin de la table
+; effacement des positions libâ€šrâ€šes â€¦ la fin de la table
 mov di,127+offset table_positions
 mov cl,cs:taille_select_arrangement
 xor ch,ch
 xor al,al
 std
 rep stosb
-; drapeau: on a modifi‚ le machin
+; drapeau: on a modifiâ€š le machin
 mov b cs:fichier_modifie,1
-; modif (‚ventuelle) de la derniŠre position
+; modif (â€šventuelle) de la derniÅ re position
 mov al,cs:nb_positions
 cmp al,cs:position_modifiee
-if be ret       ; pas besoin de modification: bloc aprŠs derniŠre position
+if be ret       ; pas besoin de modification: bloc aprÅ s derniÅ re position
 mov al,cs:position_modifiee
 add al,cs:taille_select_arrangement
 cmp al,cs:nb_positions
