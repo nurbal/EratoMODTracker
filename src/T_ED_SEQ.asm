@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_ed_seq.a
-; (‚dition partition sous forme de s‚quenceur)
+; (â€šdition partition sous forme de sâ€šquenceur)
 ;**************************************************************************
 
 menu_sequenceur:
