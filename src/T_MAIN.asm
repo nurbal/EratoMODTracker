@@ -5,7 +5,7 @@
 ; (programme principal)
 ;**************************************************************************
 
-; d‚but du programme
+; dâ€šbut du programme
 ;**************************************************************************
 debut_programme:
 
@@ -19,7 +19,7 @@ call proc_active_palette
 actualise_volume_mod
 actualise_echantillonnage_mod
 
-; initialisation des segments de donn‚es...
+; initialisation des segments de donnâ€šes...
 mov ax,cs
 add ax,1000h
 mov cs:segment_directory,ax
@@ -34,10 +34,10 @@ mov cx,20
 cld
 rep movsb
 
-; page de pr‚sentation
+; page de prâ€šsentation
 call page_presentation
 
-; d‚finit le menu principal
+; dâ€šfinit le menu principal
 mov b cs:options_menus[1],0FFh
 menu1 menu_fichier,'FICHIER',2,8, menu_samples,'SAMPLES',11,17, menu_edition,'EDITION',20,26, menu_jouer,'JOUER',29,33, menu_options,'CONFIGURATION',36,48, infos_programme,'INFORMATIONS',66,77
 
@@ -51,25 +51,25 @@ jmp b1
 ; fin du programme
 ;**************************************************************************
 fin_programme:
-; arrˆt du module
+; arrË†t du module
 stop_mod
-; restauration du r‚pertoire original
+; restauration du râ€špertoire original
 mov dl,cs:dir_programme
 sub dl,'A'
 mov ah,0Eh
-int 21h         ; s‚lectionne un nouveau disque
+int 21h         ; sâ€šlectionne un nouveau disque
 mov bx,0
 b1:
 inc bx
 cmp cs:dir_programme[bx],0
 jne b1
 cmp bx,3
-if a mov b cs:dir_programme[bx-1],0     ; correction du r‚peroire:enlŠve le '\'
+if a mov b cs:dir_programme[bx-1],0     ; correction du râ€šperoire:enlÅ ve le '\'
 mov ds,cs
 mov dx,offset dir_programme
 add dx,2
 mov ah,3Bh
-int 21h         ; changement de r‚pertoire
+int 21h         ; changement de râ€špertoire
 ; retour au DOS
 ret
 
@@ -141,7 +141,7 @@ pop si
 add si,8
 cmp w cs:[si],-1
 jne b1
-; infos compl‚mentaires
+; infos complâ€šmentaires
 modifie_couleur_vga 2,0,0,0
 rectangle_vga 2,185,77,225,2
 mov cx,22
@@ -166,19 +166,19 @@ bloc1_vga 2,185,77,225
 police_vga 0
 gotoxy_vga 32,195
 couleur_texte_vga 1
-aff_chaine_vga 'v1.0 - á version'
+aff_chaine_vga 'v1.0 - Ã¡ version'
 police_vga 1
 gotoxy_vga 26,205
-aff_chaine_vga 'par Bruno Carrez - ao–t 1995'
+aff_chaine_vga 'par Bruno Carrez - aoâ€“t 1995'
 police_vga 2
 call proc_active_palette
 couleur_texte_vga 12
 bloc1_vga 15,310,64,405
 bloc2_vga 16,318,63,397
 gotoxy_vga 23,340
-aff_chaine_vga 'Version provisoire non document‚e.'
+aff_chaine_vga 'Version provisoire non documentâ€še.'
 gotoxy_vga 20,360
-aff_chaine_vga '-> voir message … la fin du programme...'
+aff_chaine_vga '-> voir message â€¦ la fin du programme...'
 ret
 
 ; NEANT (JMP)
@@ -191,17 +191,17 @@ bloc1_vga 25,200,54,299
 police_vga 2
 gotoxy_vga 28,224
 couleur_texte_vga 4
-aff_chaine_vga 'Pas encore programm‚ ...'
+aff_chaine_vga 'Pas encore programmâ€š ...'
 police_vga 0
 gotoxy_vga 36,270
 couleur_texte_vga 1
-aff_chaine_vga '(d‚sol‚)'
+aff_chaine_vga '(dâ€šsolâ€š)'
 ; appel du menu
 b1:
 souris_menus
 jmp b1
 
-; variables systŠme
+; variables systÅ me
 ;**************************************************************************
 debut_vars:
 palette db 0,0,0        ; noir
@@ -212,7 +212,7 @@ palette db 0,0,0        ; noir
         db 42,0,42      ; magenta
         db 42,21,0      ; brun
         db 42,42,42     ; gris clair
-        db 21,21,21     ; gris fonc‚
+        db 21,21,21     ; gris foncâ€š
         db 21,21,63     ; bleu clair
         db 21,63,21     ; vert clair
         db 21,63,63     ; cyan clair
@@ -249,7 +249,7 @@ loop b1
 ret
 table_traduction_palette db 0,1,2,3,4,5,20,7,56,57,58,59,60,61,62,63
 
-; informations g‚n‚rales
+; informations gâ€šnâ€šrales
 ;**************************************************************************
 infos_programme:
 menu2 infos_sb,'SOUND-BLASTER',2,14, infos_mem,'MEMOIRE',17,23, infos_module,'MODULE',26,31
@@ -276,7 +276,7 @@ gotoxy_vga 31,370
 aff_chaine_vga 'interruption:'
 gotoxy_vga 31,390
 aff_chaine_vga 'version DSP: '
-; affiche donn‚es sound blaster
+; affiche donnâ€šes sound blaster
 couleur_texte_vga 0
 gotoxy_vga 46,350
 mov ax,cs:port_sb
@@ -301,7 +301,7 @@ call proc_aff_word_vga
 b1:
 souris_menus
 jmp b1
-; information m‚moire
+; information mâ€šmoire
 infos_mem:
 affiche_menus
 police_vga 2
@@ -310,17 +310,17 @@ bloc1_vga 28,300,51,329
 bloc1_vga 28,330,51,426
 gotoxy_vga 36,308
 couleur_texte_vga 4
-aff_chaine_vga 'M‚moire:'
+aff_chaine_vga 'Mâ€šmoire:'
 couleur_texte_vga 1
 gotoxy_vga 30,340
 aff_chaine_vga 'totale (DOS):'
 gotoxy_vga 30,360
-aff_chaine_vga 'utilis‚e:'
+aff_chaine_vga 'utilisâ€še:'
 gotoxy_vga 30,380
 aff_chaine_vga 'programme:'
 gotoxy_vga 30,400
 aff_chaine_vga 'libre (MOD):'
-; affiche donn‚es m‚moire
+; affiche donnâ€šes mâ€šmoire
 couleur_texte_vga 0
 gotoxy_vga 44,340
 mov ax,640
@@ -375,8 +375,8 @@ aff_chaine_vga 'longueur:'
 gotoxy_vga 31,370
 aff_chaine_vga 'patterns:'
 gotoxy_vga 31,390
-aff_chaine_vga 'm‚moire: '
-; affiche donn‚es module
+aff_chaine_vga 'mâ€šmoire: '
+; affiche donnâ€šes module
 couleur_texte_vga 0
 gotoxy_vga 42,350
 mov al,cs:nb_positions
@@ -412,7 +412,7 @@ nom_fichier_charge_config db 'ERATO.CFG',0
 dir_programme   db 65 dup 0
 nom_fichier_config db 75 dup 0
 proc_charge_config:
-; d‚termination du nom complet du fichier ( avec chemin et drive... )
+; dâ€štermination du nom complet du fichier ( avec chemin et drive... )
 push cs
 pop es
 mov di,offset dir_programme
@@ -426,12 +426,12 @@ stosb   ; drive
 mov al,':'
 stosb
 mov al,'\'
-stosb   ; ":\"rajout‚s au nom du drive
+stosb   ; ":\"rajoutâ€šs au nom du drive
 mov ds,cs
 mov si,di
 mov ah,47h
-mov dl,0        ; unit‚ par d‚faut
-int 21h         ; demande le r‚pertoire courant
+mov dl,0        ; unitâ€š par dâ€šfaut
+int 21h         ; demande le râ€špertoire courant
 mov ax,cs
 mov es,ax
 mov ds,ax
@@ -450,7 +450,7 @@ cld
 lodsb
 stosb
 cmp al,0
-jne b1          ; chemin copi‚
+jne b1          ; chemin copiâ€š
 dec di
 mov si,offset nom_fichier_charge_config
 b1:
@@ -458,7 +458,7 @@ cld
 lodsb
 stosb
 cmp al,0
-jne b1          ; nom fichier copi‚ en prime
+jne b1          ; nom fichier copiâ€š en prime
 ; ouverture
 mov ds,cs
 mov dx,offset nom_fichier_config
