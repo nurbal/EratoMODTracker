@@ -2,7 +2,7 @@
 ; programme TRACKER (nom provisoire)
 ;**************************************************************************
 ; fichier t_edit.a
-; (Çdition : fonctions d'interràt gÇnÇral)
+; (‚Äödition : fonctions d'interrÀÜt g‚Äön‚Äöral)
 ;**************************************************************************
 
 delai_select            equ 20
@@ -39,7 +39,7 @@ table2_noms_commandes   db 'Rien / Arpeggio',0
                         db 'Pattern Break  ',0
                         db 'E = ?          ',0
                         db 'Set Music Speed',0
-; variables relatives aux blocs et Ö la sÇlection...
+; variables relatives aux blocs et ‚Ä¶ la s‚Äölection...
 bloc            db 2048 dup ?
 nb_voix_bloc    db 1
 nb_notes_bloc   db 1
@@ -55,11 +55,11 @@ lance_pattern macro
 call proc_lance_pattern
 #em
 proc_lance_pattern:
-; arràt de toute sortie son
+; arrÀÜt de toute sortie son
 push ax
 stop_mod
 pop ax
-; initialisation du mode spÇcial
+; initialisation du mode sp‚Äöcial
 mov b cs:mode_joue_mod,1
 mov cs:pattern_joue_mod,al
 ; "nettoyage" des buffers...
@@ -96,17 +96,17 @@ mov es:[si],ax
 mov ax,cs
 mov es:[si+2],ax
 sti
-; lancement de la "rÇaction en chaine":
+; lancement de la "r‚Äöaction en chaine":
 mov al,40h
 call proc_ecrit_dsp_sb
 mov al,cs:time_constant_sb
-call proc_ecrit_dsp_sb  ; Çcriture du "time constant"
+call proc_ecrit_dsp_sb  ; ‚Äöcriture du "time constant"
 mov al,80h
 call proc_ecrit_dsp_sb
 mov al,0
 call proc_ecrit_dsp_sb
 mov al,0
-call proc_ecrit_dsp_sb  ; silence instantanÇ => va provoquer l'interruption
+call proc_ecrit_dsp_sb  ; silence instantan‚Äö => va provoquer l'interruption
 ret
 
 
@@ -133,7 +133,7 @@ if e jmp menu_sequenceur
 jmp menu_arrangement
 
 ; CHOIX_PATTERN (JMP)
-; donne le choix entre tous les patterns utilisÇs
+; donne le choix entre tous les patterns utilis‚Äös
 ;**************************************************************************
 choix_pattern:
 menu2 choix_pattern,'AUTRE PATTERN',25,37, neant,'SEQUENCEUR',55,64, neant,'ARRANGEMENT',67,77
@@ -148,7 +148,7 @@ gotoxy_vga 27,68
 aff_chaine_vga 'CHOIX DU PATTERN A EDITER:'
 couleur_texte_vga 1
 gotoxy_vga 17,101
-aff_chaine_vga '(bouton gauche=choisir - bouton droit=Çcouter)'
+aff_chaine_vga '(bouton gauche=choisir - bouton droit=‚Äöcouter)'
 rectangle_vga 0,128,79,479,7
 police_vga 1
 mov cl,cs:nb_patterns
@@ -176,22 +176,22 @@ mov bh,22
 div bh
 mov cl,3
 shl al,cl
-add al,bl       ; al = numÇro du pattern sÇlectionnÇ
+add al,bl       ; al = num‚Äöro du pattern s‚Äölectionn‚Äö
 pop bx          ; bx = bouton souris
 cmp al,cs:nb_patterns
 jae b1
 shr bx,1        ; c=1 => bouton gauche
 jc >l1
-; lancement du pattern dont le numÇro est dans AL
+; lancement du pattern dont le num‚Äöro est dans AL
 lance_pattern
 jmp b1
-l1:     ; un pattern a ÇtÇ choisi (dans AL)
+l1:     ; un pattern a ‚Äöt‚Äö choisi (dans AL)
 xchg cs:pattern_modifie,al
 call proc_aff_bloc_choix_pattern
 mov al,cs:pattern_modifie
 call proc_aff_bloc_choix_pattern
 lache_souris
-stop_mod        ; arràte les Çventuels patterns en route...
+stop_mod        ; arrÀÜte les ‚Äöventuels patterns en route...
 jmp menu_edition
 
 data_choix_pattern      db ?
@@ -251,7 +251,7 @@ bloc1_vga 19,110,60,369
 bloc1_vga 31,120,48,149
 gotoxy_vga 32,127
 couleur_texte_vga 4
-aff_chaine_vga 'Bloc SÇlectionnÇ'
+aff_chaine_vga 'Bloc S‚Äölectionn‚Äö'
 init_bouton 0,34,230,45,259,37,237,'Copier'
 init_bouton 1,34,260,45,289,37,267,'Couper'
 init_bouton 2,34,290,45,319,36,297,'Effacer'
@@ -341,7 +341,7 @@ mov ah,cs:pattern_modifie
 mov al,0
 shr ax,1
 add ax,cs:segment_patterns
-mov es,ax       ; es = segment du pattern considÇrÇ
+mov es,ax       ; es = segment du pattern consid‚Äör‚Äö
 mov al,cs:note_modifiee
 mov ah,0
 mov cl,3
@@ -417,7 +417,7 @@ ret
 
 
 ; PROC_JOUE_NOTE_MODIFIEE (JMP)
-; joue la note ÇditÇe (en essayant de dÇterminer le sample Ö utiliser)
+; joue la note ‚Äödit‚Äöe (en essayant de d‚Äöterminer le sample ‚Ä¶ utiliser)
 ;**************************************************************************
 proc_joue_note_modifiee:
 adresse_note_modifiee
@@ -448,28 +448,28 @@ shr ah,1
 shr ah,1
 shr ah,1
 or al,ah
-sub si,32       ; ligne prÇcÇdente
+sub si,32       ; ligne pr‚Äöc‚Äödente
 cmp al,0
 if e loop b1
 cmp al,0
-if ne dec al    ; AL = numÇro de l'instrument
+if ne dec al    ; AL = num‚Äöro de l'instrument
 mov ah,bl       ; AH = hauteur de note
-lance_sample    ; sample lancÇ!
+lance_sample    ; sample lanc‚Äö!
 ret
 
 ; MODIFIE_COMMANDE (JMP)
-; modif. de la commande et du patamätre
+; modif. de la commande et du patam≈†tre
 ;**************************************************************************
 com_modifie_commande    db ?
 data_modifie_commande   db ?
 modifie_commande:
-; lecture et dÇcodage de la commande et du paramätre dans la partition
+; lecture et d‚Äöcodage de la commande et du param≈†tre dans la partition
 adresse_note_modifiee
 mov al,es:[si+2]
 and al,0Fh
-mov cs:com_modifie_commande,al  ; commande transfÇrÇe
+mov cs:com_modifie_commande,al  ; commande transf‚Äör‚Äöe
 mov al,es:[si+3]
-mov cs:data_modifie_commande,al ; donnÇe transfÇrÇe
+mov cs:data_modifie_commande,al ; donn‚Äöe transf‚Äör‚Äöe
 
 ; affichage du menu
 bloc1_vga 20,60,59,469
@@ -529,18 +529,18 @@ cmp al,0Fh      ; set speed?
 if e mov b cs:data_modifie_commande,6
 jmp boucle_modifie_commande
 l1:     ; c'est pas un nouvelle commande !
-test_zone_souris 320,73,463,424,>l1     ; modifie les paramätres?
+test_zone_souris 320,73,463,424,>l1     ; modifie les param≈†tres?
 call proc_modifie_curseur_commande
 l1:
 test_souris_bouton 0,>l3    ; OK ?
-; stockage dans la partition des commande & paramätre
+; stockage dans la partition des commande & param≈†tre
 adresse_note_modifiee
 mov al,cs:data_modifie_commande
-mov es:[si+3],al        ; paramätre
+mov es:[si+3],al        ; param≈†tre
 and b es:[si+2],0F0h
 mov al,cs:com_modifie_commande
 or es:[si+2],al         ; commande
-mov b cs:fichier_modifie,1      ; le fichier a ÇtÇ modifiÇ
+mov b cs:fichier_modifie,1      ; le fichier a ‚Äöt‚Äö modifi‚Äö
 jmp menu_edition
 l3:
 test_souris_bouton 1,>l3    ; Annuler ?
@@ -549,13 +549,13 @@ l3:
 jmp boucle_souris_modifie_commande
 
 ; PROC_AFF_CURSEUR_COMMANDE (P)
-; affiche le curseur de paramätre correspondant Ö la commande
+; affiche le curseur de param≈†tre correspondant ‚Ä¶ la commande
 ; ==> actualise TYPE_CURSEUR_COMMANDE, corrige DATA_MODIFIE_COMMANDE
 ;**************************************************************************
 type_curseur_commande   db ?
 proc_aff_curseur_commande:
 tempo_vga
-mov b cs:type_curseur_commande,0        ; curseur par dÇfaut
+mov b cs:type_curseur_commande,0        ; curseur par d‚Äöfaut
 cmp b cs:com_modifie_commande,0         ; arpeggio ?
 if e mov b cs:type_curseur_commande,1
 if e jmp aff_curseur_commande_1
@@ -733,7 +733,7 @@ call proc_aff_hex_vga
 ret
 ; curseur type 5 (Pattern Break)
 aff_curseur_commande_5:
-mov b cs:data_modifie_commande,0        ; pas de paramätre pour cette commande !
+mov b cs:data_modifie_commande,0        ; pas de param≈†tre pour cette commande !
 ret
 ; curseur type 6 (Set Music Speed)
 aff_curseur_commande_6:
@@ -762,7 +762,7 @@ call proc_aff_hex_vga
 ret
 
 ; PROC_MODIFIE_CURSEUR_COMMANDE (P)
-; teste la souris afin de dÇterminer si le cursue doit changer ou pas
+; teste la souris afin de d‚Äöterminer si le cursue doit changer ou pas
 ;**************************************************************************
 proc_modifie_curseur_commande:
 cmp b cs:type_curseur_commande,1
@@ -960,7 +960,7 @@ l1:
 ret
 
 ; PROC_COLLER_BLOC (P)
-; colle le bloc Ö NOTE_MODIFIEE et VOIX_NOTE_MODIFIEE
+; colle le bloc ‚Ä¶ NOTE_MODIFIEE et VOIX_NOTE_MODIFIEE
 ;**************************************************************************
 proc_coller_bloc:
 adresse_note_modifiee
@@ -986,7 +986,7 @@ l1:
 cmp b cs:masque_bloc[1],1
 jne >l1
 mov al,ds:[si+3]
-mov es:[di+3],al        ; paramätre
+mov es:[di+3],al        ; param≈†tre
 mov al,ds:[si+2]
 and al,0Fh
 and b es:[di+2],0F0h
